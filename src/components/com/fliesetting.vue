@@ -18,7 +18,8 @@
             <button class="btn fileinput-button" type="button" style="background: rgb(3, 138, 253);color:#fff;">Select file</button>
             <input type="file" name="file" @change="loadFile" style="position:absolute;top:0;left:0;font-size:34px; opacity:0">
           </div>
-          <span id="filename" style="vertical-align: middle">{{filename}}</span>
+          <span id="filename" style="vertical-align: middle;">{{filename}}</span>
+          <span id="filesize" style="vertical-align: middle;">{{fileSize}}</span>
         </div>
       </div>
       <div class="form-group">
@@ -62,7 +63,7 @@
       <div class="form-group">
         <label class="col-sm-4 col-xs-4 col-md-4 text-left control-label" for="ds_password"></label>
         <div class="col-sm-6 col-xs-6 col-md-6 bth-style">
-          <button class="btn btn-default btn-primary" @click="step4" data-loading-text="Uploading....">Upload&Submit</button>
+          <button class="btn btn-default btn-primary" @click="step4" id="fileBth" :class="{'disabled':btnState}">Upload&Submit</button>
         </div>
       </div>
     </fieldset>
@@ -72,10 +73,13 @@
 export default {
   name: 'uploadFile',
   data() {
+    vm = this
     return {
       filename: "未上传文件",//显示上传的是哪个文件
-      PrintEmailId_1: '',
-      selected: {
+      fileSize: "",//显示上传文件的大小
+      PrintEmailId_1: '',//输入的printeEmailId
+      btnState: false,//设置按钮的默认状态
+      selected: {//默认选中的参数
         Plex: 1,
         MediaSize: 1,
         MediaType: 1,
@@ -83,7 +87,7 @@ export default {
         Quality: 2,
         Copies: 1
       },
-      options: {
+      options: {//各个参数的列表
         Plex: [],
         MediaSize: [],
         MediaType: [],
@@ -92,12 +96,12 @@ export default {
       },
       din: "",
       clearId: 0,//清除定时器的id
-      intervalObj: {},
-      name: 'timer_',
+      intervalObj: {},//所有定时器的集合
+      name: 'timer_',//获取打印结果的定时器命名
+      warnName:'timer1_'//获取打印机异常的定时器命名
     }
   },
   beforeCreate() {
-    const vm = this
     vm.$http.get(vm.$store.state.url + "/printerJob/getPrintJobConfig").then(function(data) {
       var obj = data.body;
       var opt = vm.options;
@@ -121,11 +125,19 @@ export default {
   methods: {
     step4: function() {//当上传需要打印的文件上传好之后，将结果返回给后台时做的操作
       var vm = this;
+      vm.btnState = true;
+      setTimeout(function() {//每次按下之后，将按钮禁用5秒
+        vm.btnState = false
+      }, 5 * 1000)
       vm.$store.state.PrintEmailId = vm.PrintEmailId_1;
       var jobCfg = '{Plex:' + vm.selected.Plex + ';MediaSize:' + vm.selected.MediaSize + ';MediaType:' + vm.selected.MediaType + ';Color:' + vm.selected.Color + ';Quality:' + vm.selected.Quality + ';Copies:' + vm.selected.Copies + '}';
       var jobCfg1 = encodeURIComponent(jobCfg)
       var data = new FormData($('#upLoadApp')[0])
       vm.$http.post(vm.$store.state.url + "/printerJob/submitPrintJob?printerEmailId=" + vm.$store.state.PrintEmailId + "&jobCfg=" + jobCfg1, data, { emulateJSON: true }).then((data) => {
+        if (data.body == "") {
+          vm.$store.state.warningState = true;
+          vm.$store.state.warningContent = "The server did not return data"
+        }
         if (data.body.result == 0) {
           let stateObj = {//只有是引用类型传进去的参数，函数内部才可以修改函数外部的值
             nowstate: 0,//每次定时去取数据时的取到的当时状态
@@ -143,20 +155,39 @@ export default {
           vm.din = data.body.din;
           vm.$store.commit('log', JSON.stringify(data.body.log))//提交的日志
           vm.intervalObj[vm.name + job_num] = setInterval(function() {//设置定时器去获取
-            vm.ajax(vm, job_num, stateObj, degree, vm.index)
-          }, 10 * 1000)
-          console.log(vm.intervalObj)
+            vm.getMessage(vm, job_num, stateObj, degree, vm.index)
+          }, 5 * 1000)
+           vm.intervalObj[vm.warnName + job_num] = setInterval(function() {//设置定时器去获取打印机异常
+            vm.getWarning(vm, job_num)
+          }, 20 * 1000)
         }
+
         vm.$store.state.notification.unshift(json)//json文件存入notification中
+      }, (err) => {
+        if (err.state == 500) {//判断调用后台接口传来的错误
+          vm.$store.state.warningState = true;
+          vm.$store.state.warningContent = "Server error"
+        } else if (err.state == 404) {
+          vm.$store.state.warningState = true;
+          vm.$store.state.warningContent = "No resource found"
+        } else {
+          vm.$store.state.warningState = true;
+          vm.$store.state.warningContent = "Server exception"
+        }
       });
     },
-    loadFile: function(e) {//显示上传文件名
+    loadFile: function(e) {//显示上传文件名和上传文件大小
       this.filename = e.target.files[0].name;
+      var byte = e.target.files[0].size;//获取到文件的字节
+      if (Math.floor(byte / (1024 * 1024)) > 0) {
+        this.fileSize = Math.floor(byte / (1024 * 1024)) + "." + byte % (1024 * 1024) + "M"
+      } else {
+        this.fileSize = Math.floor(byte / 1024) + "." + byte % 1024 + "KB"
+      }
     },
-    ajax: function(vm, job_num, stateObj, degree) {//定时去请求数据，直到得到最后的结果
+    getMessage: function(vm, job_num, stateObj, degree) {//定时去请求数据，直到得到最后的结果
       vm.$http.get(vm.$store.state.url + "/printJobStatus/latest?din=" + vm.din + "&jobNum=" + job_num).then((data) => {
         var resultMsg = "";
-
         if (data.body.length == 0) {
           degree += 1
           if (degree <= 1) {
@@ -174,9 +205,7 @@ export default {
               stateObj.beforestate = stateObj.nowstate
               for (var i = 0; i < vm.$store.state.notification.length; i++) {
                 if (vm.$store.state.notification[i].job_num == job_num) {
-                  var timeStamp = new Date();//时间戳
                   resultMsg = {
-                    "time": timeStamp.toLocaleString(),
                     "helpTitle": ' padding.....',
                     "result": data.body.result,
                   }
@@ -199,8 +228,40 @@ export default {
                 vm.$store.state.notification[i].num += 1
                 vm.$store.state.notification[i].msg.push(resultMsg)
                 clearInterval(vm.intervalObj[vm.name + job_num])//清除定时器
-                console.log(vm.intervalObj[vm.name + job_num] + '已被清除')
                 return false
+              }
+            }
+          }
+        }
+      }, (err) => {
+        if (err.state == 500) {
+          vm.$store.state.warningState = true;
+          vm.$store.state.warningContent = "Server error"
+        } else if (err.state == 404) {
+          vm.$store.state.warningState = true;
+          vm.$store.state.warningContent = "No resource found"
+        } else {
+          vm.$store.state.warningState = true;
+          vm.$store.state.warningContent = "Server exception"
+        }
+      })
+    },
+    getWarning: function(vm, job_num) {//获取打印机异常
+      vm.$http.get(vm.$store.state.url + "/getInkAlert/message?din=" + vm.din + "&jobNum=" + job_num).then((data) => {
+        if (data.body != '') {
+          if (data.body.helpTitle != "") {
+            for (var i = 0; i < vm.$store.state.notification.length; i++) {
+              if (vm.$store.state.notification[i].job_num == job_num) {
+                var resultMsg = {//成功之后返回的数据,打印机的异常
+                  "helpTitle": data.body.helpTitle,
+                  "helpDigest": data.body.helpDigest,
+                  "helpCoverurl": data.body.helpCoverurl,
+                  "helpUrl": data.body.helpUrl,
+                  "subType":data.body.subType
+                }
+                 vm.$store.state.notification[i].msg.push(resultMsg)
+                 clearInterval(vm.intervalObj[vm.warnName + job_num])//清除定时器
+                 return false
               }
             }
           }

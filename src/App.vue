@@ -3,16 +3,20 @@
      <div class="container-fluid">
     <HeaderDiv></HeaderDiv>
     <router-view></router-view>
+    <Warning></Warning>
   </div>
   </div>
 </template>
 
 <script>
 import HeaderDiv from '@/components/header.vue'
+import Warning from '@/components/com/warning.vue'
 export default {
   name: 'app',
   components:{
-    HeaderDiv
+    HeaderDiv,
+    Warning
+
   }
 }
 </script>

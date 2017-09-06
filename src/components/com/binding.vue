@@ -38,7 +38,7 @@
           <div class="form-group">
             <label class="col-sm-4 col-xs-4 col-md-4 text-left control-label" for="ds_password"></label>
             <div class="col-sm-6  col-xs-6 col-md-6 bth-style">
-              <button class="btn btn-default btn-primary" :disabled='newBing' @click="step3">Binding</button>
+              <button class="btn btn-default btn-primary" :class="{'disabled':btnState}" :disabled='newBing' @click="step3">Binding</button>
             </div>
             <div class="alert alert-warning warning" v-show="isWarning">
               <a href="#" class="close" data-dismiss="alert">&times;</a>
@@ -53,6 +53,7 @@ export default {
   name:'binding',
   data(){
     return{
+      btnState:false
     }
   },
     computed:mapState({
@@ -81,18 +82,34 @@ export default {
   methods : {
       step3: function() {//当是新绑定的时候，调用这个函数返回结果为0
        let vm = this;
-      if (vm.$store.state.newBing) {
-        console.log(1111)
+         vm.btnState = true;
+      setTimeout(function() {//每次按下之后，将按钮禁用5秒
+        vm.btnState = false
+      }, 5 * 1000)
+      if (vm.$store.state.newBing) {//判断是否需要绑定
         var json = JSON.stringify({
           "pid": vm.$store.state.Pid,
           "sn": vm.$store.state.Sn,
           "din": vm.$store.state.Din
         });
         vm.$http.post(vm.$store.state.url + "/bindPrinter/bind", json, { emulateJSON: true }).then((data) => {
-          console.log(data)
+         if(data.body==""){
+            vm.$store.state.warningState = true;
+            vm.$store.state.warningContent = "The server did not return data"
+         }
           vm.$store.state.resultCode = data.body.resultCode;
           vm.$store.state.logMessage = JSON.stringify(data.body.log)
-        }, (err) => {
+        } ,(err)=>{
+        if(err.state==500){
+           vm.$store.state.warningState = true;
+            vm.$store.state.warningContent = "Server error"
+        }else if(err.state==404){
+          vm.$store.state.warningState = true;
+            vm.$store.state.warningContent = "No resource found"
+        }else{
+           vm.$store.state.warningState = true;
+            vm.$store.state.warningContent = "Server exception"
+        }
           vm.$store.state.logMessage = JSON.stringify(err)
         })
       }

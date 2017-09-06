@@ -1,9 +1,14 @@
 <template>
   <div class="bind-progress">
-    <div class="row bind-bg">
+    <div class="row">
+      <div class="col-md-5 col-padding">
       <Gen></Gen>
       <Scan></Scan>
       <Binding></Binding>
+      </div>
+      <div class="col-md-6 col-padding">
+        <Log></Log>
+      </div>
     </div>
   </div>
 </template>
@@ -11,6 +16,7 @@
 import Gen from './com/generate'
 import Scan from './com/scan'
 import Binding from './com/binding'
+import Log from './com/log'
 export default {
   name: 'bind',
   data() {
@@ -22,6 +28,7 @@ export default {
     Gen,
     Scan,
     Binding,
+    Log
   }
 }
 </script>

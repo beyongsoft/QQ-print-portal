@@ -12,7 +12,7 @@
     <div class="form-group">
       <label class="col-sm-4 col-md-4 col-xs-4 control-label text-left" for="ds_password"></label>
       <div class="col-sm-6 col-xs-6 col-md-6 bth-style">
-        <button class="btn btn-default btn-primary" @click="step2">Scan</button>
+        <button class="btn btn-default btn-primary" @click="step2" :class="{'disabled':btnState}">Scan</button>
       </div>
     </div>
   </fieldset>
@@ -22,6 +22,7 @@ export default {
   name:'scan',
   data() {
     return {
+      btnState:false
     }
   },
   computed:{
@@ -32,7 +33,15 @@ export default {
   methods: {
     step2: function() {//根据生成二维码获得的id去调用获取该printerid的相关信息
       var vm = this;
+      vm.btnState = true;
+      setTimeout(function(){
+        vm.btnState = false
+      },5*1000)
       vm.$http.get(vm.$store.state.url + "/scanQRCode/getSnAndPidByPinterId?printerId=" + vm.$store.state.printerId).then((data) => {
+          if(data.body==""){
+            vm.$store.state.warningState = true;
+            vm.$store.state.warningContent = "The server did not return data"
+         }
         vm.$store.commit('log', JSON.stringify(data.body.log))
         let Am = data.body
         vm.$store.state.printerName = Am.model
@@ -43,7 +52,17 @@ export default {
         vm.$store.state.newBing = Am.newBinding;
         vm.$store.state.isWarning = !Am.newBinding
         console.log(vm.$store.state.sn)
-      }, (err) => {
+      }, (err)=>{
+        if(err.state==500){
+           vm.$store.state.warningState = true;
+            vm.$store.state.warningContent = "Server error"
+        }else if(err.state==404){
+          vm.$store.state.warningState = true;
+            vm.$store.state.warningContent = "No resource found"
+        }else{
+           vm.$store.state.warningState = true;
+            vm.$store.state.warningContent = "Server exception"
+        }
         vm.$store.commit('log', JSON.stringify(err))
       })
 
