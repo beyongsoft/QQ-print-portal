@@ -64,7 +64,6 @@ export default {
   created(){
       var imageArr=["jpg","png","gif","jpeg","bmp"]
       if(imageArr.indexOf(this.item.fileName.split(".")[1])!=-1){
-
         this.isimg=true
       }
   },

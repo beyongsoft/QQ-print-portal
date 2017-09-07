@@ -73,7 +73,6 @@
 export default {
   name: 'uploadFile',
   data() {
-    vm = this
     return {
       filename: "未上传文件",//显示上传的是哪个文件
       fileSize: "",//显示上传文件的大小
@@ -102,6 +101,7 @@ export default {
     }
   },
   beforeCreate() {
+    let vm = this;
     vm.$http.get(vm.$store.state.url + "/printerJob/getPrintJobConfig").then(function(data) {
       var obj = data.body;
       var opt = vm.options;
@@ -137,8 +137,12 @@ export default {
         if (data.body == "") {
           vm.$store.state.warningState = true;
           vm.$store.state.warningContent = "The server did not return data"
-        }
-        if (data.body.result == 0) {
+        }else if(data.body.jobNum==""){
+          vm.$store.state.warningState = true;
+          vm.$store.state.warningContent =data.body.msg
+        }else{
+          console.log(data.body.jobNum)
+          if (data.body.result == 0) {
           let stateObj = {//只有是引用类型传进去的参数，函数内部才可以修改函数外部的值
             nowstate: 0,//每次定时去取数据时的取到的当时状态
             beforestate: 0//每次定时去取数据时的取到的上一次状态
@@ -161,8 +165,9 @@ export default {
             vm.getWarning(vm, job_num)
           }, 20 * 1000)
         }
-
         vm.$store.state.notification.unshift(json)//json文件存入notification中
+        console.log(vm.$store.state.notification)
+        }
       }, (err) => {
         if (err.state == 500) {//判断调用后台接口传来的错误
           vm.$store.state.warningState = true;

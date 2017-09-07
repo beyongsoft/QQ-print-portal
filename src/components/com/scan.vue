@@ -49,6 +49,8 @@ export default {
         vm.$store.state.Din = Am.token.din;
         vm.$store.state.Sn = Am.snInfo.sn;
         vm.$store.state.Pid = Am.snInfo.pid;
+        vm.$store.state.dtoken = Am.token.token;
+        vm.$store.state.drefreshToken = Am.token.refreshToken;
         vm.$store.state.newBing = Am.newBinding;
         vm.$store.state.isWarning = !Am.newBinding
         console.log(vm.$store.state.sn)

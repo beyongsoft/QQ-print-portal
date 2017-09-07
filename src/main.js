@@ -13,6 +13,7 @@ import VueResource from 'vue-resource';
 import Validator from 'vue-validator'
 import Vuex from 'vuex'
 import store from './vuex/store'
+
 Vue.use(Vuex)
 Vue.use(Validator)
 Vue.use(VueResource)
