@@ -97,7 +97,7 @@ export default {
       clearId: 0,//清除定时器的id
       intervalObj: {},//所有定时器的集合
       name: 'timer_',//获取打印结果的定时器命名
-      warnName:'timer1_'//获取打印机异常的定时器命名
+      warnName: 'timer1_'//获取打印机异常的定时器命名
     }
   },
   beforeCreate() {
@@ -125,6 +125,7 @@ export default {
   methods: {
     step4: function() {//当上传需要打印的文件上传好之后，将结果返回给后台时做的操作
       var vm = this;
+      let str="";
       vm.btnState = true;
       setTimeout(function() {//每次按下之后，将按钮禁用5秒
         vm.btnState = false
@@ -137,47 +138,47 @@ export default {
         if (data.body == "") {
           vm.$store.state.warningState = true;
           vm.$store.state.warningContent = "The server did not return data"
-        }else if(data.body.jobNum==""){
+        } else if (data.body.jobNum == "") {
           vm.$store.state.warningState = true;
-          vm.$store.state.warningContent =data.body.msg
-        }else{
+          vm.$store.state.warningContent = data.body.msg
+        } else {
           console.log(data.body.jobNum)
           if (data.body.result == 0) {
-          let stateObj = {//只有是引用类型传进去的参数，函数内部才可以修改函数外部的值
-            nowstate: 0,//每次定时去取数据时的取到的当时状态
-            beforestate: 0//每次定时去取数据时的取到的上一次状态
+            let stateObj = {//只有是引用类型传进去的参数，函数内部才可以修改函数外部的值
+              nowstate: 0,//每次定时去取数据时的取到的当时状态
+              beforestate: 0//每次定时去取数据时的取到的上一次状态
+            }
+            var degree = 0;//请求为空的次数
+            var job_num = data.body.jobNum;//获取到的jobNum
+            var json = {//存入notification的数据
+              "job_num": job_num,
+              "PrintEmailId": data.body.printerEmail,
+              "fileName": vm.filename,
+              "msg": [],
+              "num": 0
+            }
+            vm.din = data.body.din;
+            vm.$store.commit('log', JSON.stringify(data.body.log))//提交的日志
+            vm.intervalObj[vm.name + job_num] = setInterval(function() {//设置定时器去获取
+              vm.getMessage(vm, job_num, stateObj, degree, vm.index)
+            }, 5 * 1000)
+            vm.intervalObj[vm.warnName + job_num] = setInterval(function() {//设置定时器去获取打印机异常
+              vm.getWarning(vm, job_num)
+            }, 20 * 1000)
           }
-          var degree = 0;//请求为空的次数
-          var job_num = data.body.jobNum;//获取到的jobNum
-          var json = {//存入notification的数据
-            "job_num": job_num,
-            "PrintEmailId": data.body.printerEmail,
-            "fileName": vm.filename,
-            "msg": [],
-            "num": 0
-          }
-          vm.din = data.body.din;
-          vm.$store.commit('log', JSON.stringify(data.body.log))//提交的日志
-          vm.intervalObj[vm.name + job_num] = setInterval(function() {//设置定时器去获取
-            vm.getMessage(vm, job_num, stateObj, degree, vm.index)
-          }, 5 * 1000)
-           vm.intervalObj[vm.warnName + job_num] = setInterval(function() {//设置定时器去获取打印机异常
-            vm.getWarning(vm, job_num)
-          }, 20 * 1000)
-        }
-        vm.$store.state.notification.unshift(json)//json文件存入notification中
-        console.log(vm.$store.state.notification)
+          vm.$store.state.notification.unshift(json)//json文件存入notification中
+          console.log(vm.$store.state.notification)
         }
       }, (err) => {
         if (err.state == 500) {//判断调用后台接口传来的错误
-          vm.$store.state.warningState = true;
-          vm.$store.state.warningContent = "Server error"
+          str = "Server error"
+          vm.showWarining(str)
         } else if (err.state == 404) {
-          vm.$store.state.warningState = true;
-          vm.$store.state.warningContent = "No resource found"
+          str = "No resource found"
+          vm.showWarining(str)
         } else {
-          vm.$store.state.warningState = true;
-          vm.$store.state.warningContent = "Server exception"
+          str = "Server exception"
+          vm.showWarining(str)
         }
       });
     },
@@ -240,14 +241,14 @@ export default {
         }
       }, (err) => {
         if (err.state == 500) {
-          vm.$store.state.warningState = true;
-          vm.$store.state.warningContent = "Server error"
+          str = "Server error"
+          vm.showWarining(str)
         } else if (err.state == 404) {
-          vm.$store.state.warningState = true;
-          vm.$store.state.warningContent = "No resource found"
+          str = "No resource found"
+          vm.showWarining(str)
         } else {
-          vm.$store.state.warningState = true;
-          vm.$store.state.warningContent = "Server exception"
+          str = "Server exception"
+          vm.showWarining(str)
         }
       })
     },
@@ -262,11 +263,11 @@ export default {
                   "helpDigest": data.body.helpDigest,
                   "helpCoverurl": data.body.helpCoverurl,
                   "helpUrl": data.body.helpUrl,
-                  "subType":data.body.subType
+                  "subType": data.body.subType
                 }
-                 vm.$store.state.notification[i].msg.push(resultMsg)
-                 clearInterval(vm.intervalObj[vm.warnName + job_num])//清除定时器
-                 return false
+                vm.$store.state.notification[i].msg.push(resultMsg)
+                clearInterval(vm.intervalObj[vm.warnName + job_num])//清除定时器
+                return false
               }
             }
           }

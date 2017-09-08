@@ -34,20 +34,21 @@ export default {
       selected: 'F5S46B',
       options: [],
       btnState: false,
-      PrintEmailId:''
+      PrintEmailId: ''
     }
   },
- beforeCreate(){
-   const vm = this;
-  vm.$http.get(vm.$store.state.url+"/qrcode/getSku").then((data)=>{//动态获取SKU
-    for(var i=0;i<data.body.length;i++){
-      vm.options.push({value:data.body[i]})
-    }
-  })
- },
+  beforeCreate() {
+    const vm = this;
+    vm.$http.get(vm.$store.state.url + "/qrcode/getSku").then((data) => {//动态获取SKU
+      for (var i = 0; i < data.body.length; i++) {
+        vm.options.push({ value: data.body[i] })
+      }
+    })
+  },
   methods: {
     step1: function() {//第一次生成图片二维码
       const vm = this;
+      let str=""
       vm.btnState = true;
       setTimeout(function() {//每次按下之后，将按钮禁用5秒
         vm.btnState = false
@@ -68,14 +69,14 @@ export default {
         vm.$store.commit('log', JSON.stringify(data.body))
       }, (err) => {
         if (err.state == 500) {
-          vm.$store.state.warningState = true;
-          vm.$store.state.warningContent = "Server error"
+          str = "Server error"
+          vm.showWarining(str)
         } else if (err.state == 404) {
-          vm.$store.state.warningState = true;
-          vm.$store.state.warningContent = "No resource found"
+          str = "No resource found"
+          vm.showWarining(str)
         } else {
-          vm.$store.state.warningState = true;
-          vm.$store.state.warningContent = "Server exception"
+          str = "Server exception"
+          vm.showWarining(str)
         }
         vm.$store.commit('log', JSON.stringify(err))
       })

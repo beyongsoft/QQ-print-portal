@@ -40,10 +40,6 @@
       <div class="col-sm-6  col-xs-6 col-md-6 bth-style">
         <button class="btn btn-default btn-primary" :class="{'disabled':btnState||newBing}" @click="step3">Binding</button>
       </div>
-      <div class="alert alert-warning warning" v-show="isWarning">
-        <a href="#" class="close" data-dismiss="alert">&times;</a>
-        <strong>warning！</strong>This printer has been bound.
-      </div>
     </div>
   </fieldset>
 </template>
@@ -82,6 +78,7 @@ export default {
   methods: {
     step3: function() {//当是新绑定的时候，调用这个函数返回结果为0
       let vm = this;
+      let str = "";
       vm.btnState = true;
       setTimeout(function() {//每次按下之后，将按钮禁用5秒
         vm.btnState = false
@@ -91,34 +88,37 @@ export default {
           "pid": vm.$store.state.Pid,
           "sn": vm.$store.state.Sn,
           "din": vm.$store.state.Din,
-          "dtoken":vm.$store.state.dtoken,
+          "dtoken": vm.$store.state.dtoken,
           "drefreshtoken": vm.$store.state.drefreshToken
         });
         vm.$http.post(vm.$store.state.url + "/bindPrinter/bind", json, { emulateJSON: true }).then((data) => {
           if (data.body == "") {
-            vm.$store.state.warningState = true;
-            vm.$store.state.warningContent = "The server did not return data"
+            str="The server did not return data"
+            vm.showWarining(str)
           } else if (data.body.resultCode == -1) {
-            vm.$store.state.warningState = true;
-            vm.$store.state.warningContent = "Binding failed"
+            str= "Binding failed"
+            vm.showWarining(str)
           }
           vm.$store.state.resultCode = data.body.resultCode;
           vm.$store.state.logMessage = JSON.stringify(data.body.log)
         }, (err) => {
           if (err.state == 500) {
-            vm.$store.state.warningState = true;
-            vm.$store.state.warningContent = "Server error"
+            str= "Server error"
+            vm.showWarining(str)
           } else if (err.state == 404) {
-            vm.$store.state.warningState = true;
-            vm.$store.state.warningContent = "No resource found"
+            str="No resource found"
+            vm.showWarining(str)
           } else {
-            vm.$store.state.warningState = true;
-            vm.$store.state.warningContent = "Server exception"
+          str= "Server exception"
+            vm.showWarining(str)
           }
           //  vm.$store.commit('log', JSON.stringify(err))
         })
+      } else {
+         str="This printEmailId is already bound"
+        this.showWarining(str)
       }
-    },
+    }
   }
 }
 </script>

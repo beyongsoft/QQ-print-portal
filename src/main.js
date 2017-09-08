@@ -21,6 +21,10 @@ Vue.use(VueResource)
 Vue.config.productionTip = false
 Vue.http.options.emulateJSON = true
     /* eslint-disable no-new */
+Vue.prototype.showWarining = function(str) {
+    this.$store.state.warningState = true;
+    this.$store.state.warningContent = str
+}
 new Vue({
     el: '#app',
     router,

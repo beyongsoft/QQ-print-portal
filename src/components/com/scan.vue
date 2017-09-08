@@ -19,29 +19,30 @@
 </template>
 <script>
 export default {
-  name:'scan',
+  name: 'scan',
   data() {
     return {
-      btnState:false
+      btnState: false
     }
   },
-  computed:{
-    codeSrc(){
+  computed: {
+    codeSrc() {
       return this.$store.state.codeSrc
     }
   },
   methods: {
     step2: function() {//根据生成二维码获得的id去调用获取该printerid的相关信息
       var vm = this;
+      let str = ""
       vm.btnState = true;
-      setTimeout(function(){
+      setTimeout(function() {
         vm.btnState = false
-      },5*1000)
+      }, 5 * 1000)
       vm.$http.get(vm.$store.state.url + "/scanQRCode/getSnAndPidByPinterId?printerId=" + vm.$store.state.printerId).then((data) => {
-          if(data.body==""){
-            vm.$store.state.warningState = true;
-            vm.$store.state.warningContent = "The server did not return data"
-         }
+        if (data.body == "") {
+          str = "The server did not return data"
+          vm.showWarining(str)
+        }
         vm.$store.commit('log', JSON.stringify(data.body.log))
         let Am = data.body
         vm.$store.state.printerName = Am.model
@@ -54,16 +55,16 @@ export default {
         vm.$store.state.newBing = Am.newBinding;
         vm.$store.state.isWarning = !Am.newBinding
         console.log(vm.$store.state.sn)
-      }, (err)=>{
-        if(err.state==500){
-           vm.$store.state.warningState = true;
-            vm.$store.state.warningContent = "Server error"
-        }else if(err.state==404){
-          vm.$store.state.warningState = true;
-            vm.$store.state.warningContent = "No resource found"
-        }else{
-           vm.$store.state.warningState = true;
-            vm.$store.state.warningContent = "Server exception"
+      }, (err) => {
+        if (err.state == 500) {
+          str = "Server error"
+          vm.showWarining(str)
+        } else if (err.state == 404) {
+          str = "No resource found"
+          vm.showWarining(str)
+        } else {
+          str = "Server exception"
+          vm.showWarining(str)
         }
         vm.$store.commit('log', JSON.stringify(err))
       })
