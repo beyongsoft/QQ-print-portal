@@ -5,8 +5,7 @@ Vue.use(Vuex);
 const store = new Vuex.Store({
     state: {
         sku: "", //输入的地址
-        emailId: "", //打印机的email地址
-        url: "http://192.168.54.11:8088", //请求的地址
+        PrintEmailId: "", //打印机的email地址
         printerId: "", //获取到的打印机的Id
         newBing: true, //是否为新绑定的
         logMessage: "", //log日志
@@ -23,15 +22,16 @@ const store = new Vuex.Store({
         isWarning: false, //是否出现警告框
         resultCode: null, //当是新绑定的时候的绑定的时候返回的结果
         warningContent: "", //出现警告框内容为空
-        warningState: false
+        warningState: false,
+        tipContent: '', //成功之后的提示框
+        tipState: false, //提示框是否出现
 
     },
     mutations: {
         newStep1(state, msg) {
             //第一步输入的基本信息
             state.sku = msg.sku;
-            state.PrintEmailId = msg.PrintEmailId;
-            console.log(msg)
+            state.PrintEmailId = msg.emailId;
         },
         newstep2(state, msg) {
             //第二步传入的参数

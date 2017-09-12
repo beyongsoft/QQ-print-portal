@@ -76,7 +76,7 @@ export default {
     return {
       filename: "未上传文件",//显示上传的是哪个文件
       fileSize: "",//显示上传文件的大小
-      PrintEmailId_1: '',//输入的printeEmailId
+      PrintEmailId_1: this.$store.state.PrintEmailId,//输入的printeEmailId
       btnState: false,//设置按钮的默认状态
       selected: {//默认选中的参数
         Plex: 1,
@@ -102,7 +102,8 @@ export default {
   },
   beforeCreate() {
     let vm = this;
-    vm.$http.get(vm.$store.state.url + "/printerJob/getPrintJobConfig").then(function(data) {
+    console.log(vm.$store.state.PrintEmailId)
+    vm.$http.get(vm.$api.url("printerJob/getPrintJobConfig")).then(function(data) {
       var obj = data.body;
       var opt = vm.options;
       for (var i in obj.Plex) {
@@ -134,16 +135,16 @@ export default {
       var jobCfg = '{Plex:' + vm.selected.Plex + ';MediaSize:' + vm.selected.MediaSize + ';MediaType:' + vm.selected.MediaType + ';Color:' + vm.selected.Color + ';Quality:' + vm.selected.Quality + ';Copies:' + vm.selected.Copies + '}';
       var jobCfg1 = encodeURIComponent(jobCfg)
       var data = new FormData($('#upLoadApp')[0])
-      vm.$http.post(vm.$store.state.url + "/printerJob/submitPrintJob?printerEmailId=" + vm.$store.state.PrintEmailId + "&jobCfg=" + jobCfg1, data, { emulateJSON: true }).then((data) => {
+      vm.$http.post(vm.$api.url("printerJob/submitPrintJob?printerEmailId=" + vm.$store.state.PrintEmailId + "&jobCfg=" + jobCfg1) , data, { emulateJSON: true }).then((data) => {
         if (data.body == "") {
-          vm.$store.state.warningState = true;
-          vm.$store.state.warningContent = "The server did not return data"
-        } else if (data.body.jobNum == "") {
-          vm.$store.state.warningState = true;
-          vm.$store.state.warningContent = data.body.msg
-        } else {
-          console.log(data.body.jobNum)
-          if (data.body.result == 0) {
+          str = "The server did not return data"
+          vm.showWarining(str)
+        } else if (data.body.result == 1) {//文件上传失败
+          str = data.body.msg
+          vm.showWarining(str)
+        } else {//提交打印成功
+            str = " Successful Upload"
+            vm.showSuccess(str)
             let stateObj = {//只有是引用类型传进去的参数，函数内部才可以修改函数外部的值
               nowstate: 0,//每次定时去取数据时的取到的当时状态
               beforestate: 0//每次定时去取数据时的取到的上一次状态
@@ -157,18 +158,15 @@ export default {
               "msg": [],
               "num": 0
             }
-            vm.din = data.body.din;
             vm.$store.commit('log', JSON.stringify(data.body.log))//提交的日志
             vm.intervalObj[vm.name + job_num] = setInterval(function() {//设置定时器去获取
               vm.getMessage(vm, job_num, stateObj, degree, vm.index)
-            }, 5 * 1000)
+            }, 10 * 1000)
             vm.intervalObj[vm.warnName + job_num] = setInterval(function() {//设置定时器去获取打印机异常
               vm.getWarning(vm, job_num)
             }, 20 * 1000)
           }
           vm.$store.state.notification.unshift(json)//json文件存入notification中
-          console.log(vm.$store.state.notification)
-        }
       }, (err) => {
         if (err.state == 500) {//判断调用后台接口传来的错误
           str = "Server error"
@@ -192,18 +190,10 @@ export default {
       }
     },
     getMessage: function(vm, job_num, stateObj, degree) {//定时去请求数据，直到得到最后的结果
-      vm.$http.get(vm.$store.state.url + "/printJobStatus/latest?din=" + vm.din + "&jobNum=" + job_num).then((data) => {
+      vm.$http.get(vm.$api.url("printJobStatus/latest?printerEmailId=" + vm.$store.state.PrintEmailId + "&jobNum=" + job_num)).then((data) => {
         var resultMsg = "";
         if (data.body.length == 0) {
-          degree += 1
-          if (degree <= 1) {
-            resultMsg = { "helpTitle": "该用户未绑定或绑定失效", "result": -1 }
-            for (var i = 0; i < vm.$store.state.notification.length; i++) {
-              if (vm.$store.state.notification[i].job_num == job_num) {
-                vm.$store.state.notification[i].msg.push(resultMsg)
-              }
-            }
-          }
+            console.log('没有消息')
         } else {
           stateObj.nowstate = data.body.id;
           if (data.body.result == 0) {//除了result为0时还是在查询，除0以外均会跳出循环
@@ -212,7 +202,7 @@ export default {
               for (var i = 0; i < vm.$store.state.notification.length; i++) {
                 if (vm.$store.state.notification[i].job_num == job_num) {
                   resultMsg = {
-                    "helpTitle": ' padding.....',
+                    "helpTitle": 'Pending.....',
                     "result": data.body.result,
                   }
                   vm.$store.state.notification[i].num += 1
@@ -253,7 +243,7 @@ export default {
       })
     },
     getWarning: function(vm, job_num) {//获取打印机异常
-      vm.$http.get(vm.$store.state.url + "/getInkAlert/message?din=" + vm.din + "&jobNum=" + job_num).then((data) => {
+      vm.$http.get(vm.$api.url( "getInkAlert/message?din=" + vm.din + "&jobNum=" + job_num)).then((data) => {
         if (data.body != '') {
           if (data.body.helpTitle != "") {
             for (var i = 0; i < vm.$store.state.notification.length; i++) {

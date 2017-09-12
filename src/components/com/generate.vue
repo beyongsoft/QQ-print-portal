@@ -39,7 +39,8 @@ export default {
   },
   beforeCreate() {
     const vm = this;
-    vm.$http.get(vm.$store.state.url + "/qrcode/getSku").then((data) => {//动态获取SKU
+    const url=vm.$api.url("qrcode/getSku")
+    vm.$http.get(url).then((data) => {//动态获取SKU
       for (var i = 0; i < data.body.length; i++) {
         vm.options.push({ value: data.body[i] })
       }
@@ -48,7 +49,7 @@ export default {
   methods: {
     step1: function() {//第一次生成图片二维码
       const vm = this;
-      let str=""
+      let str = ""
       vm.btnState = true;
       setTimeout(function() {//每次按下之后，将按钮禁用5秒
         vm.btnState = false
@@ -59,14 +60,21 @@ export default {
       }
       this.$store.commit('newStep1', obj)
       var json = JSON.stringify(obj)
-      vm.$http.post(vm.$store.state.url + "/qrcode/generate", json, { emulateJSON: true }).then((data) => {
+      const url=vm.$api.url("qrcode/generate")
+      vm.$http.post(url, json, { emulateJSON: true }).then((data) => {
         if (data.body == "") {
-          vm.$store.state.warningState = true;
-          vm.$store.state.warningContent = "The server did not return data"
+          str = "The server did not return data"
+          vm.showWarining(str)
+        } else if (data.body.statusCode == 1) {
+          str = data.body.message
+          vm.showWarining(str)
+        } else {
+          vm.$store.state.printerId = data.body.content.split("=")[1]
+          vm.$store.state.codeSrc = "data:image/png;base64," + data.body.data
+          vm.$store.commit('log', JSON.stringify(data.body))
+          str = "Generate Success"
+          vm.showSuccess(str)
         }
-        vm.$store.state.printerId = data.body.content.split("=")[1]
-        vm.$store.state.codeSrc = "data:image/png;base64," + data.body.data
-        vm.$store.commit('log', JSON.stringify(data.body))
       }, (err) => {
         if (err.state == 500) {
           str = "Server error"

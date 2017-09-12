@@ -91,7 +91,7 @@ export default {
           "dtoken": vm.$store.state.dtoken,
           "drefreshtoken": vm.$store.state.drefreshToken
         });
-        vm.$http.post(vm.$store.state.url + "/bindPrinter/bind", json, { emulateJSON: true }).then((data) => {
+        vm.$http.post(vm.$api.url("bindPrinter/bind"), json, { emulateJSON: true }).then((data) => {
           if (data.body == "") {
             str="The server did not return data"
             vm.showWarining(str)
@@ -101,6 +101,11 @@ export default {
           }
           vm.$store.state.resultCode = data.body.resultCode;
           vm.$store.state.logMessage = JSON.stringify(data.body.log)
+          str = "Successful binding!Jumping to the printer page for you...."
+          vm.showSuccess(str)
+          setTimeout(function(){
+            vm.$router.push({path:"/qRcode"})
+          },3*1000)
         }, (err) => {
           if (err.state == 500) {
             str= "Server error"

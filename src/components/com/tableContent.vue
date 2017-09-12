@@ -183,7 +183,7 @@ export default {
       } else {
         this.param.pageNo = this.pages[this.activeNum-1];
         this.param.pageSize = this.len;
-        this.$http.post(this.$store.state.url + this.pathUrl, JSON.stringify(this.param), { emulateJSON: true }).then(function(res) {
+        this.$http.post(this.$api.url(this.pathUrl), JSON.stringify(this.param), { emulateJSON: true }).then(function(res) {
           this.pageTotal = res.body.pages
           if (this.pages.length !== this.pageLen || this.pageTotal < this.pageLen) {
             this.getPages()

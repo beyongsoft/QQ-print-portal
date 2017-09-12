@@ -4,6 +4,7 @@
     <HeaderDiv></HeaderDiv>
     <router-view></router-view>
     <Warning></Warning>
+    <Tip></Tip>
   </div>
   </div>
 </template>
@@ -11,11 +12,13 @@
 <script>
 import HeaderDiv from '@/components/header.vue'
 import Warning from '@/components/com/warning.vue'
+import Tip from '@/components/com/tipmessage.vue'
 export default {
   name: 'app',
   components:{
     HeaderDiv,
-    Warning
+    Warning,
+    Tip
 
   }
 }

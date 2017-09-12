@@ -38,7 +38,7 @@ export default {
       setTimeout(function() {
         vm.btnState = false
       }, 5 * 1000)
-      vm.$http.get(vm.$store.state.url + "/scanQRCode/getSnAndPidByPinterId?printerId=" + vm.$store.state.printerId).then((data) => {
+      vm.$http.get(vm.$api.url("scanQRCode/getSnAndPidByPinterId?printerId=" + vm.$store.state.printerId)).then((data) => {
         if (data.body == "") {
           str = "The server did not return data"
           vm.showWarining(str)
@@ -53,8 +53,15 @@ export default {
         vm.$store.state.dtoken = Am.token.token;
         vm.$store.state.drefreshToken = Am.token.refreshToken;
         vm.$store.state.newBing = Am.newBinding;
-        vm.$store.state.isWarning = !Am.newBinding
-        console.log(vm.$store.state.sn)
+        vm.$store.state.isWarning = !Am.newBinding;
+        if(!Am.newBinding){
+           str="This printEmailId is already bound"
+           this.showWarining(str)
+        }else{
+          str = "Scan Successful"
+          vm.showSuccess(str)
+        }
+
       }, (err) => {
         if (err.state == 500) {
           str = "Server error"
