@@ -16,7 +16,7 @@
       <label class="col-sm-4 col-md-4 col-xs-4 control-label text-left" for="ds_username">
         <span class="icon-youxiang iconfont"></span>PrintEmailId</label>
       <div class="col-sm-6 col-xs-6 col-md-6">
-        <input class="form-control" id="ds_username" type="text" placeholder="PrintEmailId" v-model="PrintEmailId" />
+        <input class="form-control" id="ds_username" type="text" placeholder="PrintEmailId" v-model="PrintEmailId" required="required"/>
       </div>
     </div>
     <div class="form-group">

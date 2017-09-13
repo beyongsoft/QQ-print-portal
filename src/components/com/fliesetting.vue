@@ -16,7 +16,7 @@
         <div class="col-sm-6 col-xs-6 col-md-6">
           <div class="file-container" style="display:inline-block;position:relative;overflow: hidden;vertical-align:middle;">
             <button class="btn fileinput-button" type="button" style="background: rgb(3, 138, 253);color:#fff;">Select file</button>
-            <input type="file" name="file" @change="loadFile" style="position:absolute;top:0;left:0;font-size:34px; opacity:0">
+            <input type="file" name="file" @change="loadFile" style="position:absolute;top:0;left:0;font-size:34px; opacity:0" required="required">
           </div>
           <span id="filename" style="vertical-align: middle;">{{filename}}</span>
           <span id="filesize" style="vertical-align: middle;">{{fileSize}}</span>
@@ -132,10 +132,10 @@ export default {
         vm.btnState = false
       }, 5 * 1000)
       vm.$store.state.PrintEmailId = vm.PrintEmailId_1;
-      var jobCfg = '{Plex:' + vm.selected.Plex + ';MediaSize:' + vm.selected.MediaSize + ';MediaType:' + vm.selected.MediaType + ';Color:' + vm.selected.Color + ';Quality:' + vm.selected.Quality + ';Copies:' + vm.selected.Copies + '}';
+      var jobCfg = '{Plex:' + vm.selected.Plex + ';MediaSize:' + vm.selected.MediaSize + ';MediaType:' + vm.selected.MediaType + ';Color:' + vm.selected.Color + ';Quality:' + vm.selected.Quality + ';Copies:' + vm.selected.Copies + '}';//打印参数
       var jobCfg1 = encodeURIComponent(jobCfg)
       var data = new FormData($('#upLoadApp')[0])
-      vm.$http.post(vm.$api.url("printerJob/submitPrintJob?printerEmailId=" + vm.$store.state.PrintEmailId + "&jobCfg=" + jobCfg1) , data, { emulateJSON: true }).then((data) => {
+      vm.$http.post(vm.$api.url("printerJob/submitPrintJob?printerEmailId=" + vm.$store.state.PrintEmailId + "&jobCfg=" + jobCfg1) , data, { emulateJSON: true }).then((data) => {//文件上传
         if (data.body == "") {
           str = "The server did not return data"
           vm.showWarining(str)
@@ -159,6 +159,7 @@ export default {
               "num": 0
             }
             vm.$store.commit('log', JSON.stringify(data.body.log))//提交的日志
+            vm.$store.state.notification.unshift(json)//json文件存入notification中
             vm.intervalObj[vm.name + job_num] = setInterval(function() {//设置定时器去获取
               vm.getMessage(vm, job_num, stateObj, degree, vm.index)
             }, 10 * 1000)
@@ -166,7 +167,6 @@ export default {
               vm.getWarning(vm, job_num)
             }, 20 * 1000)
           }
-          vm.$store.state.notification.unshift(json)//json文件存入notification中
       }, (err) => {
         if (err.state == 500) {//判断调用后台接口传来的错误
           str = "Server error"

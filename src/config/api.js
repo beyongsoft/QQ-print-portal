@@ -1,7 +1,6 @@
-var root = process.env.API_ROOT;
 export default {
     url: function(path) {
-        var url = root + '/' + path
+        var url = "/" + path
         return url
     }
 }

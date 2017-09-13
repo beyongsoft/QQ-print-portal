@@ -13,7 +13,7 @@
                 <span>{{item.job_num}}</span>
               </p>
               <p>
-                <span style="font-size:12px; color:#666;">{{item.msg[item.msg.length-1].helpTitle}}</span>
+                <span style="font-size:12px; color:#666;" v-if="item.msg!=''">{{item.msg[item.msg.length-1].helpTitle}}</span>
               </p>
             </dd>
           </dl>
