@@ -2,11 +2,11 @@
   <form id="upLoadApp" action="" target="nm_iframe" method="post">
     <fieldset>
       <h3>Printer Job</h3>
-      <div class="form-group">
+      <div class="form-group" :class="{'has-error':isclick}">
         <label class="col-sm-4 col-md-4 col-xs-4 control-label text-left" for="ds_username">
           <span class="icon-youxiang iconfont"></span>PrintEmailId</label>
         <div class="col-sm-6 col-xs-6 col-md-6">
-          <input class="form-control" id="ds_username" type="text" placeholder="PrintEmailId" v-model="PrintEmailId_1" />
+          <input class="form-control" id="ds_username" @blur="validator" type="text" placeholder="PrintEmailId" v-model="PrintEmailId_1"  required/>
         </div>
       </div>
       <div class="form-group">
@@ -16,7 +16,7 @@
         <div class="col-sm-6 col-xs-6 col-md-6">
           <div class="file-container" style="display:inline-block;position:relative;overflow: hidden;vertical-align:middle;">
             <button class="btn fileinput-button" type="button" style="background: rgb(3, 138, 253);color:#fff;">Select file</button>
-            <input type="file" name="file" @change="loadFile" style="position:absolute;top:0;left:0;font-size:34px; opacity:0" required="required">
+            <input type="file" name="file" @change="loadFile" style="position:absolute;top:0;left:0;font-size:34px; opacity:0">
           </div>
           <span id="filename" style="vertical-align: middle;">{{filename}}</span>
           <span id="filesize" style="vertical-align: middle;">{{fileSize}}</span>
@@ -78,6 +78,7 @@ export default {
       fileSize: "",//显示上传文件的大小
       PrintEmailId_1: this.$store.state.PrintEmailId,//输入的printeEmailId
       btnState: false,//设置按钮的默认状态
+      isclick:false,
       selected: {//默认选中的参数
         Plex: 1,
         MediaSize: 1,
@@ -127,6 +128,7 @@ export default {
     step4: function() {//当上传需要打印的文件上传好之后，将结果返回给后台时做的操作
       var vm = this;
       let str="";
+      vm.validator()
       vm.btnState = true;
       setTimeout(function() {//每次按下之后，将按钮禁用5秒
         vm.btnState = false
@@ -263,6 +265,17 @@ export default {
           }
         }
       })
+    },
+     validator: function(){//验证printeremailid是否存在
+      if(this.PrintEmailId_1==""){
+        this.isclick=true
+        this.btnState = true
+        console.log(his.isclick)
+      }else{
+        this.isclick = false
+        this.btnState = false
+        console.log(his.isclick)
+      }
     }
   }
 }

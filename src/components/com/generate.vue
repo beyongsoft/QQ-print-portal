@@ -12,11 +12,11 @@
         </select>
       </div>
     </div>
-    <div class="form-group">
+    <div class="form-group" :class="{'has-error':isclick}">
       <label class="col-sm-4 col-md-4 col-xs-4 control-label text-left" for="ds_username">
         <span class="icon-youxiang iconfont"></span>PrintEmailId</label>
       <div class="col-sm-6 col-xs-6 col-md-6">
-        <input class="form-control" id="ds_username" type="text" placeholder="PrintEmailId" v-model="PrintEmailId" required="required"/>
+        <input class="form-control" id="ds_username" type="text" placeholder="PrintEmailId" v-model="PrintEmailId" @blur="validator" required/>
       </div>
     </div>
     <div class="form-group">
@@ -34,7 +34,8 @@ export default {
       selected: 'F5S46B',
       options: [],
       btnState: false,
-      PrintEmailId: ''
+      PrintEmailId: '',
+      isclick:false
     }
   },
   beforeCreate() {
@@ -51,6 +52,7 @@ export default {
       const vm = this;
       let str = ""
       vm.btnState = true;
+      vm.validator()
       setTimeout(function() {//每次按下之后，将按钮禁用5秒
         vm.btnState = false
       }, 5 * 1000)
@@ -88,6 +90,16 @@ export default {
         }
         vm.$store.commit('log', JSON.stringify(err))
       })
+    },
+    validator: function(){//验证printeremailid是否存在
+      if(this.PrintEmailId==""){
+        this.isclick=true
+        this.btnState = true
+        return false
+      }else{
+        this.isclick = false
+        this.btnState = false
+      }
     }
   }
 }
