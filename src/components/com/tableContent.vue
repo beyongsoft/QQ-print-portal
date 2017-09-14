@@ -192,7 +192,6 @@ export default {
             this.activeNum = this.pageTotal
           }
           this.$emit('update-data',res.body.list);
-          console.log(res.body.list)
         })
       }
     },

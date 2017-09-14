@@ -27,7 +27,7 @@
           <p class="text-left">{{value.helpTitle}}
             <span class="text-right" style="display:none;" v-show="value.result==0">{{value.time}}</span>
           </p>
-          <div class="last-result" style="display:none;" v-show="value.result!=0&&value.result!=-1">
+          <div class="last-result" style="display:none;" v-show="value.result==2">
             <img :src="value.helpCoverurl" />
             <p class="JDlink text-left">
               <a :href="value.helpUrl" target='_brank'>查看详情</a>

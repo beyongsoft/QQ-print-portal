@@ -98,12 +98,12 @@ export default {
       clearId: 0,//清除定时器的id
       intervalObj: {},//所有定时器的集合
       name: 'timer_',//获取打印结果的定时器命名
-      warnName: 'timer1_'//获取打印机异常的定时器命名
+      warnName: 'timer1_',//获取打印机异常的定时器命名
+      clearInterTime:{},
     }
   },
   beforeCreate() {
     let vm = this;
-    console.log(vm.$store.state.PrintEmailId)
     vm.$http.get(vm.$api.url("printerJob/getPrintJobConfig")).then(function(data) {
       var obj = data.body;
       var opt = vm.options;
@@ -160,10 +160,11 @@ export default {
               "msg": [],
               "num": 0
             }
+            vm.clearInterTime[job_num]={n:0}
             vm.$store.commit('log', JSON.stringify(data.body.log))//提交的日志
             vm.$store.state.notification.unshift(json)//json文件存入notification中
             vm.intervalObj[vm.name + job_num] = setInterval(function() {//设置定时器去获取
-              vm.getMessage(vm, job_num, stateObj, degree, vm.index)
+              vm.getMessage(vm, job_num, stateObj, degree)
             }, 10 * 1000)
             vm.intervalObj[vm.warnName + job_num] = setInterval(function() {//设置定时器去获取打印机异常
               vm.getWarning(vm, job_num)
@@ -203,9 +204,19 @@ export default {
               stateObj.beforestate = stateObj.nowstate
               for (var i = 0; i < vm.$store.state.notification.length; i++) {
                 if (vm.$store.state.notification[i].job_num == job_num) {
-                  resultMsg = {
+                  if(data.body.state==50){
+                    resultMsg = {
                     "helpTitle": 'Pending.....',
                     "result": data.body.result,
+                  }
+                  }else{
+                    resultMsg = {//成功之后返回的数据
+                    "helpTitle": data.body.helpTitle,
+                    "helpDigest": data.body.helpDigest,
+                    "helpCoverurl": data.body.helpCoverurl,
+                    "helpUrl": data.body.helpUrl,
+                    "result": 2,
+                }
                   }
                   vm.$store.state.notification[i].num += 1
                   vm.$store.state.notification[i].msg.push(resultMsg)
@@ -216,12 +227,19 @@ export default {
           } else {
             for (var i = 0; i < vm.$store.state.notification.length; i++) {
               if (vm.$store.state.notification[i].job_num == job_num) {
-                resultMsg = {//成功之后返回的数据
+                if(data.body.result==1){
+                   resultMsg = {
+                    "helpTitle": 'Print Successful',
+                    "result": data.body.result,
+                  }
+                }else{
+                   resultMsg = {//成功之后返回的数据
                   "helpTitle": data.body.helpTitle,
                   "helpDigest": data.body.helpDigest,
                   "helpCoverurl": data.body.helpCoverurl,
                   "helpUrl": data.body.helpUrl,
                   "result": data.body.result,
+                }
                 }
                 vm.$store.state.notification[i].num += 1
                 vm.$store.state.notification[i].msg.push(resultMsg)
@@ -245,7 +263,7 @@ export default {
       })
     },
     getWarning: function(vm, job_num) {//获取打印机异常
-      vm.$http.get(vm.$api.url( "getInkAlert/message?din=" + vm.din + "&jobNum=" + job_num)).then((data) => {
+      vm.$http.get(vm.$api.url( "getInkAlert/message?printerEmailId=" + vm.$store.state.PrintEmailId + "&jobNum=" + job_num)).then((data) => {
         if (data.body != '') {
           if (data.body.helpTitle != "") {
             for (var i = 0; i < vm.$store.state.notification.length; i++) {
@@ -264,17 +282,19 @@ export default {
             }
           }
         }
+        vm.clearInterTime[job_num].n++
+        if(vm.clearInterTime[job_num].n>=30){//十分钟之后清除查询异常的定时器
+            clearInterval(vm.intervalObj[vm.warnName + job_num])
+        }
       })
     },
      validator: function(){//验证printeremailid是否存在
       if(this.PrintEmailId_1==""){
         this.isclick=true
         this.btnState = true
-        console.log(his.isclick)
       }else{
         this.isclick = false
         this.btnState = false
-        console.log(his.isclick)
       }
     }
   }

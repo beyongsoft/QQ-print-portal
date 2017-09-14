@@ -47,7 +47,7 @@ export default {
     return {
       lenArr: [10, 20, 50], // 每页显示长度设置
       pageLen: 5, // 可显示的分页数
-      pathUrl: '/bindPrinter/bindInfo', // 请求路径
+      pathUrl: 'bindPrinter/bindInfo', // 请求路径
       param: {}, // 向服务器传递参数
       tableList: [] // 分页组件传回的分页后数据
     }
@@ -56,6 +56,9 @@ export default {
     tableList(val){
       this.tableList = val
     }
+  },
+   mounted:function(){//表格刷新
+      this.refresh()
   },
   methods: {
     ChildData(data){

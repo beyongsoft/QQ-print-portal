@@ -23,7 +23,6 @@ export default {
         setTimeout(function() {//每次按下之后，将按钮禁用5秒
         vm.$store.state.tipState = false
         },3*1000)
-        console.log(111)
   }
 }
 </script>
