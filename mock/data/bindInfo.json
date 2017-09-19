@@ -1,0 +1,47 @@
+{
+  "bindInfo": {
+      "pageNum": 1,
+      "pageSize": 10,
+      "size": 2,
+      "orderBy": null,
+      "startRow": 1,
+      "endRow": 2,
+      "total": 2,
+      "pages": 1,
+      "list": [
+        {
+          "din": null,
+          "token": null,
+          "refreshToken": null,
+          "emailId": "iaby762uch58@emailinbound-test3.itcs.hp.com",
+          "sku": "F5S46B",
+          "model": "HP DeskJet 3630",
+          "lastUpdateTime": "2017-09-14 15:35:35",
+          "sn": "b854d1f8a991440a",
+          "pid": "1700001671"
+        },
+        {
+          "din": null,
+          "token": null,
+          "refreshToken": null,
+          "emailId": "ayts9232uky48@emailinbound-test3.itcs.hp.com",
+          "sku": "F5S46B",
+          "model": "HP DeskJet 3630",
+          "lastUpdateTime": "2017-09-13 18:41:26",
+          "sn": "aa0583bc0af04949",
+          "pid": "1700001671"
+        }
+      ],
+      "firstPage": 1,
+      "prePage": 0,
+      "nextPage": 0,
+      "lastPage": 1,
+      "isFirstPage": true,
+      "isLastPage": true,
+      "hasPreviousPage": false,
+      "hasNextPage": false,
+      "navigatePages": 8,
+      "navigatepageNums": [1]
+    }
+  }
+

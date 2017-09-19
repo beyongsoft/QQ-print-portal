@@ -1,0 +1,51 @@
+{
+  "generate": {
+    "log": {
+      "requestUrl": "http://localhost:5000/qrcode/gen",
+      "reqestHeaders": {
+        "Content-Type": [
+          "application/json"
+        ]
+      },
+      "requestBody": {
+        "emailId": "iaby762uch58@emailinbound-test3.itcs.hp.com",
+        "sku": "F5S46B"
+      },
+      "responseHeaders": {
+        "X-Powered-By": [
+          "Express"
+        ],
+        "resultCode": [
+          "0"
+        ],
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "Content-Length": [
+          "2268"
+        ],
+        "ETag": [
+          "W/'5P4bJ3wNt70yNN7rBqySeg=='"
+        ],
+        "Date": [
+          "Fri, 15 Sep 2017 02:38:08 GMT"
+        ],
+        "Connection": [
+          "keep-alive"
+        ]
+      },
+      "responseBody": {
+        "url": "https://s3.cn-north-1.amazonaws.com.cn/hp-bridge-qrcode-dev/1700001671/cfd48b309abd44ae895a39bdf4fc4b51.png",
+        "content": "undefined/get?printerId=CFD48B309ABD44AE895A39BDF4FC4B51",
+        "data": "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"
+      },
+      "statusCodeValue": 200,
+      "statusCode": "OK"
+    },
+    "url": "https://s3.cn-north-1.amazonaws.com.cn/hp-bridge-qrcode-dev/1700001671/cfd48b309abd44ae895a39bdf4fc4b51.png",
+    "content": "undefined/get?printerId=CFD48B309ABD44AE895A39BDF4FC4B51",
+    "data": "iVBORw0KGgoAAAANSUhEUgAAAJIAAACSCAIAAAAhGQTZAAAF2UlEQVR42u3d/0vjdRwH8LVzrc07bDqdrm3iYHreeYsr6dsv7vBmCIJR/uQfcEbIrquIjhkGfT2EfjgIo4KckGd3LdBTMZpGkhxJWRSZwX5IQYjtTgO/4Mbc+sSBSEeyvd+v9/vz+cznG3/Qfb6+34/3/Lz2er1Rg0Fkyx1o/GfI/ySch/znqNz/N/L+aqKBDWxgA1sxseUoGv8JhXaE/xCGTeQDCzawgQ1sYAPbUWKTFoOxbVJrfvBPX+IoGmxgAxvYwKYRtjwvxH+UzJODDWxgAxvYwAa2ImWjHT42UX54sIENbGADm1bYhFYA1MqS0OoeucIN2MAGNrCBDWwy2MgbebBHCy/t9nTWwAY2sIFN72w5WY0kE0/7zCdPf8gbTLCBDWxgAxvbZzi2HtJ2Xq2ISQuzinEowAY2sIENbGDTJRu/TZ6dZMs1kMMz9II/yCTPhIANbGADG9gY2WgDHqGDzp8KIc+SkBdGiGc92MAGNrCBDWzaYhNaBBdaVZc2F9VaM0EgCjawgQ1sYCPJgovLs7DFO+RsDCPLNicIiiFgAxvYwAY2sBUbG/8ok4dq/PEn+T2Iq0xJTaCADWxgO8JsB89cJGwintJyogbyVAtt1ECeSAIb2MAGNrY2MzPj9XoPns3lck1MTBTaF62z8T8ehVYACjp8aWnJ7/cbjcb29vaOjo5gMNjZ2VlSUlJfX7+4uKjie5ctJiR4h+mCra+vT9nkdrvn5ub6+/sjkcjw8HBjY6PyYigUApsW2TKZjN1uVzbV1NTEYrGenufHxsYWFhbq6uqUF8vKynZ3d8GmObZ4PG61WpVNJccMTwfPtQcDwXNPKd8oPyrNYrFI+D0JtoLZpqamzGbzMaNhNGxLzTpz3/77lf7GOf5muSJnMplGRkaKh02tlQfkGZmxL6KVZusD9xn9XtMLz5R+9W5F7EpF6LnjZ30m5UX7/ZbPhiLk81JogUKLC0bI2bbf+vhWxRMf2c68csLbU+rptj7UbXVeKHW/fML74YNN35U/vnX5am5vD2waYpuZmGo1V7xRcybe9WLSHrhd3Zp0nr/tartz6tmN1gt/dr/6juvseVP5zc9vgE1DbF1dXcrW+pMnf/3+h+TxJ5OO1q3XP9j7685eciP792Z8+Q//w35lh7a2tiJh4y/jkgc1hV5oZ2fH4/EoO586fXrpp18SlseUN9zW25/s77C6utrc3Hz3I936+rq4mCvPXhBkpoqAbX5+3uFwVFdX+3y+n39c3Lx8dTN0JfX1rf0dlpeXm5qaqqqqKisrp6enwaYJtmg0GggEBgcHbTbb5OTkvTvMzs4qqAMDAy0tLUNDQ2DTBNvKysra2lomk2loaOjt7b13h3A4XFtbu729nUgklE/lYNME234bHb1W63GOj4+nUqm7r6TT6Vgs5nE7I5FPJeQTNMHGNrL8mQK2LEk2vZH9PXzzfV/gEXvo4sVro9ev3/jy0qWXAo86ou95s7+9lt1NHNIXoYEu/cLGomHjzEiBTU9snL0AG2+mFWwCowbOPIta12U4If+8POyoo8kmIc8HtoKvS/s7HGxgI2Ljf/YaRDb+ceGffCRr8aSVzsEGNrCBDWxg0z8bCbXQIaNdtsYfi7LNKoEZE7CBDWxgA9vhbFrLNZCHJOTw/OMgMGwDG9jABjawgU2vbPyZAmlzgjzXQ1sTZ5sT+d4t2MAGNrCBjby6zfZYllaF4L89scUUAdl8sIENbGADG9h0yJaT1YRGcWyDTruswUDxV3byHQewgQ1sYAObxGeqvAtzZi5yAv4hl7hlDWADG9jABjZGNvLQQ60zSLs9/pCEYCaBDWxgAxvYwFbkbGzhIm2wRx6LCj250Ng730gSbGADG9jApgU2LTSSGIQ2mDLwA4ANbGADG9jABjapWRLycFFoyEpc2wIb2MAGNrCRZyvIQxKGqj9/fEE+qzSXWQEb2MAGNrCBTTdsQueBWgUUeYsDqP+6n2pzAmxgAxvYdM72D7a3uxC9eAFxAAAAAElFTkSuQmCC",
+    "statusCode": "0"
+  }
+}
+

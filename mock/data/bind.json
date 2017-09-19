@@ -1,0 +1,32 @@
+{
+  "bind":{
+    "log":{
+      "requestUrl":"http://localhost:5000/authsec/access/printer/binding",
+      "reqestHeaders":{
+        "Content-Type":["application/json"],
+        "token":["XjkMRh4LPLEBzUrJBRckMfKydn8fLbT2ov4wdMWDQB43jLLOJ5M8cCwduPcu0P6vpyRnWhFnt4RqNFthtEjhdSAPaK6xnJHG3Xyuj1SJPT5M5QHq0IsKtMzfcCrCmDdIBCeTznbYJXHwGUt8YzbHLIiPfIisvqfiFluJtElV8cFg2gQqeckIbrCqQ280iQlSqZXGFJyZxnLQ7ZDdAZf2jA96TIdwvkj5DFJG9DkV9Htn5c9XijbaY9UH636NCNGP"]
+      },
+      "requestBody":{
+        "drefreshtoken":"3d532a798f6549d5b73a735851f75164",
+        "din":"simulator_150477835720852688",
+        "pid":"1700001671",
+        "sn":"aa0583bc0af04949",
+        "dtoken":"86e97d5987d949bfb776823e4faf77c0"
+      },
+      "responseHeaders":{
+        "X-Powered-By":["Express"],
+        "Content-Type":["application/json; charset=utf-8"],
+        "Content-Length":["16"],
+        "ETag":["W/'10-21c3e93b'"],
+        "Date":["Fri, 15 Sep 2017 02:57:58 GMT"],
+        "Connection":["keep-alive"]
+      },
+      "responseBody":{
+        "resultCode":0
+      },
+      "statusCodeValue":200,
+      "statusCode":"OK"
+    },
+    "resultCode":0
+  }
+}

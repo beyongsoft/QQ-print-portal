@@ -1,3 +1,4 @@
+<!--头部-->
 <template>
   <div class="header row">
      <div class="logo col-md-3 col-xs-3 col-sm-3"><img src="../assets/images/logo.png" style="width:100%;height:100%;"/></div>

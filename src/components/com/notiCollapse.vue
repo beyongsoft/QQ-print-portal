@@ -17,7 +17,7 @@
               </p>
             </dd>
           </dl>
-          <div class="messageNum" v-if="item.num!=0" v-html="item.num"></div>
+          <div class="messageNum" href="javascript:void(0);" v-if="item.num!=0" v-html="item.num"></div>
         </a>
       </h4>
     </div>
@@ -115,7 +115,6 @@ export default {
   }
   .messageNum {
     background: rgba(0, 168, 249, 0.56);
-    width: 20ox;
     width: 20px;
     height: 20px;
     border-radius: 50%;

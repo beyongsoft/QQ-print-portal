@@ -1,3 +1,4 @@
+<!--这是绑定printerId的页面-->
 <template>
   <div class="bind-progress">
     <div class="row">

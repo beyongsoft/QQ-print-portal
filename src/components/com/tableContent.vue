@@ -40,12 +40,6 @@
 <script>
 export default {
   props: {
-    pages: { // 页码
-      type: Array,
-      default: function() {
-        return [1]
-      }
-    },
     async: { // 是否请求服务器端数据
       type: Boolean,
       default: true
@@ -79,15 +73,13 @@ export default {
       default: 1
     },
     param: { // 参数内容
-      type: Object,
-      default: function() {
-        return {}
-      }
+      type: Object
     }
   },
   data() {
     return {
       activeNum: 0,
+        pages:""
     }
   },
   model:{
@@ -108,7 +100,6 @@ export default {
           for (let i = 0; i < this.pages.length; i++) {
             newPages[i] = this.pages[i] - 1
           }
-          console.log(newPages)
           this.pages = newPages
           this.getData()
         }

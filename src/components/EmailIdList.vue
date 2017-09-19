@@ -1,5 +1,7 @@
+<!--显示绑定的printerId-->
 <template>
   <div class="email-list">
+    <Search :param="param" @change-param="getParam"></Search>
     <table class="table table-hover table-bordered">
       <thead>
         <tr>
@@ -38,10 +40,12 @@
 </template>
 <script>
 import Pagination from "./com/tableContent"
+import Search from "./com/search"
 export default {
   name: 'EmailIdList',
   components: {
-    Pagination
+    Pagination,
+      Search
   },
   data() {
     return {
@@ -67,7 +71,16 @@ export default {
     },
     refresh() {
       this.$refs.page.refresh() // 这里提供了一个表格刷新功能
-    }
+    },
+      getParam(msg){//获取搜索框需要搜索的参数
+          console.log(msg)
+        if(msg!=''){
+
+            this.param = msg
+            this.refresh()
+
+        }
+      }
   },
   events: {
     // 分页组件传回的表格数据（这里即为服务器传回的数据）

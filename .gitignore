@@ -13,4 +13,8 @@ yarn-error.log*
 *.sln
 /.idea/
 
-/build/
+
+/easy/.vscode/
+
+/easy/
+!/easy/

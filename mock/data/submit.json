@@ -1,0 +1,58 @@
+{
+  "submitPrintJob": {
+      "log": {
+        "requestUrl": "http://localhost:5000/authsec/access/printjob",
+        "reqestHeaders": {
+          "Content-Type": [
+            "application/json"
+          ],
+          "token": [
+            "XjkMRh4LPLEBzUrJBRckMfKydn8fLbT2ov4wdMWDQB43jLLOJ5M8cCwduPcu0P6vpyRnWhFnt4RqNFthtEjhdSAPaK6xnJHG3Xyuj1SJPT5M5QHq0IsKtMzfcCrCmDdIBCeTznbYJXHwGUt8YzbHLIiPfIisvqfiFluJtElV8cFg2gQqeckIbrCqQ280iQlSqZXGFJyZxnLQ7ZDdAZf2jA96TIdwvkj5DFJG9DkV9Htn5c9XijbaY9UH636NCNGP"
+          ]
+        },
+        "requestBody": {
+          "fileName": "generate失败返回_20170915112141.txt",
+          "din": "simulator_150544566302629543",
+          "jobCfg": {
+            "Plex": 1,
+            "MediaSize": 1,
+            "MediaType": 1,
+            "Color": 1,
+            "Quality": 2,
+            "Copies": 1
+          },
+          "jobSeqNo": "1505445701708"
+        },
+        "responseHeaders": {
+          "X-Powered-By": [
+            "Express"
+          ],
+          "Content-Type": [
+            "application/json; charset=utf-8"
+          ],
+          "Content-Length": [
+            "16"
+          ],
+          "ETag": [
+            "W/'10-21c3e93b'"
+          ],
+          "Date": [
+            "Fri, 15 Sep 2017 03:21:42 GMT"
+          ],
+          "Connection": [
+            "keep-alive"
+          ]
+        },
+        "responseBody": {
+          "resultCode": 0
+        },
+        "statusCodeValue": 200,
+        "statusCode": "OK"
+      },
+      "result": 0,
+      "din": "simulator_150544566302629543",
+      "printerEmail": "ayts9232uky48@emailinbound-test3.itcs.hp.com",
+      "jobNum": "1505445701708",
+      "msg": ""
+    }
+}

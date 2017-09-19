@@ -14,6 +14,9 @@ import Validator from 'vue-validator'
 import Vuex from 'vuex'
 import store from './vuex/store'
 import api from './config/api'
+// import CodeMirror from 'codemirror/lib/codemirror'
+// import 'codemirror/lib/codemirror.css'    // css，必要
+// import 'codemirror/mode/javascript/javascript'
 Vue.prototype.$api = api
 
 Vue.use(Vuex)
@@ -31,8 +34,25 @@ Vue.prototype.showSuccess = function(str) {
 
     this.$store.state.tipState = true;
     this.$store.state.tipContent = str;
-    console.log(this.$store.state.tipState)
+
 }
+
+// Vue.directive("codeMirror",{
+//     twoWay: true,
+//     bind: function (value) {
+//         console.log(value)
+//         this.codemirror = CodeMirror(this.el, {
+//             mode: 'javascript',
+//             lineNumbers: true
+//         })
+//         this.codemirror.on('change', function (value) {
+//             this.set(this.codemirror.getValue())
+//         }.bind(this))
+//     },
+//     update: function (value, oldValue) {
+//         this.codemirror.setValue(value || '')
+//     }
+//     })
 new Vue({
     el: '#app',
     router,

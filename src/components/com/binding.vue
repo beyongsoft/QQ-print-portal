@@ -2,12 +2,12 @@
   <fieldset style="position:relative;">
     <h3>Binding</h3>
     <div class="form-group">
-      <label for="disabledSelect" class="col-sm-4 col-xs-4 col-md-4 text-left control-label">
+      <label  class="col-sm-4 col-xs-4 col-md-4 text-left control-label">
         <span class="icon-shebeixinghao iconfont"></span>Printer Model Name</label>
       <div class="col-sm-6 col-xs-6 col-md-6">{{printerName}}</div>
     </div>
     <div class="form-group">
-      <label for="disabledSelect" class="col-sm-4 col-xs-4 col-md-4 text-left control-label">
+      <label  class="col-sm-4 col-xs-4 col-md-4 text-left control-label">
         <span class="icon-tupian iconfont"></span>Printer Image
       </label>
       <div class="col-sm-6 col-xs-6 col-md-6">
@@ -15,28 +15,28 @@
       </div>
     </div>
     <div class="form-group">
-      <label class="col-sm-4 col-md-4 col-xs-4 text-left control-label" for="ds_username">
+      <label class="col-sm-4 col-md-4 col-xs-4 text-left control-label" >
         <span class="icon-xuliehaoshangpin iconfont"></span>Sn</label>
       <div class="col-sm-6 col-xs-6 col-md-6">
         <input class="form-control" :value="Sn" type="text" placeholder="Readonly input here…" readonly/>
       </div>
     </div>
     <div class="form-group">
-      <label class="col-sm-4 col-xs-4 col-md-4 text-left control-label" for="ds_username">
+      <label class="col-sm-4 col-xs-4 col-md-4 text-left control-label">
         <span class="icon-biaozhunhualiucheng1 iconfont"></span>Pid</label>
       <div class="col-sm-6 col-xs-6 col-md-6">
         <input class="form-control" :value="Pid" type="text" placeholder="Readonly input here… " readonly/>
       </div>
     </div>
     <div class="form-group">
-      <label class="col-sm-4 col-xs-4 col-md-4 text-left control-label" for="ds_username">
+      <label class="col-sm-4 col-xs-4 col-md-4 text-left control-label" >
         <span class="icon-youxiang iconfont"></span>Din</label>
       <div class="col-sm-4 col-xs-6 col-md-6">
         <input class="form-control" :value="Din" type="text" placeholder="Readonly input here… " readonly/>
       </div>
     </div>
     <div class="form-group">
-      <label class="col-sm-4 col-xs-4 col-md-4 text-left control-label" for="ds_password"></label>
+      <label class="col-sm-4 col-xs-4 col-md-4 text-left control-label" ></label>
       <div class="col-sm-6  col-xs-6 col-md-6 bth-style">
         <button class="btn btn-default btn-primary" :class="{'disabled':btnState||newBing}" @click="step3">Binding</button>
       </div>

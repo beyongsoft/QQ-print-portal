@@ -1,0 +1,29 @@
+{
+  "getPrintJobConfig":{
+      "MediaSize":{
+        "1":"IsoA4_210x297mm",
+        "2":"NaIndex_4x6_4x6in",
+        "3":"Na_5x7_5x7in"
+      },
+      "Quality":{
+        "1":"FastDraft",
+        "2":"Normal",
+        "3":"Best"
+      },
+      "Copies":{
+        "1":"1"
+      },
+      "Color":{
+        "1":"Color",
+        "2":"Grey_K"
+      },
+      "MediaType":{
+        "1":"Plain",
+        "2":"HPGlossy220"
+      },
+      "Plex":{
+        "1":"OneSided",
+        "2":"Duplex"
+      }
+  }
+}

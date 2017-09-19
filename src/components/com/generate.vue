@@ -2,12 +2,12 @@
   <fieldset>
     <h3>Generate</h3>
     <div class="form-group">
-      <label class="col-sm-4 col-xs-4 col-md-4 control-label text-left" for="ds_host">
+      <label class="col-sm-4 col-xs-4 col-md-4 control-label text-left" >
         <span class="icon-zhanghao iconfont"></span>SKU</label>
       <div class="col-sm-6 col-xs-6 col-md-6">
         <select v-model="selected" class="form-control">
           <option v-for="(opt,index) in options" :value="opt.value" :key="index">
-            {{opt.value}}
+            {{opt.text}}
           </option>
         </select>
       </div>
@@ -42,8 +42,15 @@ export default {
     const vm = this;
     const url=vm.$api.url("qrcode/getSku")
     vm.$http.get(url).then((data) => {//动态获取SKU
+        console.log(data.body)
       for (var i = 0; i < data.body.length; i++) {
-        vm.options.push({ value: data.body[i] })
+          var str =""
+            if(data.body[i].model!=null){
+                str = data.body[i].sku+"——"+data.body[i].model
+            }else{
+                str = data.body[i].sku
+            }
+          vm.options.push({ text:str,value:data.body[i].sku})
       }
     })
   },

@@ -1,4 +1,5 @@
 module.exports={
+    "/api":"/",
     "/qrcode/getSku": "/getSku",//获取sku的接口
     "/qrcode/generate":"/generate",//获取二维码
     "/scanQRCode/getSnAndPidByPinterId:printerId":"/scanQRCode",//通过扫描二维码获取相关信息
