@@ -95,7 +95,7 @@ export default {
           str = "Server exception"
           vm.showWarining(str)
         }
-        vm.$store.commit('log', JSON.stringify(err))
+        vm.$store.commit('log', JSON.parse(JSON.stringify(err)))
       })
     },
     validator: function(){//验证printeremailid是否存在
@@ -110,4 +110,5 @@ export default {
     }
   }
 }
+
 </script>

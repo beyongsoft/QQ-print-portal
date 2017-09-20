@@ -13,7 +13,6 @@
   },
   "dependencies": {
     "browser-sync": "^2.18.13",
-    "codemirror": "^5.29.0",
     "gulp": "^3.9.1",
     "gulp-nodemon": "^2.2.1",
     "jQuery": "^1.7.4",
@@ -22,6 +21,8 @@
     "less": "^2.7.2",
     "less-loader": "^4.0.5",
     "vue": "^2.3.3",
+    "vue-codemirror": "^3.1.4",
+    "vue-json-tree-view": "^2.1.1",
     "vue-router": "^2.6.0",
     "vue-validator": "^3.0.0-alpha.2"
   },

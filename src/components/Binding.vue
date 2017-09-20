@@ -33,12 +33,5 @@ export default {
   }
 }
 </script>
-<style>
-.bind-bg{
-  background: #fff;
-  width:80%;
-  margin:20px auto;
-  border-radius: 8px;
-}
-</style>
+
 

@@ -8,7 +8,7 @@ const store = new Vuex.Store({
         PrintEmailId: "", //打印机的email地址
         printerId: "", //获取到的打印机的Id
         newBing: true, //是否为新绑定的
-        logMessage: "", //log日志
+        logMessage: {}, //log日志
         notification: [], //上传日志
         codeSrc: "", //二维码的图片路径
         errorMessage: "",

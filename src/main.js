@@ -14,14 +14,15 @@ import Validator from 'vue-validator'
 import Vuex from 'vuex'
 import store from './vuex/store'
 import api from './config/api'
-// import CodeMirror from 'codemirror/lib/codemirror'
-// import 'codemirror/lib/codemirror.css'    // css，必要
-// import 'codemirror/mode/javascript/javascript'
 Vue.prototype.$api = api
 
 Vue.use(Vuex)
 Vue.use(Validator)
 Vue.use(VueResource)
+
+//引用的json可视化插件，使json格式的数据更易解读
+import TreeView from "vue-json-tree-view"
+Vue.use(TreeView)
 
 Vue.config.productionTip = false
 Vue.http.options.emulateJSON = true
@@ -37,22 +38,6 @@ Vue.prototype.showSuccess = function(str) {
 
 }
 
-// Vue.directive("codeMirror",{
-//     twoWay: true,
-//     bind: function (value) {
-//         console.log(value)
-//         this.codemirror = CodeMirror(this.el, {
-//             mode: 'javascript',
-//             lineNumbers: true
-//         })
-//         this.codemirror.on('change', function (value) {
-//             this.set(this.codemirror.getValue())
-//         }.bind(this))
-//     },
-//     update: function (value, oldValue) {
-//         this.codemirror.setValue(value || '')
-//     }
-//     })
 new Vue({
     el: '#app',
     router,

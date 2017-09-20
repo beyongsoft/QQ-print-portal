@@ -63,17 +63,17 @@ export default {
         }
 
       }, (err) => {
-        if (err.state == 500) {
+        if (err.status == 500) {
           str = "Server error"
           vm.showWarining(str)
-        } else if (err.state == 404) {
+        } else if (err.status == 404) {
           str = "No resource found"
           vm.showWarining(str)
         } else {
           str = "Server exception"
           vm.showWarining(str)
         }
-        vm.$store.commit('log', JSON.stringify(err))
+        vm.$store.commit('log', JSON.parse(JSON.stringify(err)))
       })
 
     }
