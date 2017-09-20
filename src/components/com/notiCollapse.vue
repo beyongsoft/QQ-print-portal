@@ -2,7 +2,7 @@
   <div class="panel panel-default">
     <div class="panel-heading">
       <h4 class="panel-title text-left">
-        <a class="changeStyle" data-toggle="collapse" data-parent="#accordion" :href="'#collapse'+index" @click="changeNum">
+        <a class="changeStyle" data-toggle="collapse" data-parent="#accordion" :href="'#collapse'+index" @click.prevent="changeNum">
           <dl>
             <dt>
               <i class="iconfont" v-bind:class="[isimg ? 'icon-tupian1': 'icon-wenben']"  style="font-size:32px;"></i>
@@ -17,7 +17,7 @@
               </p>
             </dd>
           </dl>
-          <div class="messageNum" href="javascript:void(0);" v-if="item.num!=0" v-html="item.num"></div>
+          <div class="messageNum"  v-if="item.num!=0" v-html="item.num"></div>
         </a>
       </h4>
     </div>
