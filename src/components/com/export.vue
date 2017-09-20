@@ -12,7 +12,16 @@
         },
         methods:{
             downExcel(){
-             this.postDownLoadFile({url:this.$api.url("bindPrinter/excelExport"),param:this.param,method:"post"})
+               var url=this.$api.url("bindPrinter/excelExport?data="+new Date())
+                for(var i in this.param){
+                    if(this.param[key]!=""){
+                        var key = i;
+                        var para = this.param[key]
+                        var list ="&"+i+"="+para
+                        url+=list
+                    }
+                }
+             this.postDownLoadFile({url:url,method:"post"})
             },
             postDownLoadFile:function (options) {
                 var config = $.extend(true, { method: 'post' }, options);

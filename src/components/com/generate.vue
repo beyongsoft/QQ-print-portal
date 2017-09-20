@@ -42,7 +42,7 @@ export default {
     const vm = this;
     const url=vm.$api.url("qrcode/getSku")
     vm.$http.get(url).then((data) => {//动态获取SKU
-        console.log(data.body)
+
       for (var i = 0; i < data.body.length; i++) {
           var str =""
             if(data.body[i].model!=null){

@@ -67,13 +67,12 @@ export default {
   methods: {
     ChildData(data){
       this.tableList=data
-      console.log(this.tableList)
+
     },
     refresh() {
       this.$refs.page.refresh() // 这里提供了一个表格刷新功能
     },
       getParam(msg){//获取搜索框需要搜索的参数
-          console.log(msg)
         if(msg!=''){
 
             this.param = msg

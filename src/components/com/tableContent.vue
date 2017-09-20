@@ -89,7 +89,6 @@ export default {
   methods: {
     onPageClick(index) {// 点击页码刷新数据
       this.activeNum = index
-      console.log(index)
     },
     onPrevClick() { // 上一页
       if (this.activeNum > 0) {  // 当前页是否为当前最小页码
@@ -142,7 +141,6 @@ export default {
           lastPage.push(this.pageTotal - i)
         }
         this.pages = lastPage
-        console.log(this.pages)
         this.activeNum === this.pages.length - 1 ? this.getData() : this.activeNum = this.pages.length - 1
       }
     },

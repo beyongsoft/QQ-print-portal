@@ -235,7 +235,6 @@ export default {
                 }else{
                    resultMsg = {//成功之后返回的数据
                   "helpTitle": data.body.helpTitle,
-                  "helpDigest": data.body.helpDigest,
                   "helpCoverurl": data.body.helpCoverurl,
                   "helpUrl": data.body.helpUrl,
                   "result": data.body.result,
