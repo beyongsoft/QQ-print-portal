@@ -100,7 +100,7 @@ export default {
             vm.showWarining(str)
           }
           vm.$store.state.resultCode = data.body.resultCode;
-          vm.$store.state.logMessage = JSON.stringify(data.body.log)
+          vm.$store.state.logMessage = JSON.parse(JSON.stringify(data.body.log))
           str = "Successful binding!Jumping to the printer page for you...."
           vm.showSuccess(str)
           setTimeout(function(){

@@ -2,7 +2,7 @@
   <fieldset>
     <h3>Scan QR Code</h3>
     <div class="form-group">
-      <label for="disabledSelect" class="col-sm-4 col-xs-4 col-md-4 control-label text-left">
+      <label  class="col-sm-4 col-xs-4 col-md-4 control-label text-left">
         <span class="icon-shengchengerweimaxuanzhong iconfont"></span>OR code
       </label>
       <div class="col-sm-6 col-xs-6 col-md-6">
@@ -10,7 +10,7 @@
       </div>
     </div>
     <div class="form-group">
-      <label class="col-sm-4 col-md-4 col-xs-4 control-label text-left" for="ds_password"></label>
+      <label class="col-sm-4 col-md-4 col-xs-4 control-label text-left"></label>
       <div class="col-sm-6 col-xs-6 col-md-6 bth-style">
         <button class="btn btn-default btn-primary" @click="step2" :class="{'disabled':btnState}">Scan</button>
       </div>
@@ -43,7 +43,7 @@ export default {
           str = "The server did not return data"
           vm.showWarining(str)
         }
-        vm.$store.commit('log', JSON.stringify(data.body.log))
+        vm.$store.commit('log', JSON.parse(JSON.stringify(data.body.log)))
         let Am = data.body
         vm.$store.state.printerName = Am.model
         vm.$store.state.printerImg = Am.printerLogoUrl

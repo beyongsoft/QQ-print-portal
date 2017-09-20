@@ -110,7 +110,6 @@ export default {
         this.activeNum = this.activeNum + 1
       } else {
         if (this.pages[this.pages.length - 1] < this.pageTotal) {
-          console.log(111)
           let newPages = []
           for (let i = 0; i < this.pages.length; i++) {
             newPages[i] = this.pages[i] + 1

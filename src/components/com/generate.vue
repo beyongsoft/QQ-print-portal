@@ -80,7 +80,7 @@ export default {
         } else {
           vm.$store.state.printerId = data.body.content.split("=")[1]
           vm.$store.state.codeSrc = "data:image/png;base64," + data.body.data
-          vm.$store.commit('log', JSON.stringify(data.body))
+          vm.$store.commit('log', JSON.parse(JSON.stringify(data.body.log)))
           str = "Generate Success"
           vm.showSuccess(str)
         }

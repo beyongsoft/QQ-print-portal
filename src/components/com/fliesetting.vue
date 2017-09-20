@@ -10,7 +10,7 @@
         </div>
       </div>
       <div class="form-group">
-        <label for="disabledSelect" class="col-sm-4 col-xs-4 col-md-4 text-left control-label">
+        <label   class="col-sm-4 col-xs-4 col-md-4 text-left control-label">
           <span class="icon-wenjian iconfont"></span>File Upload
         </label>
         <div class="col-sm-6 col-xs-6 col-md-6">
@@ -23,7 +23,7 @@
         </div>
       </div>
       <div class="form-group">
-        <label for="disabledSelect " class="col-sm-4 col-xs-4 text-left col-md-4 control-label">
+        <label  class="col-sm-4 col-xs-4 text-left col-md-4 control-label">
           <span class="icon-dayin_zhizhangshezhi iconfont"></span>Job Settings
         </label>
         <div class="col-sm-7col-xs-7col-md-7" style="overflow:hidden;">
@@ -61,7 +61,7 @@
         </div>
       </div>
       <div class="form-group">
-        <label class="col-sm-4 col-xs-4 col-md-4 text-left control-label" for="ds_password"></label>
+        <label class="col-sm-4 col-xs-4 col-md-4 text-left control-label" ></label>
         <div class="col-sm-6 col-xs-6 col-md-6 bth-style">
           <button class="btn btn-default btn-primary" @click="step4" id="fileBth" :class="{'disabled':btnState}">Upload&Submit</button>
         </div>
@@ -161,7 +161,7 @@ export default {
               "num": 0
             }
             vm.clearInterTime[job_num]={n:0}
-            vm.$store.commit('log', JSON.stringify(data.body.log))//提交的日志
+            vm.$store.commit('log', JSON.parse(JSON.stringify(data.body.log)))//提交的日志
             vm.$store.state.notification.unshift(json)//json文件存入notification中
             vm.intervalObj[vm.name + job_num] = setInterval(function() {//设置定时器去获取
               vm.getMessage(vm, job_num, stateObj, degree)
