@@ -1,7 +1,7 @@
 <template>
   <form id="upLoadApp" action="" target="nm_iframe" method="post">
     <fieldset>
-      <h3>Printer Job</h3>
+      <h3>Print Job</h3>
       <div class="form-group" :class="{'has-error':isclick}">
         <label class="col-sm-4 col-md-4 col-xs-4 control-label text-left" for="ds_username">
           <span class="icon-youxiang iconfont"></span>PrintEmailId</label>

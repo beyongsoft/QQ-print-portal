@@ -22,7 +22,7 @@
     <div class="form-group">
       <label class="col-sm-4 col-xs-4 control-label text-left" for="ds_username"></label>
       <div class="col-sm-6 col-xs-6 col-md-6 bth-style">
-        <button class="btn btn-default btn-primary" @click="step1" :class="{'disabled':btnState}">Genetare QR Code</button>
+        <button class="btn btn-default btn-primary" @click="step1" :class="{'disabled':btnState}">Generate QR Code</button>
       </div>
     </div>
   </fieldset>

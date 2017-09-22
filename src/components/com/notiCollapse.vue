@@ -5,7 +5,7 @@
         <a class="changeStyle" data-toggle="collapse" data-parent="#accordion" :href="'#collapse'+index" @click.prevent="changeNum">
           <dl>
             <dt>
-              <i class="iconfont" v-bind:class="[isimg ? 'icon-tupian1': 'icon-wenben']"  style="font-size:32px;"></i>
+              <i class="iconfont" v-bind:class="[isimg ? 'icon-tupian1': 'icon-wenben']" v-model="showHead" style="font-size:32px;"></i>
             </dt>
             <dd>
               <p>
@@ -61,11 +61,22 @@ export default {
       required: true
     }
   },
-  created(){
-      var imageArr=["jpg","png","gif","jpeg","bmp"]
-      if(imageArr.indexOf(this.item.fileName.split(".")[1])!=-1){
-        this.isimg=true
+  computed:{
+      showHead:{
+          set:function () {
+
+              var imageArr=["jpg","png","gif","jpeg","bmp"]
+              if(imageArr.indexOf(this.item.fileName.split(".")[1])!=-1){
+                  this.isimg=true
+              }else{
+                  this.isimg = false
+              }
+          },
+          get:function () {
+              return this.isimg
+          }
       }
+      
   },
   methods: {
     changeNum() {

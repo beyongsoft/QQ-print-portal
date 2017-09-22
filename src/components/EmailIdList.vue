@@ -27,7 +27,7 @@
         <tr>
           <td colspan="6">
             <div class="pull-left">
-              <button class="btn btn-default" @click="refresh">刷新</button>
+              <button class="btn btn-default" @click="refresh">Refresh</button>
             </div>
             <div class="pull-right">
               <Pagination ref="page"  @update-data="ChildData" :async="true"  :pathUrl="pathUrl" :lens="lenArr" :page-len="pageLen" :param="param"></Pagination>
