@@ -118,7 +118,6 @@ export default {
             vm.showWarining(str)
           }
             vm.$store.commit('log', JSON.parse(JSON.stringify(err)))
-            console.log(err)
         })
       } else {
          str="This printEmailId is already bound"

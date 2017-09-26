@@ -5,19 +5,21 @@
     <table class="table table-hover table-bordered">
       <thead>
         <tr>
-          <th width="30%">PrinteEmailId</th>
-          <th width="10%">SKU</th>
+          <th width="25%">PrinteEmailId</th>
+          <th width="15%">SKU</th>
           <th width="15%">Model</th>
-          <th width="15%">Sn</th>
-          <th width="15%">Pid</th>
-          <th width="15%">Time</th>
+          <th width="15">Din</th>
+          <th width="10%">Sn</th>
+          <th width="10%">Pid</th>
+          <th width="10%">Time</th>
         </tr>
       </thead>
       <tbody>
         <tr v-for="(data,index) in tableList" :key="index">
-          <td v-text="data.emailId"></td>
+          <router-link to="{path:'/qRcode',params:{emailId:data.emailId}}"  tag="td" v-text="data.emailId"></router-link>
           <td v-text="data.sku"></td>
           <td v-text="data.model"></td>
+          <td v-text=""></td>
           <td v-text="data.sn"></td>
           <td v-text="data.pid"></td>
           <td v-text="data.lastUpdateTime"></td>
@@ -25,7 +27,7 @@
       </tbody>
       <tfoot>
         <tr>
-          <td colspan="6">
+          <td colspan="7">
             <div class="pull-left">
               <button class="btn btn-default" @click="refresh">Refresh</button>
             </div>
@@ -74,10 +76,8 @@ export default {
     },
       getParam(msg){//获取搜索框需要搜索的参数
         if(msg!=''){
-
             this.param = msg
             this.refresh()
-
         }
       }
   },

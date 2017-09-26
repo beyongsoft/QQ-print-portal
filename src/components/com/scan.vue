@@ -12,7 +12,7 @@
     <div class="form-group">
       <label class="col-sm-4 col-md-4 col-xs-4 control-label text-left"></label>
       <div class="col-sm-6 col-xs-6 col-md-6 bth-style">
-        <button class="btn btn-default btn-primary" @click="step2" :class="{'disabled':btnState}">Scan</button>
+        <button class="btn btn-default btn-primary" @click="step2" :class="{'disabled':btnState||!newBing}">Scan</button>
       </div>
     </div>
   </fieldset>
@@ -28,7 +28,10 @@ export default {
   computed: {
     codeSrc() {
       return this.$store.state.codeSrc
-    }
+    },
+      newBing(){
+          return this.$store.state.newBing
+      }
   },
   methods: {
     step2: function() {//根据生成二维码获得的id去调用获取该printerid的相关信息

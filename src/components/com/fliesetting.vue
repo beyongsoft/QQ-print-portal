@@ -100,6 +100,7 @@ export default {
       name: 'timer_',//获取打印结果的定时器命名
       warnName: 'timer1_',//获取打印机异常的定时器命名
       clearInterTime:{},
+      fileTypeArr:["doc","docx","rtf","xls","xlsx","ppt","pptx","jpeg","jpg","png","gif","bmp","txt","html","pdf"],
     }
   },
   beforeCreate() {
@@ -124,6 +125,13 @@ export default {
       }
     })
   },
+  beforeRouteEnter(to,from,next){//路由传入参数的时候，修改全局的printeEmailId
+      if(to.params){
+          next(vm=>{
+              vm.$store.state.PrintEmailId = to.params.emailId
+          })
+      }
+  },
   methods: {
     step4: function() {//当上传需要打印的文件上传好之后，将结果返回给后台时做的操作
       var vm = this;
@@ -136,6 +144,7 @@ export default {
       vm.$store.state.PrintEmailId = vm.PrintEmailId_1;
       var jobCfg = '{Plex:' + vm.selected.Plex + ';MediaSize:' + vm.selected.MediaSize + ';MediaType:' + vm.selected.MediaType + ';Color:' + vm.selected.Color + ';Quality:' + vm.selected.Quality + ';Copies:' + vm.selected.Copies + '}';//打印参数
       var jobCfg1 = encodeURIComponent(jobCfg)
+        console.log(jobcfg1)
       var data = new FormData($('#upLoadApp')[0])
       vm.$http.post(vm.$api.url("printerJob/submitPrintJob?printerEmailId=" + vm.$store.state.PrintEmailId + "&jobCfg=" + jobCfg1) , data, { emulateJSON: true }).then((data) => {//文件上传
         if (data.body == "") {
@@ -184,13 +193,16 @@ export default {
       });
     },
     loadFile: function(e) {//显示上传文件名和上传文件大小
-      this.filename = e.target.files[0].name;
-      var byte = e.target.files[0].size;//获取到文件的字节
-      if (Math.floor(byte / (1024 * 1024)) > 0) {
-        this.fileSize = Math.floor(byte / (1024 * 1024)) + "." + byte % (1024 * 1024) + "M"
-      } else {
-        this.fileSize = Math.floor(byte / 1024) + "." + byte % 1024 + "KB"
-      }
+        if(typeof (e.target.files[0])!=="undefined"){
+            this.filename = e.target.files[0].name;
+            var byte = e.target.files[0].size;//获取到文件的字节
+            if (Math.floor(byte / (1024 * 1024)) > 0) {
+                this.fileSize = Math.floor(byte / (1024 * 1024)) + "." + byte % (1024 * 1024) + "M"
+            } else {
+                this.fileSize = Math.floor(byte / 1024) + "." + byte % 1024 + "KB"
+            }
+            this.validFile()//调用函数检查上传文件是否为可支持的文件类型和文件大小
+        }
     },
     getMessage: function(vm, job_num, stateObj, degree) {//定时去请求数据，直到得到最后的结果
       vm.$http.get(vm.$api.url("printJobStatus/latest?printerEmailId=" + vm.$store.state.PrintEmailId + "&jobNum=" + job_num)).then((data) => {
@@ -287,14 +299,33 @@ export default {
         }
       })
     },
-     validator: function(){//验证printeremailid是否存在
-      if(this.PrintEmailId_1==""){
-        this.isclick=true
-        this.btnState = true
-      }else{
-        this.isclick = false
-        this.btnState = false
-      }
+    validator: function(){//验证printeremailid是否正确
+         var reg =/[\w!#$%&'*+/=?^_`{|}~-]+(?:\.[\w!#$%&'*+/=?^_`{|}~-]+)*@(?:[\w](?:[\w-]*[\w])?\.)+[\w](?:[\w-]*[\w])?/
+        console.log(this.PrintEmailId_1)
+         var flag=reg.test(this.PrintEmailId_1)//验证邮箱的正则表达式
+        console.log(flag)
+         this.isclick = !flag
+         this.btnState = !flag
+         this.$store.state.newBing = flag//判断是否需要绑定
+         if(!flag) {
+             var str = "Please enter the correct PrintEmailId"
+             this.showWarining(str)
+
+         }
+     },
+    validFile:function (file) {//对上传文件做一个判断
+        let str
+        if(this.fileSize.includes("M")&&parseFloat(this.fileSize)>15){//判断文件大小是否超过15M
+            this.btnState = true
+            str = "Upload files too large"
+            this.showWarining(str)
+        }else if(!this.fileTypeArr.includes(this.filename.split(".")[1])){//判断文件类型是否支持
+            this.btnState = true
+            str = "This file type is not supported"
+            this.showWarining(str)
+        }else{
+            this.btnState = false
+        }
     }
   }
 }

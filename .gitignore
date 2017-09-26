@@ -17,4 +17,4 @@ yarn-error.log*
 /easy/.vscode/
 
 /easy/
-!/easy/
+/node_modules/
