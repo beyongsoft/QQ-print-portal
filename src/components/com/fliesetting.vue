@@ -278,30 +278,31 @@ export default {
       })
     },
     getWarning: function(vm, job_num) {//获取打印机异常
-      vm.$http.get(vm.$api.url( "getInkAlert/message?printerEmailId=" + vm.$store.state.PrintEmailId + "&jobNum=" + job_num)).then((data) => {
+      vm.$http.get(vm.$api.url( "getInkAlert/allMessage?printerEmailId=" + vm.$store.state.PrintEmailId + "&jobNum=" + job_num)).then((data) => {
         if (data.body != '') {
             let resultMsg
             let msgArr=[]
             for(i in data.body){
                 (function (item) {
                     if(itme.helpTitle!=""){
-                        resultMsg={
-                            "helpTitle": item.helpTitle,
-                            "helpDigest": item.helpDigest,
-                            "helpCoverurl": item.helpCoverurl,
-                            "helpUrl": item.helpUrl,
-                            "subType":item.subType,
-                            "result": 2
+                        for (var i = 0; i < vm.$store.state.notification.length; i++) {
+                            if (vm.$store.state.notification[i].jobNum == job_num) {
+                                vm.$store.state.notification[i].num +=1
+                                if(vm.$store.state.notification[i].msg.indexOf(item)==-1){
+                                    resultMsg = {
+                                        "helpTitle": item.helpTitle,
+                                        "helpDigest": item.helpDigest,
+                                        "helpCoverurl": item.helpCoverurl,
+                                        "helpUrl": item.helpUrl,
+                                        "subType": item.subType,
+                                        "result": 2
+                                    }
+                                    vm.$store.state.notification[i].msg.push(resultMsg)
+                                }
+                            }
                         }
-                        msgArr.push(resultMsg)
                     }
                 })(data.body[i])
-            }
-            for (var i = 0; i < vm.$store.state.notification.length; i++) {
-              if (vm.$store.state.notification[i].jobNum == job_num) {
-                  vm.$store.state.notification[i].num +=1
-                vm.$store.state.notification[i].msg.push(msgArr)
-              }
             }
         }
         vm.clearInterTime[job_num].n++
