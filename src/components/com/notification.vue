@@ -5,7 +5,7 @@
       <div class="col-sm-12 col-md-12">
         <div class="notification">
           <div class="panel-group" id="accordion">
-              <NotiCollapse v-for="(item,index) in notification" :item="item" :index="index" :key="index"></NotiCollapse>
+              <NotiCollapse v-for="(value,key) in notification" :item="value" :index="key" :key="key"></NotiCollapse>
           </div>
         </div>
       </div>

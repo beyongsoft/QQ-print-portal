@@ -16,7 +16,7 @@
       </thead>
       <tbody>
         <tr v-for="(data,index) in tableList" :key="index">
-          <router-link to="{path:'/qRcode',params:{emailId:data.emailId}}"  tag="td" v-text="data.emailId"></router-link>
+          <td><router-link :to="{name:'qRcode',params:{emailId:data.emailId}}"  tag="a" v-text="data.emailId"></router-link></td>
           <td v-text="data.sku"></td>
           <td v-text="data.model"></td>
           <td v-text=""></td>
@@ -90,7 +90,10 @@ export default {
     'refresh'() {
       this.refresh()
     }
-  }
+  },
+    beforeLeaveRouter(){
+
+    }
 }
 </script>
 <style scoped>

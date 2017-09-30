@@ -104,7 +104,7 @@ export default {
           str = "Successful binding!Jumping to the printer page for you...."
           vm.showSuccess(str)
           setTimeout(function(){
-            vm.$router.push({path:"/qRcode"})
+            vm.$router.push({path:"/qRcode",params:{emailId:vm.$store.state.PrintEmailId}})
           },3*1000)
         }, (err) => {
           if (err.status == 500) {
@@ -124,7 +124,13 @@ export default {
         this.showWarining(str)
       }
     }
-  }
+  },
+    valid:function () {
+        if(this.$store.state.printerImg==''){
+            str= ""
+            vm.showWarining(str)
+        }
+    }
 }
 </script>
 

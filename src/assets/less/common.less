@@ -6,22 +6,25 @@ body,dl,dd,dt,p,h1,h2,h3,h4,h5,h6,ul,li{
   padding: 0;
   margin:0;
 }
+@media (min-width: 640px) { html {font-size:12px;} }
+@media (min-width:960px) { html {font-size:16px;} }
+@media (min-width:1100px) { html {font-size:18px;} }
 body{
   background: @body-bg;
   color: @color;
 }
 .logo{
-  padding: 24px;
+  padding: 1.2rem;
 }
 .row{
   overflow: hidden;
-  margin-top:16px;
-  margin-bottom:16px;
+  margin-top:1rem;
+  margin-bottom:1rem;
   color: rgba(0, 65, 123, 0.81);
   .col-padding{
     background: @white;
-    margin:0 16px;
-    padding:16px;
+    margin:0 1rem;
+    padding:1rem;
     margin-bottom:-3000px;
     padding-bottom:3000px;
     border-radius: 10px;
@@ -31,7 +34,7 @@ body{
 fieldset{
   border:1px solid #f1f1f1;
   border-radius: 8px;
-  margin:20px;
+  margin:1.2rem;
   .hid-border{
     border:0;
     outline:none;
@@ -40,7 +43,7 @@ fieldset{
   }
 }
 .iconfont{
-  margin-right:14px;
+  margin-right:1rem;
 }
 .notification{
   width:100%;

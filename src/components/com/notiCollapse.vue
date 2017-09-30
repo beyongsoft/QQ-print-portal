@@ -2,18 +2,18 @@
   <div class="panel panel-default">
     <div class="panel-heading">
       <h4 class="panel-title text-left">
-        <a class="changeStyle" data-toggle="collapse" data-parent="#accordion" :href="'#collapse'+index" @click.prevent="changeNum">
+        <a class="changeStyle" data-toggle="collapse" data-parent="#accordion" :href="'#collapse'+index" @click.prevent="changeNum" @contextmenu.prevent>
           <dl>
             <dt>
-              <i class="iconfont" v-bind:class="[isimg ? 'icon-tupian1': 'icon-wenben']" v-model="showHead" style="font-size:32px;"></i>
+              <i class="iconfont" v-bind:class="[iconChange ? 'icon-tupian1': 'icon-wenben']" style="font-size:32px;"></i>
             </dt>
             <dd>
               <p>
                 <span>{{item.fileName}}</span>
-                <span>{{item.job_num}}</span>
+                <span>{{item.jobNum}}</span>
               </p>
               <p>
-                <span style="font-size:12px; color:#666;" v-if="item.msg!=''">{{item.msg[item.msg.length-1].helpTitle}}</span>
+                <span style="font-size:12px; color:#666;" v-if="item.helpTitle!=''">{{item.helpTitle}}</span>
               </p>
             </dd>
           </dl>
@@ -23,12 +23,14 @@
     </div>
     <div :id="'collapse'+index" class="panel-collapse collapse">
       <div class="panel-body">
+        <p class="text-left" style="color:#333;"><span>{{item.fileName}}</span>&nbsp;&nbsp;<span>{{item.jobNum}}</span></p>
         <div class="printe-result" v-for="(value,index) in item.msg" :key="index">
           <p class="text-left">{{value.helpTitle}}
             <span class="text-right" style="display:none;" v-show="value.result==0">{{value.time}}</span>
           </p>
           <div class="last-result" style="display:none;" v-show="value.result==2">
             <img :src="value.helpCoverurl" />
+            <p v-html="value.helpDigest" style="text-align: left;margin: 1rem 0;font-size: 0.9rem;color: #999;"></p>
             <p class="JDlink text-left">
               <a :href="value.helpUrl" target='_brank'>查看详情</a>
             </p>
@@ -47,8 +49,7 @@ export default {
       href: "",
       state: false,
       unreadState: true,//有新消息的num
-      num:0,
-      isimg:false
+      num:0
     }
   },
   props: {
@@ -62,19 +63,8 @@ export default {
     }
   },
   computed:{
-      showHead:{
-          set:function () {
-
-              var imageArr=["jpg","png","gif","jpeg","bmp"]
-              if(imageArr.indexOf(this.item.fileName.split(".")[1])!=-1){
-                  this.isimg=true
-              }else{
-                  this.isimg = false
-              }
-          },
-          get:function () {
-              return this.isimg
-          }
+      iconChange(){
+        return this.$store.state.iconChange
       }
       
   },
@@ -90,7 +80,7 @@ export default {
   color: #333;
   h3 {
     color: #000;
-    font-size: 16px;
+    font-size: 1rem;
     font-weight: bold;
     margin: 10px;
   }

@@ -30,6 +30,13 @@ export default {
     Log,
     Notification
   },
+    beforeRouteEnter(to,from,next){//路由传入参数的时候，修改全局的printeEmailId
+        if(to.params){
+            next(vm=>{
+                vm.$store.state.PrintEmailId = to.params.emailId
+            })
+        }
+    },
 
 }
 </script>

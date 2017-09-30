@@ -66,6 +66,7 @@ export default {
         }
 
       }, (err) => {
+          this.$store.state.newBing = true
         if (err.status == 500) {
           str = "Server error"
           vm.showWarining(str)

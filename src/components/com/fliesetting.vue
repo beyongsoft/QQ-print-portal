@@ -76,7 +76,7 @@ export default {
     return {
       filename: "未上传文件",//显示上传的是哪个文件
       fileSize: "",//显示上传文件的大小
-      PrintEmailId_1: this.$store.state.PrintEmailId,//输入的printeEmailId
+      PrintEmailId_1: this.$route.params.emailId,//输入的printeEmailId
       btnState: false,//设置按钮的默认状态
       isclick:false,
       selected: {//默认选中的参数
@@ -103,9 +103,11 @@ export default {
       fileTypeArr:["doc","docx","rtf","xls","xlsx","ppt","pptx","jpeg","jpg","png","gif","bmp","txt","html","pdf"],
     }
   },
+
   beforeCreate() {
     let vm = this;
     vm.$http.get(vm.$api.url("printerJob/getPrintJobConfig")).then(function(data) {
+      this.btnState = false
       var obj = data.body;
       var opt = vm.options;
       for (var i in obj.Plex) {
@@ -123,79 +125,82 @@ export default {
       for (var i in obj.Quality) {
         opt.Quality.push({ code: i, value: obj.Quality[i] })
       }
+    },err=> {
+        this.btnState = true
+        str = "The print parameter was not reached"
+        vm.showWarining(str)
     })
-  },
-  beforeRouteEnter(to,from,next){//路由传入参数的时候，修改全局的printeEmailId
-      if(to.params){
-          next(vm=>{
-              vm.$store.state.PrintEmailId = to.params.emailId
-          })
-      }
   },
   methods: {
     step4: function() {//当上传需要打印的文件上传好之后，将结果返回给后台时做的操作
       var vm = this;
       let str="";
-      vm.validator()
-      vm.btnState = true;
-      setTimeout(function() {//每次按下之后，将按钮禁用5秒
-        vm.btnState = false
-      }, 5 * 1000)
-      vm.$store.state.PrintEmailId = vm.PrintEmailId_1;
-      var jobCfg = '{Plex:' + vm.selected.Plex + ';MediaSize:' + vm.selected.MediaSize + ';MediaType:' + vm.selected.MediaType + ';Color:' + vm.selected.Color + ';Quality:' + vm.selected.Quality + ';Copies:' + vm.selected.Copies + '}';//打印参数
-      var jobCfg1 = encodeURIComponent(jobCfg)
-        console.log(jobcfg1)
-      var data = new FormData($('#upLoadApp')[0])
-      vm.$http.post(vm.$api.url("printerJob/submitPrintJob?printerEmailId=" + vm.$store.state.PrintEmailId + "&jobCfg=" + jobCfg1) , data, { emulateJSON: true }).then((data) => {//文件上传
-        if (data.body == "") {
-          str = "The server did not return data"
-          vm.showWarining(str)
-        } else if (data.body.result == 1) {//文件上传失败
-          str = data.body.msg
-          vm.showWarining(str)
-        } else {//提交打印成功
-            str = " Successful Upload"
-            vm.showSuccess(str)
-            let stateObj = {//只有是引用类型传进去的参数，函数内部才可以修改函数外部的值
-              nowstate: 0,//每次定时去取数据时的取到的当时状态
-              beforestate: 0//每次定时去取数据时的取到的上一次状态
+      var sureResult = vm.validator()
+        if(!sureResult){
+        }else if(vm.fileSize==""){
+            str = "Please upload the file"
+            vm.showWarining(str)
+        }else{
+        vm.btnState = true;
+        setTimeout(function() {//每次按下之后，将按钮禁用5秒
+          vm.btnState = false
+        }, 5 * 1000)
+        vm.$store.state.PrintEmailId = vm.PrintEmailId_1;
+        var jobCfg = '{Plex:' + vm.selected.Plex + ';MediaSize:' + vm.selected.MediaSize + ';MediaType:' + vm.selected.MediaType + ';Color:' + vm.selected.Color + ';Quality:' + vm.selected.Quality + ';Copies:' + vm.selected.Copies + '}';//打印参数
+        var jobCfg1 = encodeURIComponent(jobCfg)
+        var data = new FormData($('#upLoadApp')[0])
+        vm.$http.post(vm.$api.url("printerJob/submitPrintJob?printerEmailId=" + vm.$store.state.PrintEmailId + "&jobCfg=" + jobCfg1) , data, { emulateJSON: true }).then((data) => {//文件上传
+          if (data.body == "") {
+            str = "The server did not return data"
+            vm.showWarining(str)
+          } else if (data.body.result == 1) {//文件上传失败
+            str = data.body.msg
+            vm.showWarining(str)
+          } else {//提交打印成功
+              str = "Submitted Successfully"
+              vm.showSuccess(str)
+              var job_num = data.body.jobNum;//获取到的jobNum
+              var json = {//存入notification的数据
+                "jobNum": job_num,
+                "PrintEmailId": data.body.printerEmail,
+                "fileName": vm.filename,
+                "msg": [],
+                "num": 0
+              }
+              vm.clearInterTime[job_num]={n:0}
+              vm.$store.commit('log', JSON.parse(JSON.stringify(data.body.log)))//提交的日志
+              vm.$store.state.notification.unshift(json)//json文件存入notification中
+              vm.intervalObj[vm.name + job_num] = setInterval(function() {//设置定时器去获取
+                vm.getMessage(vm, job_num)
+              }, 10 * 1000)
+              vm.intervalObj[vm.warnName + job_num] = setInterval(function() {//设置定时器去获取打印机异常
+                vm.getWarning(vm, job_num)
+              }, 20 * 1000)
             }
-            var degree = 0;//请求为空的次数
-            var job_num = data.body.jobNum;//获取到的jobNum
-            var json = {//存入notification的数据
-              "job_num": job_num,
-              "PrintEmailId": data.body.printerEmail,
-              "fileName": vm.filename,
-              "msg": [],
-              "num": 0
-            }
-            vm.clearInterTime[job_num]={n:0}
-            vm.$store.commit('log', JSON.parse(JSON.stringify(data.body.log)))//提交的日志
-            vm.$store.state.notification.unshift(json)//json文件存入notification中
-            vm.intervalObj[vm.name + job_num] = setInterval(function() {//设置定时器去获取
-              vm.getMessage(vm, job_num, stateObj, degree)
-            }, 10 * 1000)
-            vm.intervalObj[vm.warnName + job_num] = setInterval(function() {//设置定时器去获取打印机异常
-              vm.getWarning(vm, job_num)
-            }, 20 * 1000)
+        }, (err) => {
+          if (err.status == 500) {//判断调用后台接口传来的错误
+            str = "Server error"
+            vm.showWarining(str)
+          } else if (err.status == 404) {
+            str = "No resource found"
+            vm.showWarining(str)
+          } else {
+            str = "Server exception"
+            vm.showWarining(str)
           }
-      }, (err) => {
-        if (err.status == 500) {//判断调用后台接口传来的错误
-          str = "Server error"
-          vm.showWarining(str)
-        } else if (err.status == 404) {
-          str = "No resource found"
-          vm.showWarining(str)
-        } else {
-          str = "Server exception"
-          vm.showWarining(str)
-        }
-      });
+        });
+    }
     },
     loadFile: function(e) {//显示上传文件名和上传文件大小
         if(typeof (e.target.files[0])!=="undefined"){
             this.filename = e.target.files[0].name;
-            var byte = e.target.files[0].size;//获取到文件的字节
+            let imageArr=["jpg","png","gif","jpeg","bmp"]
+            if(imageArr.indexOf(this.filename.split(".")[1])!=-1){//判断该上传文件的类型
+                this.$store.state.iconChange = true
+            }else{
+                this.$store.state.iconChange = false
+            }
+            let byte = e.target.files[0].size;//获取到文件的字节
             if (Math.floor(byte / (1024 * 1024)) > 0) {
                 this.fileSize = Math.floor(byte / (1024 * 1024)) + "." + byte % (1024 * 1024) + "M"
             } else {
@@ -204,63 +209,62 @@ export default {
             this.validFile()//调用函数检查上传文件是否为可支持的文件类型和文件大小
         }
     },
-    getMessage: function(vm, job_num, stateObj, degree) {//定时去请求数据，直到得到最后的结果
-      vm.$http.get(vm.$api.url("printJobStatus/latest?printerEmailId=" + vm.$store.state.PrintEmailId + "&jobNum=" + job_num)).then((data) => {
-        var resultMsg = "";
-        if (data.body.length == 0) {
-            console.log('没有消息')
-        } else {
-          stateObj.nowstate = data.body.id;
-          if (data.body.result == 0) {//除了result为0时还是在查询，除0以外均会跳出循环
-            if (stateObj.nowstate != stateObj.beforestate) {
-              stateObj.beforestate = stateObj.nowstate
-              for (var i = 0; i < vm.$store.state.notification.length; i++) {
-                if (vm.$store.state.notification[i].job_num == job_num) {
-                  if(data.body.state==50){
-                    resultMsg = {
-                    "helpTitle": 'Pending.....',
-                    "result": data.body.result,
-                  }
-                  }else{
-                    resultMsg = {//成功之后返回的数据
-                    "helpTitle": data.body.helpTitle,
-                    "helpDigest": data.body.helpDigest,
-                    "helpCoverurl": data.body.helpCoverurl,
-                    "helpUrl": data.body.helpUrl,
-                    "result": 2,
+    getMessage: function(vm, job_num) {//定时去请求数据，直到得到最后的结果
+      vm.$http.get(vm.$api.url("printJobStatus/allLatest?printerEmailId=" + vm.$store.state.PrintEmailId + "&jobNum=" + job_num)).then((data) => {
+          let arr=data.body
+          let obj
+          let objArr=[]
+          if(arr.length!=""){
+              for(i in arr){//循环data，将data数据改变
+                  (function(item,index){
+                      if(item.result==0&&item.state==50){//打印未有返回结果
+                    obj={
+                        "helpTitle": 'Pending.....',
+                        "result": item.result,
+                    }
+                          objArr[index]=obj
+
+                }else if(item.result==0&&item.state==9001){//打印超过5分钟
+                    obj={//成功之后返回的数据
+                        "helpTitle": item.helpTitle,
+                        "helpDigest": item.helpDigest,
+                        "helpCoverurl": item.helpCoverurl,
+                        "helpUrl": item.helpUrl,
+                        "result": 2,
+                    }
+                          objArr[index]=obj
+                }else if(item.result==1){打印成功
+                    obj={
+                        "helpTitle": 'Print Successful',
+                        "result": item.result,
+                    }
+                          objArr[index]=obj
+                }else if(item.result==2){//返回打印错误信息
+                    obj={//成功之后返回的数据
+                        "helpTitle": item.helpTitle,
+                        "helpDigest": item.helpDigest,
+                        "helpCoverurl": item.helpCoverurl,
+                        "helpUrl": item.helpUrl,
+                        "result": item.result,
+                    }
+                          objArr[index]=obj
                 }
-                  }
-                  vm.$store.state.notification[i].num += 1
-                  vm.$store.state.notification[i].msg.push(resultMsg)
-                  return false
-                }
+                  })(arr[i],i)
               }
-            }
-          } else {
-            for (var i = 0; i < vm.$store.state.notification.length; i++) {
-              if (vm.$store.state.notification[i].job_num == job_num) {
-                if(data.body.result==1){
-                   resultMsg = {
-                    "helpTitle": 'Print Successful',
-                    "result": data.body.result,
+              objArr.reverse()
+              for (var i = 0; i < vm.$store.state.notification.length; i++) {//将处理好的数据插入到显示的上面
+                  if (vm.$store.state.notification[i].jobNum == job_num) {
+                      vm.$store.state.notification[i].num +=1
+                      vm.$store.state.notification[i].msg=objArr
+                      if(arr[0].result!=0){
+                          clearInterval(vm.intervalObj[vm.name + job_num])//清除定时器
+                      }
                   }
-                }else{
-                   resultMsg = {//成功之后返回的数据
-                  "helpTitle": data.body.helpTitle,
-                  "helpCoverurl": data.body.helpCoverurl,
-                  "helpUrl": data.body.helpUrl,
-                  "result": data.body.result,
-                }
-                }
-                vm.$store.state.notification[i].num += 1
-                vm.$store.state.notification[i].msg.push(resultMsg)
-                clearInterval(vm.intervalObj[vm.name + job_num])//清除定时器
-                return false
-              }
-            }
-          }
+                  }
+
         }
       }, (err) => {
+          let str
         if (err.status == 500) {
           str = "Server error"
           vm.showWarining(str)
@@ -276,50 +280,51 @@ export default {
     getWarning: function(vm, job_num) {//获取打印机异常
       vm.$http.get(vm.$api.url( "getInkAlert/message?printerEmailId=" + vm.$store.state.PrintEmailId + "&jobNum=" + job_num)).then((data) => {
         if (data.body != '') {
-          if (data.body.helpTitle != "") {
+            let resultMsg
+            let msgArr=[]
+            for(i in data.body){
+                (function (item) {
+                    if(itme.helpTitle!=""){
+                        resultMsg={
+                            "helpTitle": item.helpTitle,
+                            "helpDigest": item.helpDigest,
+                            "helpCoverurl": item.helpCoverurl,
+                            "helpUrl": item.helpUrl,
+                            "subType":item.subType,
+                            "result": 2
+                        }
+                        msgArr.push(resultMsg)
+                    }
+                })(data.body[i])
+            }
             for (var i = 0; i < vm.$store.state.notification.length; i++) {
-              if (vm.$store.state.notification[i].job_num == job_num) {
-                var resultMsg = {//成功之后返回的数据,打印机的异常
-                  "helpTitle": data.body.helpTitle,
-                  "helpDigest": data.body.helpDigest,
-                  "helpCoverurl": data.body.helpCoverurl,
-                  "helpUrl": data.body.helpUrl,
-                  "subType": data.body.subType
-                }
-                vm.$store.state.notification[i].msg.push(resultMsg)
-                clearInterval(vm.intervalObj[vm.warnName + job_num])//清除定时器
-                return false
+              if (vm.$store.state.notification[i].jobNum == job_num) {
+                  vm.$store.state.notification[i].num +=1
+                vm.$store.state.notification[i].msg.push(msgArr)
               }
             }
-          }
         }
         vm.clearInterTime[job_num].n++
-        if(vm.clearInterTime[job_num].n>=30){//十分钟之后清除查询异常的定时器
+        if(vm.clearInterTime[job_num].n>=90){//十分钟之后清除查询异常的定时器
             clearInterval(vm.intervalObj[vm.warnName + job_num])
         }
       })
     },
     validator: function(){//验证printeremailid是否正确
          var reg =/[\w!#$%&'*+/=?^_`{|}~-]+(?:\.[\w!#$%&'*+/=?^_`{|}~-]+)*@(?:[\w](?:[\w-]*[\w])?\.)+[\w](?:[\w-]*[\w])?/
-        console.log(this.PrintEmailId_1)
          var flag=reg.test(this.PrintEmailId_1)//验证邮箱的正则表达式
-        console.log(flag)
          this.isclick = !flag
          this.btnState = !flag
          this.$store.state.newBing = flag//判断是否需要绑定
          if(!flag) {
              var str = "Please enter the correct PrintEmailId"
              this.showWarining(str)
-
          }
+         return flag
      },
     validFile:function (file) {//对上传文件做一个判断
         let str
-        if(this.fileSize.includes("M")&&parseFloat(this.fileSize)>15){//判断文件大小是否超过15M
-            this.btnState = true
-            str = "Upload files too large"
-            this.showWarining(str)
-        }else if(!this.fileTypeArr.includes(this.filename.split(".")[1])){//判断文件类型是否支持
+       if(!this.fileTypeArr.includes(this.filename.split(".")[1])){//判断文件类型是否支持
             this.btnState = true
             str = "This file type is not supported"
             this.showWarining(str)
@@ -333,7 +338,7 @@ export default {
 <style lang="less" scoped>
 select {
   float: left;
-  width: 132px;
+  width: 6.2rem;
   margin: 5px 4px;
 }
 
@@ -346,5 +351,4 @@ select {
   }
 }
 </style>
-
 
