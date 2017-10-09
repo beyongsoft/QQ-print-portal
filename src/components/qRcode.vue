@@ -10,6 +10,7 @@
       <div class="col-md-6 col-padding">
         <Notification></Notification>
       </div>
+      <Loading v-show="showLoading"></Loading>
     </div>
   </div>
 </template>
@@ -19,6 +20,7 @@
 import UploadFile from './com/fliesetting'
 import Log from './com/log'
 import Notification from './com/notification'
+import Loading from "./com/loading";
 export default {
   name: 'qRcode',
   data() {
@@ -28,15 +30,21 @@ export default {
   components: {
     UploadFile,
     Log,
-    Notification
+    Notification,
+    Loading
   },
-    beforeRouteEnter(to,from,next){//路由传入参数的时候，修改全局的printeEmailId
+  beforeRouteEnter(to,from,next){//路由传入参数的时候，修改全局的printeEmailId
         if(to.params){
             next(vm=>{
                 vm.$store.state.PrintEmailId = to.params.emailId
             })
         }
-    },
+  },
+  computed:{
+    showLoading(){
+        return this.$store.state.loading
+    }
+}
 
 }
 </script>

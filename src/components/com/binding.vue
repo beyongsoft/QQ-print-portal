@@ -41,12 +41,13 @@
         <button class="btn btn-default btn-primary" :class="{'disabled':btnState||newBing}" @click="step3">Binding</button>
       </div>
     </div>
+
   </fieldset>
 </template>
 <script>
 import { mapState } from 'vuex'
 export default {
-  name: 'binding',
+    name: 'binding',
   data() {
     return {
       btnState: false
@@ -104,7 +105,7 @@ export default {
           str = "Successful binding!Jumping to the printer page for you...."
           vm.showSuccess(str)
           setTimeout(function(){
-            vm.$router.push({path:"/qRcode",params:{emailId:vm.$store.state.PrintEmailId}})
+            vm.$router.push({name:"qRcode",params:{emailId:vm.$store.state.PrintEmailId}})
           },3*1000)
         }, (err) => {
           if (err.status == 500) {

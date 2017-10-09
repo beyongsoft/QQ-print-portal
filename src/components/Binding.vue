@@ -10,6 +10,7 @@
       <div class="col-md-6 col-padding">
         <Log></Log>
       </div>
+      <Loading v-show="showLoading"></Loading>
     </div>
   </div>
 </template>
@@ -18,6 +19,7 @@ import Gen from './com/generate'
 import Scan from './com/scan'
 import Binding from './com/binding'
 import Log from './com/log'
+import Loading from "./com/loading";
 export default {
   name: 'bind',
   data() {
@@ -29,7 +31,13 @@ export default {
     Gen,
     Scan,
     Binding,
-    Log
+    Log,
+    Loading
+  },
+  computed:{
+      showLoading(){
+          return this.$store.state.loading
+      }
   }
 }
 </script>

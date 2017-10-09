@@ -38,16 +38,19 @@
         </tr>
       </tfoot>
     </table>
+    <Loading v-show="showLoading"></Loading>
   </div>
 </template>
 <script>
 import Pagination from "./com/tableContent"
 import Search from "./com/search"
+import Loading from "./com/loading";
 export default {
   name: 'EmailIdList',
   components: {
     Pagination,
-      Search
+      Search,
+      Loading
   },
   data() {
     return {
@@ -57,6 +60,11 @@ export default {
       param: {}, // 向服务器传递参数
       tableList: [] // 分页组件传回的分页后数据
     }
+  },
+  computed:{
+        showLoading(){
+            return this.$store.state.loading
+        }
   },
   watch:{
     tableList(val){
