@@ -7,7 +7,6 @@ import EmailIdList from '@/components/EmailIdList'
 Vue.use(Router)
 
 export default new Router({
-    mode:"history",
     routes: [{
             path: '/',
             component: Binding
@@ -25,11 +24,5 @@ export default new Router({
             name: 'idList',
             component: EmailIdList
         }
-    ], scrollBehavior (to, from, savedPosition) {
-        if (savedPosition) {
-            return savedPosition
-        } else {
-            return { x: 0, y: 0 }
-        }
-    }
+    ]
 })

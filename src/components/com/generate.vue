@@ -14,9 +14,9 @@
     </div>
     <div class="form-group" :class="{'has-error':isclick}">
       <label class="col-sm-4 col-md-4 col-xs-4 control-label text-left" for="ds_username">
-        <span class="icon-youxiang iconfont"></span>PrintEmailId</label>
+        <span class="icon-youxiang iconfont"></span>PrinterEmailId</label>
       <div class="col-sm-6 col-xs-6 col-md-6">
-        <input class="form-control" id="ds_username" type="text" placeholder="PrintEmailId" v-model="PrintEmailId" @blur="validator" required/>
+        <input class="form-control" id="ds_username" type="text" placeholder="PrinterEmailId" v-model="PrintEmailId" @blur="validator" required/>
       </div>
     </div>
     <div class="form-group">
@@ -72,7 +72,7 @@ export default {
           }, 5 * 1000)
           const obj = {
             sku: vm.selected,
-            emailId: vm.PrintEmailId
+            emailId: $.trim(vm.PrintEmailId)
           }
           this.$store.commit('newStep1', obj)
           var json = JSON.stringify(obj)

@@ -12,7 +12,7 @@
             <span aria-hidden="true">‹</span>
           </a>
         </li>
-        <li v-for="(page,index) in pages" :key="index" :class="activeNum === page ? 'active' : ''">
+        <li v-for="(page,index) in pages" :key="index" :class="activeNum === index+1 ? 'active' : ''">
           <a href="javascript:void(0)" v-text="page" @click="onPageClick(page)"></a>
         </li>
         <li>
@@ -78,7 +78,7 @@ export default {
   },
   data() {
     return {
-      activeNum: 0,
+      activeNum: 1,
         pages:""
     }
   },
@@ -91,7 +91,7 @@ export default {
       this.activeNum = index
     },
     onPrevClick() { // 上一页
-      if (this.activeNum > 0) {  // 当前页是否为当前最小页码
+      if (this.activeNum > 1) {  // 当前页是否为当前最小页码
         this.activeNum = this.activeNum - 1
       } else {
         if (this.pages[0] !== 1) {
@@ -105,7 +105,7 @@ export default {
       }
     },
     onNextClick() {// 下一页
-      if (this.activeNum < this.pages.length - 1) { // 当前页是否为当前最大页码
+      if (this.activeNum <= this.pages.length - 1) { // 当前页是否为当前最大页码
         this.activeNum = this.activeNum + 1
       } else {
         if (this.pages[this.pages.length - 1] < this.pageTotal) {
@@ -141,7 +141,7 @@ export default {
           lastPage.push(this.pageTotal - i)
         }
         this.pages = lastPage
-        this.activeNum === this.pages.length - 1 ? this.getData() : this.activeNum = this.pages.length - 1
+        this.activeNum === this.pages.length ? this.getData() : this.activeNum = this.pages.length - 1
       }
     },
     getPages() { // 获取页码
@@ -157,12 +157,13 @@ export default {
         for (let i = 1; i <= this.pageLen; i++) {
           this.pages.push(i)
         }
+        this.activeNum = 1
       }
     },
     getData() { // 页码变化获取数据
       if (!this.async) {
         let len = this.len,
-          pageNum = this.pages[this.activeNum]
+          pageNum = this.pages[this.activeNum-1]
           newData = [];
         for (let i = pageNum * len; i < (pageNum * len + len); i++) {
           this.data[i] !== undefined ? newData.push(this.data[i]) : ''

@@ -53,12 +53,7 @@
                 var key = vm.selected
                 var str=""
                 vm.param[key]=value
-                if(value!=""){
-                    vm.$emit("change-param",vm.param)
-                }else{
-                    str="Please enter the search criteria"
-                    vm.showWarining(str)
-                }
+                vm.$emit("change-param",vm.param)
 
             }
         }

@@ -3,7 +3,7 @@
     <h3>Scan QR Code</h3>
     <div class="form-group">
       <label  class="col-sm-4 col-xs-4 col-md-4 control-label text-left">
-        <span class="icon-shengchengerweimaxuanzhong iconfont"></span>OR code
+        <span class="icon-shengchengerweimaxuanzhong iconfont"></span>QR Code
       </label>
       <div class="col-sm-6 col-xs-6 col-md-6">
         <img id="qRCode" :src="codeSrc" class="img-responsive img-center" alt="qRcode">

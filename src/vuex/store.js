@@ -25,7 +25,6 @@ const store = new Vuex.Store({
         warningState: false,
         tipContent: '', //成功之后的提示框
         tipState: false, //提示框是否出现
-        iconChange:false,//notification显示的判断图片和文档的iconfont
         loading:false,
 
     },

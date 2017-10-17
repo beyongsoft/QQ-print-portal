@@ -5,7 +5,7 @@
         <a class="changeStyle" data-toggle="collapse" data-parent="#accordion" :href="'#collapse'+index" @click.prevent="changeNum" @contextmenu.prevent>
           <dl>
             <dt>
-              <i class="iconfont" v-bind:class="[iconChange ? 'icon-tupian1': 'icon-wenben']" style="font-size:32px;"></i>
+              <i class="iconfont" v-bind:class="[item.isimage ? 'icon-tupian1': 'icon-wenben']" style="font-size:32px;"></i>
             </dt>
             <dd>
               <p>
@@ -13,7 +13,7 @@
                 <span>{{item.jobNum}}</span>
               </p>
               <p>
-                <span style="font-size:12px; color:#666;" v-if="item.helpTitle!=''">{{item.helpTitle}}</span>
+                <span style="font-size:12px; color:#666;" v-if="item.msg!=''">{{item.msg[item.msg.length-1].helpTitle}}</span>
               </p>
             </dd>
           </dl>
@@ -28,7 +28,7 @@
           <p class="text-left">{{value.helpTitle}}
             <span class="text-right" style="display:none;" v-show="value.result==0">{{value.time}}</span>
           </p>
-          <div class="last-result" style="display:none;" v-show="value.result==2">
+          <div class="last-result" style="display:none;" v-show="value.resultCode==2">
             <img :src="value.helpCoverurl" />
             <p v-html="value.helpDigest" style="text-align: left;margin: 1rem 0;font-size: 0.9rem;color: #999;"></p>
             <p class="JDlink text-left">
@@ -61,12 +61,6 @@ export default {
       type: Number,
       required: true
     }
-  },
-  computed:{
-      iconChange(){
-        return this.$store.state.iconChange
-      }
-      
   },
   methods: {
     changeNum() {
@@ -104,7 +98,7 @@ export default {
   dd,
   dt {
     float: left;
-    padding: 5px;
+    padding: 4px;
     span {
       margin-left: 5px;
       width:200px;

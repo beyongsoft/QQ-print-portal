@@ -46,7 +46,9 @@ var app=new Vue({
 })
 
 Vue.http.interceptors.push((request, next) => {//此处this为请求所在页面的Vue实例
-    app.$store.state.loading= true
+    if(request.url.indexOf("printJobStatus")==-1&&request.url.indexOf("getInkAlert")==-1){
+        app.$store.state.loading= true
+    }
     next((response) => {//在响应之后传给then之前对response进行修改和逻辑判断。对于token时候已过期的判断，就添加在此处，页面中任何一次http请求都会先调用此处方法
         app.$store.state.loading= false
         return response;

@@ -19,7 +19,7 @@
           <td><router-link :to="{name:'qRcode',params:{emailId:data.emailId}}"  tag="a" v-text="data.emailId"></router-link></td>
           <td v-text="data.sku"></td>
           <td v-text="data.model"></td>
-          <td v-text=""></td>
+          <td v-text="data.din"></td>
           <td v-text="data.sn"></td>
           <td v-text="data.pid"></td>
           <td v-text="data.lastUpdateTime"></td>
