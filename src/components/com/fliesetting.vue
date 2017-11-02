@@ -147,7 +147,6 @@ export default {
                   vm.btnState = false
               }, 5 * 1000)
               vm.$store.state.PrintEmailId = $.trim(vm.PrintEmailId_1);
-              console.log(vm.$store.state.PrintEmailId)
               var jobCfg = '{Plex:' + vm.selected.Plex + ';MediaSize:' + vm.selected.MediaSize + ';MediaType:' + vm.selected.MediaType + ';Color:' + vm.selected.Color + ';Quality:' + vm.selected.Quality + ';Copies:' + vm.selected.Copies + '}';//打印参数
               var jobCfg1 = encodeURIComponent(jobCfg)
               var data = new FormData($('#upLoadApp')[0])
@@ -199,7 +198,7 @@ export default {
           if (typeof (e.target.files[0]) !== "undefined") {
               this.filename = e.target.files[0].name;
               let imageArr = ["jpg", "png", "gif", "jpeg", "bmp"]
-              if (imageArr.indexOf(this.filename.split(".")[1]) != -1) {//判断该上传文件的类型
+              if (imageArr.indexOf(this.filename.split(".")[1].toLowerCase()) != -1) {//判断该上传文件的类型
                   this.isimage = true
               } else {
                   this.isimage = false
@@ -232,7 +231,7 @@ export default {
                                           "resultCode": item.result,
                                           "state": item.state,
                                       }
-                                      vm.$store.state.notification[j].msg.unshift(obj)
+                                      vm.$store.state.notification[j].msg.push(obj)
 
                                   } else if (item.result == 0 && item.state == 9001) {//打印超过5分钟
                                       obj = {//成功之后返回的数据
@@ -243,14 +242,14 @@ export default {
                                           "state": item.state,
                                           "resultCode": 2,
                                       }
-                                      vm.$store.state.notification[j].msg.unshift(obj)
+                                      vm.$store.state.notification[j].msg.push(obj)
                                   } else if (item.result == 1) {//打印成功
                                       obj = {
                                           "helpTitle": 'Print Successful',
                                           "state": item.state,
                                           "resultCode": item.result,
                                       }
-                                      vm.$store.state.notification[j].msg.unshift(obj)
+                                      vm.$store.state.notification[j].msg.push(obj)
                                   } else if (item.result == 2) {//返回打印错误信息
                                       obj = {//成功之后返回的数据
                                           "helpTitle": item.helpTitle,
@@ -260,12 +259,13 @@ export default {
                                           "state": item.state,
                                           "resultCode": item.result,
                                       }
-                                      vm.$store.state.notification[j].msg.unshift(obj)
+                                      vm.$store.state.notification[j].msg.push(obj)
                                   }
                               }
                              }
                           }
                       })(arr[i], i)
+
                       if (arr[0].result != 0) {
                           clearInterval(vm.intervalObj[vm.name + job_num])//清除定时器
                       }
@@ -289,12 +289,13 @@ export default {
           vm.$http.get(vm.$api.url("getInkAlert/allMessage?printerEmailId=" + vm.$store.state.PrintEmailId + "&jobNum=" + job_num)).then((data) => {
               if (data.body != '') {
                   let resultMsg
+                  let compaRes
                   for (var j in data.body) {
                       (function (item) {
                           if (item.helpTitle != "") {
                               for (var i = 0; i < vm.$store.state.notification.length; i++) {
                                   if (vm.$store.state.notification[i].jobNum == job_num) {
-                                      compaRes = vm.findIndexOf(item, vm.$store.state.notification[j].msg, 'helpTitle')
+                                      compaRes = vm.findIndexOf(item, vm.$store.state.notification[i].msg, 'helpTitle')
                                       if (compaRes) {
                                           vm.$store.state.notification[i].num += 1
                                           resultMsg = {

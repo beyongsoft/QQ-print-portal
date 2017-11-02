@@ -5,7 +5,7 @@
     <table class="table table-hover table-bordered">
       <thead>
         <tr>
-          <th width="25%">PrinteEmailId</th>
+          <th width="25%">PrinterEmailId</th>
           <th width="15%">SKU</th>
           <th width="15%">Model</th>
           <th width="15">Din</th>

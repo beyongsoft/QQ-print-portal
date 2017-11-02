@@ -108,7 +108,7 @@ export default {
     },
     validator: function(){//验证printeremailid是否存在
         var reg = /^([a-zA-Z0-9_-])+@([a-zA-Z0-9_-])+(.[a-zA-Z0-9_-])+/
-        var flag=reg.test(this.PrintEmailId)//验证邮箱的正则表达式
+        var flag=reg.test($.trim(this.PrintEmailId))//验证邮箱的正则表达式
         this.isclick = !flag
         this.btnState = !flag
         this.$store.state.newBing = flag//判断是否需要绑定
