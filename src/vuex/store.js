@@ -6,6 +6,7 @@ const store = new Vuex.Store({
     state: {
         sku: "", //输入的地址
         PrintEmailId: "", //打印机的email地址
+        deviceId:"",//打印机的CloudId
         printerId: "", //获取到的打印机的Id
         newBing: true, //是否为新绑定的
         logMessage: {}, //log日志
@@ -33,6 +34,7 @@ const store = new Vuex.Store({
             //第一步输入的基本信息
             state.sku = msg.sku;
             state.PrintEmailId = msg.emailId;
+            state.deviceId = msg.deviceId;
         },
         newstep2(state, msg) {
             //第二步传入的参数

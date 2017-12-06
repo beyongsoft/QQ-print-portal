@@ -227,6 +227,8 @@ export default {
 .boot-select {
   float: right;
   width: 80px;
+  height: 33px;
+  margin-top: 3px;
 }
 
 .boot-nav {

@@ -1,7 +1,7 @@
 <template>
   <div id="app">
      <div class="container-fluid">
-    <HeaderDiv></HeaderDiv>
+    <!-- <HeaderDiv></HeaderDiv> -->
     <router-view></router-view>
     <Warning></Warning>
     <Tip></Tip>
@@ -10,14 +10,14 @@
 </template>
 
 <script>
-import HeaderDiv from '@/components/header.vue'
+// import HeaderDiv from '@/components/header.vue'
 import Warning from '@/components/com/warning.vue'
 import Tip from '@/components/com/tipmessage.vue'
 
 export default {
   name: 'app',
   components:{
-    HeaderDiv,
+    // HeaderDiv,
     Warning,
     Tip
 
@@ -32,6 +32,9 @@ export default {
   -moz-osx-font-smoothing: grayscale;
   text-align: center;
   color: #2c3e50;
-  margin-top: 60px;
+  /*margin-top: 60px;*/
+}
+.container-fluid{
+  width: 90%;
 }
 </style>

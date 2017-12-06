@@ -1,28 +1,22 @@
 import Vue from 'vue'
 import Router from 'vue-router'
-import qRcode from '@/components/qRcode'
-import Binding from '@/components/Binding'
-import EmailIdList from '@/components/EmailIdList'
+import AddPrinter from '@/components/AddPrinter'
+import PrinterList from '@/components/PrinterList'
 
 Vue.use(Router)
 
 export default new Router({
     routes: [{
             path: '/',
-            component: Binding
-        },
-        {
-            path: '/qRcode/',
-            name: 'qRcode',
-            component: qRcode,
-        }, {
-            path: '/bind',
-            name: 'bind',
-            component: Binding,
+            component: PrinterList
+        },{
+            path: '/add',
+            name: 'add',
+            component: AddPrinter,
         }, {
             path: '/idList',
             name: 'idList',
-            component: EmailIdList
+            component: PrinterList
         }
     ]
 })

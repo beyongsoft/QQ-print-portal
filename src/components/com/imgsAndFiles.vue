@@ -1,58 +1,22 @@
 <template>
   <fieldset>
-    <h3>Basic</h3>
-    <div class="form-group" :class="{'has-error':isclick}">
-      <label class="col-sm-4 col-md-4 col-xs-4 control-label text-left" for="ds_username">PrinterEmailId</label>
+    <h3>ImgsAndFiles</h3>
+    <div class="form-group">
+      <label class="col-sm-4 col-md-4 col-xs-4 control-label text-left" for="ds_username"></span>certificate</label>
       <div class="col-sm-8 col-xs-8 col-md-8">
-        <input class="form-control" id="ds_username" type="text" placeholder="PrinterEmailId" v-model="PrintEmailId" @blur="validator" required/>
+        <input class="form-control" id="ds_certificate" type="file" />
       </div>
     </div>
     <div class="form-group">
-      <label class="col-sm-4 col-md-4 col-xs-4 control-label text-left" for="ds_username"></span>CloudId</label>
+      <label class="col-sm-4 col-md-4 col-xs-4 control-label text-left" for="ds_username"></span>Flyer</label>
       <div class="col-sm-8 col-xs-8 col-md-8">
-        <input class="form-control" id="ds_deviceId" type="text" placeholder="CloudId" v-model="deviceId" />
+        <input class="form-control" id="ds_Flyer" type="file" />
       </div>
     </div>
     <div class="form-group">
-      <label class="col-sm-4 col-md-4 col-xs-4 control-label text-left" for="ds_username"></span>ProductName</label>
+      <label class="col-sm-4 col-md-4 col-xs-4 control-label text-left" for="ds_username"></span>PrinterIcon</label>
       <div class="col-sm-8 col-xs-8 col-md-8">
-        <input class="form-control" id="ds_ProductName" type="text" placeholder="ProductName" v-model="ProductName" />
-      </div>
-    </div>
-    <div class="form-group">
-      <label class="col-sm-4 col-md-4 col-xs-4 control-label text-left" for="ds_username"></span>ModelName</label>
-      <div class="col-sm-8 col-xs-8 col-md-8">
-        <input class="form-control" id="ds_ModelName" type="text" placeholder="ModelName" v-model="ModelName" />
-      </div>
-    </div>
-    <div class="form-group">
-      <label class="col-sm-4 col-md-4 col-xs-4 control-label text-left" for="ds_username"></span>SKU</label>
-      <div class="col-sm-8 col-xs-8 col-md-8">
-        <input class="form-control" id="ds_SKU" type="text" placeholder="SKU" v-model="SKU" />
-      </div>
-    </div>
-    <div class="form-group">
-      <label class="col-sm-4 col-md-4 col-xs-4 control-label text-left" for="ds_username"></span>PID</label>
-      <div class="col-sm-8 col-xs-8 col-md-8">
-        <input class="form-control" id="ds_PID" type="text" placeholder="PID" v-model="PID" />
-      </div>
-    </div>
-    <div class="form-group">
-      <label class="col-sm-4 col-md-4 col-xs-4 control-label text-left" for="ds_username"></span>JDLinks</label>
-      <div class="col-sm-8 col-xs-8 col-md-8">
-        <input class="form-control" id="ds_JDLinks" type="text" placeholder="JDLinks" v-model="JDLinks" />
-      </div>
-    </div>
-    <div class="form-group">
-      <label class="col-sm-4 col-md-4 col-xs-4 control-label text-left" for="ds_username"></span>FAQ</label>
-      <div class="col-sm-8 col-xs-8 col-md-8">
-        <input class="form-control" id="ds_FAQ" type="text" placeholder="FAQ" v-model="FAQ" />
-      </div>
-    </div>
-    <div class="form-group">
-      <label class="col-sm-4 col-md-4 col-xs-4 control-label text-left" for="ds_username"></span>PCPrompt</label>
-      <div class="col-sm-8 col-xs-8 col-md-8">
-        <input class="form-control" id="ds_PCPrompt" type="text" placeholder="PCPrompt" v-model="PCPrompt" />
+        <input class="form-control" id="ds_PrinterIcon" type="file"/>
       </div>
     </div>
     <div class="form-group">
@@ -158,6 +122,6 @@ export default {
 }
 
 </script>
-<style type="text/css">
-  .btn-save{margin-left: 70%;background: #2e6daF;color:white;}
+<style type="text/css" scoped="">
+  input{font-size: 10px;}
 </style>

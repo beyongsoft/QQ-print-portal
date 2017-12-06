@@ -30,7 +30,7 @@ export default {
 </script>
 <style lang="less" scoped>
   .warning-message{
-    position: absolute;
+    position: fixed;
     right: 50%;
     bottom: 50%;
     width: 30%;
