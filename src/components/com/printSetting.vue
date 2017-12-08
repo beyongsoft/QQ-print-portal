@@ -1,6 +1,6 @@
 <template>
   <fieldset>
-    <h3>PrintSetting</h3>
+    <h3>Print Settings</h3>
     <div class="form-group">
       <div class="col-sm-12">
         <div style="border:1px solid #ccc;border-radius: 4px;">
@@ -286,9 +286,9 @@
         </div>
       </div>
     </div>
-    <div class="form-group">
+    <!-- <div class="form-group">
        <button class="btn btn-save">save</button>
-    </div>
+    </div> -->
   </fieldset>
 </template>
 <script>

@@ -1,70 +1,52 @@
 <template>
   <fieldset>
-    <h3>Basic</h3>
-<!--     <div class="form-group" :class="{'has-error':isclick}">
-      <label class="col-sm-4 col-md-4 col-xs-4 control-label text-left" >PrinterEmailId</label>
+    <h3>Printer Description</h3>
+    <div class="form-group">
+      <label class="col-sm-4 col-md-4 col-xs-4 control-label text-left" ></span>商品名称</label>
       <div class="col-sm-8 col-xs-8 col-md-8">
-        <input class="form-control" id="ds_username" type="text" placeholder="PrinterEmailId" v-model="PrintEmailId" @blur="validator" required/>
+        <input class="form-control" id="ds_PrinterName" type="text" placeholder="商品名称" v-model="PrinterName" />
       </div>
     </div>
     <div class="form-group">
-      <label class="col-sm-4 col-md-4 col-xs-4 control-label text-left" ></span>CloudId</label>
+      <label class="col-sm-4 col-md-4 col-xs-4 control-label text-left" ></span>商品毛重</label>
       <div class="col-sm-8 col-xs-8 col-md-8">
-        <input class="form-control" id="ds_deviceId" type="text" placeholder="CloudId" v-model="deviceId" />
-      </div>
-    </div> -->
-    <div class="form-group">
-      <label class="col-sm-4 col-md-4 col-xs-4 control-label text-left" ></span>ProductName</label>
-      <div class="col-sm-8 col-xs-8 col-md-8">
-        <input class="form-control" id="ds_ProductName" type="text" placeholder="ProductName" v-model="ProductName" />
+        <input class="form-control" id="ds_PrinterWeight" type="text" placeholder="商品毛重" v-model="PrinterWeight" />
       </div>
     </div>
     <div class="form-group">
-      <label class="col-sm-4 col-md-4 col-xs-4 control-label text-left" ></span>ModelName</label>
+      <label class="col-sm-4 col-md-4 col-xs-4 control-label text-left" ></span>商品产地</label>
       <div class="col-sm-8 col-xs-8 col-md-8">
-        <input class="form-control" id="ds_ModelName" type="text" placeholder="ModelName" v-model="ModelName" />
+        <input class="form-control" id="ds_PrinterPlace" type="text" placeholder="商品产地" v-model="PrinterPlace" />
       </div>
     </div>
     <div class="form-group">
-      <label class="col-sm-4 col-md-4 col-xs-4 control-label text-left" ></span>SKU</label>
+      <label class="col-sm-4 col-md-4 col-xs-4 control-label text-left" ></span>多功能</label>
       <div class="col-sm-8 col-xs-8 col-md-8">
-        <input class="form-control" id="ds_SKU" type="text" placeholder="SKU" v-model="SKU" />
+        <input class="form-control" id="ds_Multifunctional" type="text" placeholder="多功能" v-model="Multifunctional" />
       </div>
     </div>
     <div class="form-group">
-      <label class="col-sm-4 col-md-4 col-xs-4 control-label text-left" ></span>Go-live date</label>
+      <label class="col-sm-4 col-md-4 col-xs-4 control-label text-left" ></span>网络打印</label>
       <div class="col-sm-8 col-xs-8 col-md-8">
-        <input class="form-control" id="ds_goliveDate" type="datetime" placeholder="Go-live date" v-model="goliveDate" />
+        <input class="form-control" id="ds_FAQ" type="text" placeholder="网络打印" v-model="FAQ" />
       </div>
     </div>
     <div class="form-group">
-      <label class="col-sm-4 col-md-4 col-xs-4 control-label text-left" ></span>JD link (Home page)</label>
+      <label class="col-sm-4 col-md-4 col-xs-4 control-label text-left" ></span>类型</label>
       <div class="col-sm-8 col-xs-8 col-md-8">
-        <input class="form-control" id="ds_JDLinks" type="text" placeholder="JD link (Home page)" v-model="JDLinks" />
+        <input class="form-control" id="ds_printerType" type="text" placeholder="类型" v-model="printerType" />
       </div>
     </div>
     <div class="form-group">
-      <label class="col-sm-4 col-md-4 col-xs-4 control-label text-left" ></span>FAQ link (Home page)</label>
+      <label class="col-sm-4 col-md-4 col-xs-4 control-label text-left" ></span>幅面</label>
       <div class="col-sm-8 col-xs-8 col-md-8">
-        <input class="form-control" id="ds_FAQ" type="text" placeholder="FAQ link (Home page)" v-model="FAQ" />
+        <input class="form-control" id="ds_PrinterBreadth" type="text" placeholder="幅面" v-model="PrinterBreadth" />
       </div>
     </div>
     <div class="form-group">
-      <label class="col-sm-4 col-md-4 col-xs-4 control-label text-left" ></span>PC prompt A link</label>
+      <label class="col-sm-4 col-md-4 col-xs-4 control-label text-left" ></span>用途</label>
       <div class="col-sm-8 col-xs-8 col-md-8">
-        <input class="form-control" id="ds_PCPromptALink" type="text" placeholder="PC prompt A link" v-model="PCPromptALink" />
-      </div>
-    </div>
-    <div class="form-group">
-      <label class="col-sm-4 col-md-4 col-xs-4 control-label text-left" ></span>PC prompt B link</label>
-      <div class="col-sm-8 col-xs-8 col-md-8">
-        <input class="form-control" id="ds_PCPromptBLink" type="text" placeholder="PC prompt B link" v-model="PCPromptBLink" />
-      </div>
-    </div>
-    <div class="form-group">
-      <label class="col-sm-4 col-md-4 col-xs-4 control-label text-left"></span>PrinterIcon</label>
-      <div class="col-sm-8 col-xs-8 col-md-8">
-        <input class="form-control" id="ds_PrinterIcon" type="file"/>
+        <input class="form-control" id="ds_PrinterPurpose" type="text" placeholder="用途" v-model="PrinterPurpose" />
       </div>
     </div>
 <!--     <div class="form-group">
@@ -171,4 +153,9 @@ export default {
 
 </script>
 <style type="text/css">
+  .btn-save{margin-left: 70%;background: #2e6daF;color:white;}
+</style>
+<style type="text/css" scoped="">
+    .form-group label{width: 25%;}
+    .form-group div{width: 75%;}
 </style>

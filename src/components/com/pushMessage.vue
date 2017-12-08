@@ -1,6 +1,7 @@
 <template>
   <fieldset>
-    <h3>Push Message</h3>
+    <h3>Push Message Rules({{num}})</h3>
+    <div><router-link to="/pushMessageList" tag="li" class="addProduct">查看已添加推送信息</router-link></div>
     <div class="dropdown">
       <a href="#" class="dropdown-toggle" data-toggle="dropdown" v-model="threshold_level">{{threshold_level}}<b class="caret"></b></a>
       <ul class="dropdown-menu dd">
@@ -10,70 +11,70 @@
       </ul>
     </div>
     <div class="form-group">
-      <label class="col-sm-4 col-md-4 col-xs-4 control-label text-left" for="ds_username">
+      <label class="col-sm-4 col-md-4 col-xs-4 control-label text-left" >
         </span>Color</label>
       <div class="col-sm-8 col-xs-8 col-md-8">
         <input class="form-control" id="ds_Color" type="text" placeholder="Color" v-model="Color" />
       </div>
     </div>
     <div class="form-group">
-      <label class="col-sm-4 col-md-4 col-xs-4 control-label text-left" for="ds_username">
-        </span>SelectabilityNum</label>
+      <label class="col-sm-4 col-md-4 col-xs-4 control-label text-left" >
+        </span>Selectability Num</label>
       <div class="col-sm-8 col-xs-8 col-md-8">
-        <input class="form-control" id="ds_SelectabilityNum" type="text" placeholder="SelectabilityNum" v-model="SelectabilityNum" />
+        <input class="form-control" id="ds_SelectabilityNum" type="text" placeholder="Selectability Num" v-model="SelectabilityNum" />
       </div>
     </div>
     <div class="form-group">
-      <label class="col-sm-4 col-md-4 col-xs-4 control-label text-left" for="ds_username">
+      <label class="col-sm-4 col-md-4 col-xs-4 control-label text-left" >
         </span>Part#</label>
       <div class="col-sm-8 col-xs-8 col-md-8">
         <input class="form-control" id="ds_Part" type="text" placeholder="Part#" v-model="Part" />
       </div>
     </div>
     <div class="form-group">
-      <label class="col-sm-4 col-md-4 col-xs-4 control-label text-left" for="ds_username">
-        </span>JDLink</label>
+      <label class="col-sm-4 col-md-4 col-xs-4 control-label text-left" >
+        </span>JD Link</label>
       <div class="col-sm-8 col-xs-8 col-md-8">
-        <input class="form-control" id="ds_JDLink" type="text" placeholder="JDLink" v-model="JDLink" />
+        <input class="form-control" id="ds_JDLink" type="text" placeholder="JD Link" v-model="JDLink" />
       </div>
     </div>
     <div class="form-group">
-      <label class="col-sm-4 col-md-4 col-xs-4 control-label text-left" for="ds_username">
-        </span>ConsumableType</label>
+      <label class="col-sm-4 col-md-4 col-xs-4 control-label text-left" >
+        </span>Consumable Type</label>
       <div class="col-sm-8 col-xs-8 col-md-8">
-        <input class="form-control" id="ds_ConsumableType" type="text" placeholder="ConsumableType" v-model="ConsumableType" />
+        <input class="form-control" id="ds_ConsumableType" type="text" placeholder="Consumable Type" v-model="ConsumableType" />
       </div>
     </div>
     <div class="form-group">
-      <label class="col-sm-4 col-md-4 col-xs-4 control-label text-left" for="ds_username">
-        </span>ThresholdValue</label>
+      <label class="col-sm-4 col-md-4 col-xs-4 control-label text-left" >
+        </span>Threshold Value</label>
       <div class="col-sm-8 col-xs-8 col-md-8">
-        <input class="form-control" id="ds_ThresholdValue" type="text" placeholder="ThresholdValue" v-model="ThresholdValue" />
+        <input class="form-control" id="ds_ThresholdValue" type="text" placeholder="Threshold Value" v-model="ThresholdValue" />
       </div>
     </div>
     <div class="form-group">
-      <label class="col-sm-4 col-md-4 col-xs-4 control-label text-left" for="ds_username">
-        </span>AlterTitle</label>
+      <label class="col-sm-4 col-md-4 col-xs-4 control-label text-left" >
+        </span>Alter Title</label>
       <div class="col-sm-8 col-xs-8 col-md-8">
-        <input class="form-control" id="ds_AlterTitle" type="text" placeholder="AlterTitle" v-model="AlterTitle" />
+        <input class="form-control" id="ds_AlterTitle" type="text" placeholder="Alter Title" v-model="AlterTitle" />
       </div>
     </div>
     <div class="form-group">
-      <label class="col-sm-4 col-md-4 col-xs-4 control-label text-left" for="ds_username">
-        </span>HelpUrlTitle</label>
+      <label class="col-sm-4 col-md-4 col-xs-4 control-label text-left" >
+        </span>HelpUrl Title</label>
       <div class="col-sm-8 col-xs-8 col-md-8">
-        <input class="form-control" id="ds_HelpUrlTitle" type="text" placeholder="HelpUrlTitle" v-model="HelpUrlTitle" />
+        <input class="form-control" id="ds_HelpUrlTitle" type="text" placeholder="HelpUrl Title" v-model="HelpUrlTitle" />
       </div>
     </div>
     <div class="form-group">
-      <label class="col-sm-4 col-md-4 col-xs-4 control-label text-left" for="ds_username">
-        </span>IconUrl</label>
+      <label class="col-sm-4 col-md-4 col-xs-4 control-label text-left" >
+        </span>Icon Url</label>
       <div class="col-sm-8 col-xs-8 col-md-8">
-        <input class="form-control" id="ds_IconUrl" type="text" placeholder="IconUrl" v-model="IconUrl" />
+        <input class="form-control" id="ds_IconUrl" type="text" placeholder="Icon Url" v-model="IconUrl" />
       </div>
     </div>
     <div class="form-group">
-       <button class="btn btn-save">save</button>
+       <button class="btn btn-save" v-on:click="num++">save</button>
     </div>
   </fieldset>
 </template>
@@ -87,7 +88,8 @@ export default {
       btnState: false,
       PrintEmailId: '',
       deviceId: '',
-      isclick: false
+      isclick: false,
+      num:0
     }
   },
   beforeCreate() {
@@ -178,4 +180,5 @@ export default {
 </script>
 <style type="text/css" scoped="">
   .dd{margin-left: 35%;}
+  .btn-save{margin-left: 70%;background: #2e6daF;color:white;}
 </style>

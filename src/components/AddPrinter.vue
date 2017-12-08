@@ -1,27 +1,29 @@
 <!--这是绑定printerId的页面-->
 <template>
-  <div class="bind-progress">
+  <form class="bind-progress">
     <div class="submitPrinterBox">
-      <button class="btn submitPrinter">提交</button>
+      <button class="btn submitPrinter">submit</button>
     </div>
     <div class="row">
       <div class="col-md-5 col-padding">
         <Gen></Gen>
-        <ImgsAndFiles></ImgsAndFiles>
+        <PushMessage></PushMessage>
       </div>
       <div class="col-md-6 col-padding">
+        <ImgsAndFiles></ImgsAndFiles>
         <PrintSetting></PrintSetting>
-        <PushMessage></PushMessage>
+        <PrinterDescription></PrinterDescription>
       </div>
       <Loading v-show="showLoading"></Loading>
     </div>
-  </div>
+  </form>
 </template>
 <script>
 import Gen from './com/generate'
 import ImgsAndFiles from './com/imgsAndFiles'
 import PrintSetting from './com/printSetting'
 import PushMessage from './com/pushMessage'
+import PrinterDescription from './com/printerDescription'
 import Loading from "./com/loading"
 // import Submit from './com/submit'
 export default {
@@ -36,6 +38,7 @@ export default {
     ImgsAndFiles,
     PrintSetting,
     PushMessage,
+    PrinterDescription,
     Loading
   },
   computed: {

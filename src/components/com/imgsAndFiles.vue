@@ -1,27 +1,27 @@
 <template>
   <fieldset>
-    <h3>ImgsAndFiles</h3>
+    <h3>Keys</h3>
     <div class="form-group">
-      <label class="col-sm-4 col-md-4 col-xs-4 control-label text-left" for="ds_username"></span>certificate</label>
+      <label class="col-sm-4 col-md-4 col-xs-4 control-label text-left" ></span>PID</label>
       <div class="col-sm-8 col-xs-8 col-md-8">
-        <input class="form-control" id="ds_certificate" type="file" />
+        <input class="form-control" id="ds_PID" type="text" placeholder="PID" v-model="PID" />
       </div>
     </div>
     <div class="form-group">
-      <label class="col-sm-4 col-md-4 col-xs-4 control-label text-left" for="ds_username"></span>Flyer</label>
+      <label class="col-sm-4 col-md-4 col-xs-4 control-label text-left"></span>Public Key</label>
       <div class="col-sm-8 col-xs-8 col-md-8">
-        <input class="form-control" id="ds_Flyer" type="file" />
+        <input class="form-control" id="ds_public" type="file" />
       </div>
     </div>
     <div class="form-group">
-      <label class="col-sm-4 col-md-4 col-xs-4 control-label text-left" for="ds_username"></span>PrinterIcon</label>
+      <label class="col-sm-4 col-md-4 col-xs-4 control-label text-left"></span>Private Key</label>
       <div class="col-sm-8 col-xs-8 col-md-8">
-        <input class="form-control" id="ds_PrinterIcon" type="file"/>
+        <input class="form-control" id="ds_private" type="file" />
       </div>
     </div>
-    <div class="form-group">
+<!--     <div class="form-group">
        <button class="btn btn-save">save</button>
-    </div>
+    </div> -->
   </fieldset>
 </template>
 <script>
@@ -122,6 +122,10 @@ export default {
 }
 
 </script>
+<style type="text/css">
+  input[type="file"]{font-size: 10px;}
+</style>
 <style type="text/css" scoped="">
-  input{font-size: 10px;}
+    .form-group label{width: 25%;}
+    .form-group div{width: 75%;}
 </style>
