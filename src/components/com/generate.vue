@@ -4,67 +4,73 @@
 <!--     <div class="form-group" :class="{'has-error':isclick}">
       <label class="col-sm-4 col-md-4 col-xs-4 control-label text-left" >PrinterEmailId</label>
       <div class="col-sm-8 col-xs-8 col-md-8">
-        <input class="form-control" id="ds_username" type="text" placeholder="PrinterEmailId" v-model="PrintEmailId" @blur="validator" required/>
+        <input class="form-control" id="username" type="text" placeholder="PrinterEmailId" v-model="PrintEmailId" @blur="validator" required/>
       </div>
     </div>
     <div class="form-group">
       <label class="col-sm-4 col-md-4 col-xs-4 control-label text-left" ></span>CloudId</label>
       <div class="col-sm-8 col-xs-8 col-md-8">
-        <input class="form-control" id="ds_deviceId" type="text" placeholder="CloudId" v-model="deviceId" />
+        <input class="form-control" id="deviceId" type="text" placeholder="CloudId" v-model="deviceId" />
       </div>
     </div> -->
     <div class="form-group">
+      <label class="col-sm-4 col-md-4 col-xs-4 control-label text-left" ></span>Product</label>
+      <div class="col-sm-8 col-xs-8 col-md-8">
+        <input class="form-control" id="Product" type="text" placeholder="Product" v-model="Product" />
+      </div>
+    </div>
+    <div class="form-group">
       <label class="col-sm-4 col-md-4 col-xs-4 control-label text-left" ></span>ProductName</label>
       <div class="col-sm-8 col-xs-8 col-md-8">
-        <input class="form-control" id="ds_ProductName" type="text" placeholder="ProductName" v-model="ProductName" />
+        <input class="form-control" id="ProductName" type="text" placeholder="ProductName" v-model="ProductName" />
       </div>
     </div>
     <div class="form-group">
       <label class="col-sm-4 col-md-4 col-xs-4 control-label text-left" ></span>ModelName</label>
       <div class="col-sm-8 col-xs-8 col-md-8">
-        <input class="form-control" id="ds_ModelName" type="text" placeholder="ModelName" v-model="ModelName" />
+        <input class="form-control" id="ModelName" type="text" placeholder="ModelName" v-model="ModelName" />
       </div>
     </div>
     <div class="form-group">
       <label class="col-sm-4 col-md-4 col-xs-4 control-label text-left" ></span>SKU</label>
       <div class="col-sm-8 col-xs-8 col-md-8">
-        <input class="form-control" id="ds_SKU" type="text" placeholder="SKU" v-model="SKU" />
+        <input class="form-control" id="SKU" type="text" placeholder="SKU" v-model="SKU" />
       </div>
     </div>
     <div class="form-group">
       <label class="col-sm-4 col-md-4 col-xs-4 control-label text-left" ></span>Go-live date</label>
       <div class="col-sm-8 col-xs-8 col-md-8">
-        <input class="form-control" id="ds_goliveDate" type="datetime" placeholder="Go-live date" v-model="goliveDate" />
+        <input class="form-control" id="goliveDate" type="date" placeholder="Go-live date" v-model="goliveDate" />
       </div>
     </div>
     <div class="form-group">
       <label class="col-sm-4 col-md-4 col-xs-4 control-label text-left" ></span>JD link (Home page)</label>
       <div class="col-sm-8 col-xs-8 col-md-8">
-        <input class="form-control" id="ds_JDLinks" type="text" placeholder="JD link (Home page)" v-model="JDLinks" />
+        <input class="form-control" id="JDLinks" type="text" placeholder="JD link (Home page)" v-model="JDLinks" />
       </div>
     </div>
     <div class="form-group">
       <label class="col-sm-4 col-md-4 col-xs-4 control-label text-left" ></span>FAQ link (Home page)</label>
       <div class="col-sm-8 col-xs-8 col-md-8">
-        <input class="form-control" id="ds_FAQ" type="text" placeholder="FAQ link (Home page)" v-model="FAQ" />
+        <input class="form-control" id="FAQ" type="text" placeholder="FAQ link (Home page)" v-model="FAQ" />
       </div>
     </div>
     <div class="form-group">
       <label class="col-sm-4 col-md-4 col-xs-4 control-label text-left" ></span>PC prompt A link</label>
       <div class="col-sm-8 col-xs-8 col-md-8">
-        <input class="form-control" id="ds_PCPromptALink" type="text" placeholder="PC prompt A link" v-model="PCPromptALink" />
+        <input class="form-control" id="PCPromptALink" type="text" placeholder="PC prompt A link" v-model="PCPromptALink" />
       </div>
     </div>
     <div class="form-group">
       <label class="col-sm-4 col-md-4 col-xs-4 control-label text-left" ></span>PC prompt B link</label>
       <div class="col-sm-8 col-xs-8 col-md-8">
-        <input class="form-control" id="ds_PCPromptBLink" type="text" placeholder="PC prompt B link" v-model="PCPromptBLink" />
+        <input class="form-control" id="PCPromptBLink" type="text" placeholder="PC prompt B link" v-model="PCPromptBLink" />
       </div>
     </div>
     <div class="form-group">
-      <label class="col-sm-4 col-md-4 col-xs-4 control-label text-left"></span>PrinterIcon</label>
+      <label class="col-sm-4 col-md-4 col-xs-4 control-label text-left"></span>Printer Icon</label>
       <div class="col-sm-8 col-xs-8 col-md-8">
-        <input class="form-control" id="ds_PrinterIcon" type="file"/>
+        <input class="form-control" id="PrinterIcon" type="file"/>
       </div>
     </div>
 <!--     <div class="form-group">

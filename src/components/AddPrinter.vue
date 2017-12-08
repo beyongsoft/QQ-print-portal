@@ -1,7 +1,8 @@
 <!--这是绑定printerId的页面-->
 <template>
-  <form class="bind-progress">
+  <div class="bind-progress">
     <div class="submitPrinterBox">
+      <span v-on:click="templateIsShow = true">template</span>
       <button class="btn submitPrinter">submit</button>
     </div>
     <div class="row">
@@ -16,7 +17,8 @@
       </div>
       <Loading v-show="showLoading"></Loading>
     </div>
-  </form>
+    <div id="addPrinterModel" v-show="templateIsShow" v-on:click="templateIsShow = false"><img src="../assets/images/addPrinter-template.png"></div>
+  </div>
 </template>
 <script>
 import Gen from './com/generate'
@@ -30,7 +32,7 @@ export default {
   name: 'bind',
   data() {
     return {
-
+      templateIsShow:false
     }
   },
   components: {
@@ -66,5 +68,6 @@ export default {
   float: right;
   width: 80px;
 }
-
+#addPrinterModel{position: fixed;top: 0;left: 0;right: 0;bottom: 0;background: rgba(200,200,200,0.6)}
+#addPrinterModel>img{height: 100%;}
 </style>

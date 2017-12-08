@@ -4,19 +4,19 @@
     <div class="form-group">
       <label class="col-sm-4 col-md-4 col-xs-4 control-label text-left" ></span>PID</label>
       <div class="col-sm-8 col-xs-8 col-md-8">
-        <input class="form-control" id="ds_PID" type="text" placeholder="PID" v-model="PID" />
+        <input class="form-control" id="PID" type="text" placeholder="PID" v-model="PID" />
       </div>
     </div>
     <div class="form-group">
       <label class="col-sm-4 col-md-4 col-xs-4 control-label text-left"></span>Public Key</label>
       <div class="col-sm-8 col-xs-8 col-md-8">
-        <input class="form-control" id="ds_public" type="file" />
+        <input class="form-control" id="public" type="file" />
       </div>
     </div>
     <div class="form-group">
       <label class="col-sm-4 col-md-4 col-xs-4 control-label text-left"></span>Private Key</label>
       <div class="col-sm-8 col-xs-8 col-md-8">
-        <input class="form-control" id="ds_private" type="file" />
+        <input class="form-control" id="private" type="file" />
       </div>
     </div>
 <!--     <div class="form-group">

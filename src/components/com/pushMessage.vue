@@ -1,7 +1,7 @@
 <template>
   <fieldset>
     <h3>Push Message Rules({{num}})</h3>
-    <div><router-link to="/pushMessageList" tag="li" class="addProduct">查看已添加推送信息</router-link></div>
+    <!-- <div><router-link to="/pushMessageList" tag="li" class="addProduct">查看已添加推送信息</router-link></div> -->
     <div class="dropdown">
       <a href="#" class="dropdown-toggle" data-toggle="dropdown" v-model="threshold_level">{{threshold_level}}<b class="caret"></b></a>
       <ul class="dropdown-menu dd">
@@ -14,63 +14,63 @@
       <label class="col-sm-4 col-md-4 col-xs-4 control-label text-left" >
         </span>Color</label>
       <div class="col-sm-8 col-xs-8 col-md-8">
-        <input class="form-control" id="ds_Color" type="text" placeholder="Color" v-model="Color" />
+        <input class="form-control" id="Color" type="text" placeholder="Color" v-model="Color" />
       </div>
     </div>
     <div class="form-group">
       <label class="col-sm-4 col-md-4 col-xs-4 control-label text-left" >
         </span>Selectability Num</label>
       <div class="col-sm-8 col-xs-8 col-md-8">
-        <input class="form-control" id="ds_SelectabilityNum" type="text" placeholder="Selectability Num" v-model="SelectabilityNum" />
+        <input class="form-control" id="SelectabilityNum" type="text" placeholder="Selectability Num" v-model="SelectabilityNum" />
       </div>
     </div>
     <div class="form-group">
       <label class="col-sm-4 col-md-4 col-xs-4 control-label text-left" >
         </span>Part#</label>
       <div class="col-sm-8 col-xs-8 col-md-8">
-        <input class="form-control" id="ds_Part" type="text" placeholder="Part#" v-model="Part" />
+        <input class="form-control" id="Part" type="text" placeholder="Part#" v-model="Part" />
       </div>
     </div>
     <div class="form-group">
       <label class="col-sm-4 col-md-4 col-xs-4 control-label text-left" >
         </span>JD Link</label>
       <div class="col-sm-8 col-xs-8 col-md-8">
-        <input class="form-control" id="ds_JDLink" type="text" placeholder="JD Link" v-model="JDLink" />
+        <input class="form-control" id="JDLink" type="text" placeholder="JD Link" v-model="JDLink" />
       </div>
     </div>
     <div class="form-group">
       <label class="col-sm-4 col-md-4 col-xs-4 control-label text-left" >
         </span>Consumable Type</label>
       <div class="col-sm-8 col-xs-8 col-md-8">
-        <input class="form-control" id="ds_ConsumableType" type="text" placeholder="Consumable Type" v-model="ConsumableType" />
+        <input class="form-control" id="ConsumableType" type="text" placeholder="Consumable Type" v-model="ConsumableType" />
       </div>
     </div>
     <div class="form-group">
       <label class="col-sm-4 col-md-4 col-xs-4 control-label text-left" >
         </span>Threshold Value</label>
       <div class="col-sm-8 col-xs-8 col-md-8">
-        <input class="form-control" id="ds_ThresholdValue" type="text" placeholder="Threshold Value" v-model="ThresholdValue" />
+        <input class="form-control" id="ThresholdValue" type="text" placeholder="Threshold Value" v-model="ThresholdValue" />
       </div>
     </div>
     <div class="form-group">
       <label class="col-sm-4 col-md-4 col-xs-4 control-label text-left" >
         </span>Alter Title</label>
       <div class="col-sm-8 col-xs-8 col-md-8">
-        <input class="form-control" id="ds_AlterTitle" type="text" placeholder="Alter Title" v-model="AlterTitle" />
+        <input class="form-control" id="AlterTitle" type="text" placeholder="Alter Title" v-model="AlterTitle" />
       </div>
     </div>
     <div class="form-group">
       <label class="col-sm-4 col-md-4 col-xs-4 control-label text-left" >
         </span>HelpUrl Title</label>
       <div class="col-sm-8 col-xs-8 col-md-8">
-        <input class="form-control" id="ds_HelpUrlTitle" type="text" placeholder="HelpUrl Title" v-model="HelpUrlTitle" />
+        <input class="form-control" id="HelpUrlTitle" type="text" placeholder="HelpUrl Title" v-model="HelpUrlTitle" />
       </div>
     </div>
     <div class="form-group">
       <label class="col-sm-4 col-md-4 col-xs-4 control-label text-left" >
         </span>Icon Url</label>
       <div class="col-sm-8 col-xs-8 col-md-8">
-        <input class="form-control" id="ds_IconUrl" type="text" placeholder="Icon Url" v-model="IconUrl" />
+        <input class="form-control" id="IconUrl" type="text" placeholder="Icon Url" v-model="IconUrl" />
       </div>
     </div>
     <div class="form-group">
