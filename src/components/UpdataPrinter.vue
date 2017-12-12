@@ -3,9 +3,8 @@
   <div class="bind-progress">
     <form method="POST" action="http://10.10.56.40:8088/product/addProduct" enctype="multipart/form-data" >
       <div class="submitPrinterBox">
-        <!-- <span v-on:click="templateIsShow = true">template</span> -->
-        <div class="btn btn-info" v-on:click="templateIsShow = true">template</div>
-        <button class="btn submitPrinter">submit</button>
+        <!-- <div class="btn btn-info" v-on:click="templateIsShow = true">template</div> -->
+        <button class="btn submitPrinter">Submit the updates</button>
       </div>
       <div class="row">
         <div class="col-md-5 col-padding">
@@ -30,9 +29,8 @@ import PrintSetting from './com/printSetting'
 import PushMessage from './com/pushMessage'
 import PrinterDescription from './com/printerDescription'
 import Loading from "./com/loading"
-// import Submit from './com/submit'
 export default {
-  name: 'bind',
+  name: 'updata',
   data() {
     return {
       templateIsShow:false
@@ -41,19 +39,16 @@ export default {
   methods: {
    recieveMessage: function (text) {
     Toast('监听到子组件变化'+text);
-   },
-   PostData:function () {
-     $.ajax({
-            type: "POST",
-            mimeType: "multipart/form-data",
-            url: "http://10.10.56.40:8088/product/addProduct",
-            data : "",
-            success: function(msg) {
-              console.log(msg)
-            }
-        });
-        return false;
    }
+  },
+   mounted:function(){//表格刷新
+        this.$http.post('http://10.10.56.40:8088/product/productList').then(function(response) {
+          this.tableList = response.data.list;
+          console.log(response.data.list)
+        },function() {
+          console.log('error')
+        });
+      this.refresh()
   },
   components: {
     Gen,

@@ -16,61 +16,61 @@
     <div class="form-group">
       <label class="col-sm-4 col-md-4 col-xs-4 control-label text-left" ></span>Product</label>
       <div class="col-sm-8 col-xs-8 col-md-8">
-        <input class="form-control" id="Product" type="text" placeholder="Product" v-model="Product" />
+        <input class="form-control" id="Product" type="text" placeholder="Product"  name="product" v-on:input="oninput('product',product)" v-model="product"/>
       </div>
     </div>
     <div class="form-group">
       <label class="col-sm-4 col-md-4 col-xs-4 control-label text-left" ></span>ProductName</label>
       <div class="col-sm-8 col-xs-8 col-md-8">
-        <input class="form-control" id="ProductName" type="text" placeholder="ProductName" v-model="ProductName" />
+        <input class="form-control" id="ProductName" type="text" placeholder="ProductName" name="productName" v-on:input="oninput('productName',productName)" v-model="productName"/>
       </div>
     </div>
     <div class="form-group">
       <label class="col-sm-4 col-md-4 col-xs-4 control-label text-left" ></span>ModelName</label>
       <div class="col-sm-8 col-xs-8 col-md-8">
-        <input class="form-control" id="ModelName" type="text" placeholder="ModelName" v-model="ModelName" />
+        <input class="form-control" id="ModelName" type="text" placeholder="ModelName"  name="modelName" v-on:input="oninput('modelName',modelName)" v-model="modelName"/>
       </div>
     </div>
     <div class="form-group">
       <label class="col-sm-4 col-md-4 col-xs-4 control-label text-left" ></span>SKU</label>
       <div class="col-sm-8 col-xs-8 col-md-8">
-        <input class="form-control" id="SKU" type="text" placeholder="SKU" v-model="SKU" />
+        <input class="form-control" id="SKU" type="text" placeholder="SKU" name="sku" v-on:input="oninput('sku',sku)" v-model="sku"/>
       </div>
     </div>
     <div class="form-group">
       <label class="col-sm-4 col-md-4 col-xs-4 control-label text-left" ></span>Go-live date</label>
       <div class="col-sm-8 col-xs-8 col-md-8">
-        <input class="form-control" id="goliveDate" type="date" placeholder="Go-live date" v-model="goliveDate" />
+        <input class="form-control" id="goliveDate" type="date" placeholder="Go-live date"  name="goLiveDate" v-on:input="oninput('goLiveDate',goLiveDate)" v-model="goLiveDate"/>
       </div>
     </div>
     <div class="form-group">
       <label class="col-sm-4 col-md-4 col-xs-4 control-label text-left" ></span>JD link (Home page)</label>
       <div class="col-sm-8 col-xs-8 col-md-8">
-        <input class="form-control" id="JDLinks" type="text" placeholder="JD link (Home page)" v-model="JDLinks" />
+        <input class="form-control" id="JDLinks" type="text" placeholder="JD link (Home page)"  name="jdLinkHomePage" v-on:input="oninput('jdLinkHomePage',jdLinkHomePage)" v-model="jdLinkHomePage"/>
       </div>
     </div>
     <div class="form-group">
       <label class="col-sm-4 col-md-4 col-xs-4 control-label text-left" ></span>FAQ link (Home page)</label>
       <div class="col-sm-8 col-xs-8 col-md-8">
-        <input class="form-control" id="FAQ" type="text" placeholder="FAQ link (Home page)" v-model="FAQ" />
+        <input class="form-control" id="FAQ" type="text" placeholder="FAQ link (Home page)" name="faqLinHomePage" v-on:input="oninput('faqLinHomePage',faqLinHomePage)" v-model="faqLinHomePage"/>
       </div>
     </div>
     <div class="form-group">
       <label class="col-sm-4 col-md-4 col-xs-4 control-label text-left" ></span>PC prompt A link</label>
       <div class="col-sm-8 col-xs-8 col-md-8">
-        <input class="form-control" id="PCPromptALink" type="text" placeholder="PC prompt A link" v-model="PCPromptALink" />
+        <input class="form-control" id="PCPromptALink" type="text" placeholder="PC prompt A link"  name="pcPromptALink" v-on:input="oninput('pcPromptALink',pcPromptALink)" v-model="pcPromptALink"/>
       </div>
     </div>
     <div class="form-group">
       <label class="col-sm-4 col-md-4 col-xs-4 control-label text-left" ></span>PC prompt B link</label>
       <div class="col-sm-8 col-xs-8 col-md-8">
-        <input class="form-control" id="PCPromptBLink" type="text" placeholder="PC prompt B link" v-model="PCPromptBLink" />
+        <input class="form-control" id="PCPromptBLink" type="text" placeholder="PC prompt B link"  name="pcPromptBLink" v-on:input="oninput('pcPromptBLink',pcPromptBLink)" v-model="pcPromptBLink"/>
       </div>
     </div>
     <div class="form-group">
       <label class="col-sm-4 col-md-4 col-xs-4 control-label text-left"></span>Printer Icon</label>
       <div class="col-sm-8 col-xs-8 col-md-8">
-        <input class="form-control" id="PrinterIcon" type="file"/>
+        <input class="form-control" id="PrinterIcon" type="file" name="printerIconFile" v-on:change="fileChange()" />
       </div>
     </div>
 <!--     <div class="form-group">
@@ -82,6 +82,17 @@
 export default {
   data() {
     return {
+      product:'',
+      productName:'',
+      modelName:'',
+      sku:'',
+      goLiveDate:'',
+      jdLinkHomePage:'',
+      faqLinHomePage:'',
+      faqLinHomePage:'',
+      pcPromptALink:'',
+      pcPromptBLink:'',
+      printerIconFile:"",
       selected: 'F5S46B',
       options: [],
       btnState: false,
@@ -91,73 +102,14 @@ export default {
     }
   },
   beforeCreate() {
-    const vm = this;
-    const url=vm.$api.url("qrcode/getSku")
-    vm.$http.get(url).then((data) => {//动态获取SKU
-
-      for (var i = 0; i < data.body.length; i++) {
-          var str =""
-            if(data.body[i].model!=null){
-                str = data.body[i].sku+"——"+data.body[i].model
-            }else{
-                str = data.body[i].sku
-            }
-          vm.options.push({ text:str,value:data.body[i].sku})
-      }
-    })
   },
   methods: {
-    step1: function() {//第一次生成图片二维码
-      const vm = this;
-      let str = ""
-
-      var hasprint = vm.validator()
-        if(!hasprint){
-
-        }else if(vm.selected==""){
-            str = "Please select sku"
-            vm.showWarining(str)
-        }else{
-            vm.btnState = true;
-          setTimeout(function() {//每次按下之后，将按钮禁用5秒
-            vm.btnState = false
-          }, 5 * 1000)
-          const obj = {
-            sku: vm.selected,
-            emailId: $.trim(vm.PrintEmailId),
-            deviceId: $.trim(vm.deviceId)
-          }
-          this.$store.commit('newStep1', obj)
-          var json = JSON.stringify(obj)
-          const url=vm.$api.url("qrcode/generate")
-          vm.$http.post(url, json, { emulateJSON: true }).then((data) => {
-            if (data.body == "") {
-              str = "The server did not return data"
-              vm.showWarining(str)
-            } else if (data.body.statusCode == 1) {
-              str = data.body.message
-              vm.showWarining(str)
-            } else {
-              vm.$store.state.printerId = data.body.content.split("=")[1]
-              vm.$store.state.codeSrc = "data:image/png;base64," + data.body.data
-              vm.$store.commit('log', JSON.parse(JSON.stringify(data.body.log)))
-              str = "Generate Success"
-              vm.showSuccess(str)
-            }
-          }, (err) => {
-            if (err.state == 500) {
-              str = "Server error"
-              vm.showWarining(str)
-            } else if (err.state == 404) {
-              str = "No resource found"
-              vm.showWarining(str)
-            } else {
-              str = "Server exception"
-              vm.showWarining(str)
-            }
-            vm.$store.commit('log', JSON.parse(JSON.stringify(err)))
-          })
-    }
+    oninput:function (key,value) {
+      this.$store.state.addPrinterObj[key] = value;
+      console.log(this.$store.state.addPrinterObj)
+    },
+    fileChange:function () {
+      
     },
     validator: function(){//验证printeremailid是否存在
         var reg = /^([a-zA-Z0-9_-])+@([a-zA-Z0-9_-])+(.[a-zA-Z0-9_-])+/

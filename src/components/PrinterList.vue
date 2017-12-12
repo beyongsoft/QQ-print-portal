@@ -1,6 +1,5 @@
 <!--显示绑定的printerId-->
 <template>
-
   <div class="email-list">
     <HeaderDiv></HeaderDiv>
     <!-- <Search :param="param" @change-param="getParam"></Search> -->
@@ -15,10 +14,10 @@
       </thead>
       <tbody>
         <tr v-for="(data,index) in tableList" :key="index">
-          <td><router-link :to="{name:'qRcode',params:{emailId:data.emailId}}"  tag="a" v-text="data.printerModel"></router-link></td>
+          <td><router-link :to="{name:'updata',params:{emailId:data.emailId}}"  tag="a" v-text="data.modelName"></router-link></td>
           <td v-text="data.sku"></td>
-          <td v-text="data.pid"></td>
-          <td v-text="data.status"></td>
+          <td v-text="data.pId"></td>
+          <td  v-on:click="updateProduct()">修改</td>
         </tr>
       </tbody>
       <tfoot>
@@ -28,7 +27,16 @@
               <button class="btn btn-default" @click="refresh">Refresh</button>
             </div>
             <div class="pull-right">
-              <Pagination ref="page"  @update-data="ChildData" :async="true"  :pathUrl="pathUrl" :lens="lenArr" :page-len="pageLen" :param="param"></Pagination>
+              <!-- <Pagination ref="page"  @update-data="ChildData" :async="true"  :pathUrl="pathUrl" :lens="lenArr" :page-len="pageLen" :param="param"></Pagination> -->
+              <ul class="pagination" style="margin: 0;height: 34px;">
+                <li><a href="#">&laquo;</a></li>
+                <li><a href="#">1</a></li>
+                <li><a href="#">2</a></li>
+                <li><a href="#">3</a></li>
+                <li><a href="#">4</a></li>
+                <li><a href="#">5</a></li>
+                <li><a href="#">&raquo;</a></li>
+              </ul>
             </div>
           </td>
         </tr>
@@ -38,13 +46,13 @@
   </div>
 </template>
 <script>
-import Pagination from "./com/tableContent"
+// import Pagination from "./com/tableContent"
 import Loading from "./com/loading";
 import HeaderDiv from './com/header.vue'
 export default {
-  name: 'EmailIdList',
+  name: 'PrinterList',
   components: {
-    Pagination,
+    // Pagination,
       Loading,
       HeaderDiv
   },
@@ -55,14 +63,14 @@ export default {
       pathUrl: 'bindPrinter/bindInfo', // 请求路径
       param: {}, // 向服务器传递参数
       tableList: [
-        {"printerModel":"HP DeskJet Ink Advantage 3630 All-in-One Printer","sku":"F5S46B， K4U05B","pid":"1700001671","status":"pending for approval"},{"printerModel":"HP OfficeJet Pro 8710","sku":"D9L18A","pid":"1700002173","status":"approved"},{"printerModel":"HP DeskJet Ink Advantage 3630 All-in-One Printer","sku":"F5S46B， K4U05B","pid":"1700001671","status":"pending for approval"},{"printerModel":"HP OfficeJet Pro 8710","sku":"D9L18A","pid":"1700002173","status":"approved"},{"printerModel":"HP DeskJet Ink Advantage 3630 All-in-One Printer","sku":"F5S46B， K4U05B","pid":"1700001671","status":"pending for approval"},{"printerModel":"HP OfficeJet Pro 8710","sku":"D9L18A","pid":"1700002173","status":"approved"},{"printerModel":"HP DeskJet Ink Advantage 3630 All-in-One Printer","sku":"F5S46B， K4U05B","pid":"1700001671","status":"pending for approval"},{"printerModel":"HP OfficeJet Pro 8710","sku":"D9L18A","pid":"1700002173","status":"approved"},{"printerModel":"HP DeskJet Ink Advantage 3630 All-in-One Printer","sku":"F5S46B， K4U05B","pid":"1700001671","status":"pending for approval"}
+        // {"printerModel":"HP DeskJet Ink Advantage 3630 All-in-One Printer","sku":"F5S46B， K4U05B","pid":"1700001671","status":"pending for approval"},{"printerModel":"HP OfficeJet Pro 8710","sku":"D9L18A","pid":"1700002173","status":"approved"},{"printerModel":"HP DeskJet Ink Advantage 3630 All-in-One Printer","sku":"F5S46B， K4U05B","pid":"1700001671","status":"pending for approval"},{"printerModel":"HP OfficeJet Pro 8710","sku":"D9L18A","pid":"1700002173","status":"approved"},{"printerModel":"HP DeskJet Ink Advantage 3630 All-in-One Printer","sku":"F5S46B， K4U05B","pid":"1700001671","status":"pending for approval"},{"printerModel":"HP OfficeJet Pro 8710","sku":"D9L18A","pid":"1700002173","status":"approved"},{"printerModel":"HP DeskJet Ink Advantage 3630 All-in-One Printer","sku":"F5S46B， K4U05B","pid":"1700001671","status":"pending for approval"},{"printerModel":"HP OfficeJet Pro 8710","sku":"D9L18A","pid":"1700002173","status":"approved"},{"printerModel":"HP DeskJet Ink Advantage 3630 All-in-One Printer","sku":"F5S46B， K4U05B","pid":"1700001671","status":"pending for approval"}
       ] // 分页组件传回的分页后数据
     }
   },
   computed:{
         showLoading(){
             return this.$store.state.loading
-        }
+        },
   },
   watch:{
     tableList(val){
@@ -70,6 +78,12 @@ export default {
     }
   },
    mounted:function(){//表格刷新
+        this.$http.post('http://10.10.56.40:8088/product/productList').then(function(response) {
+          this.tableList = response.data.list;
+          console.log(response.data.list)
+        },function() {
+          console.log('error')
+        });
       this.refresh()
   },
   methods: {
@@ -77,8 +91,15 @@ export default {
       this.tableList=data
 
     },
+    updateProduct:function () {
+      this.$http.post('http://10.10.56.40:8088/product/updateProduct').then(function(response) {
+          console.log(response);
+        },function() {
+          console.log('error')
+        });
+    },
     refresh() {
-      this.$refs.page.refresh() // 这里提供了一个表格刷新功能
+      // this.$refs.page.refresh() // 这里提供了一个表格刷新功能
     },
       getParam(msg){//获取搜索框需要搜索的参数
         if(msg!=''){

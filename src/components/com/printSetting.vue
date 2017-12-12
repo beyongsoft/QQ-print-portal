@@ -305,20 +305,6 @@ export default {
     }
   },
   beforeCreate() {
-    const vm = this;
-    const url = vm.$api.url("qrcode/getSku")
-    vm.$http.get(url).then((data) => { //动态获取SKU
-
-      for (var i = 0; i < data.body.length; i++) {
-        var str = ""
-        if (data.body[i].model != null) {
-          str = data.body[i].sku + "——" + data.body[i].model
-        } else {
-          str = data.body[i].sku
-        }
-        vm.options.push({ text: str, value: data.body[i].sku })
-      }
-    })
   },
   methods: {
     filePrint:function (flag) {
