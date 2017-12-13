@@ -1,4 +1,4 @@
-<!--这是绑定printerId的页面-->
+<!--这是添加设备的页面-->
 <template>
   <div class="bind-progress">
     <form method="POST" action="http://10.10.56.40:8088/product/addProduct" enctype="multipart/form-data" >
@@ -32,7 +32,7 @@ import PrinterDescription from './com/printerDescription'
 import Loading from "./com/loading"
 // import Submit from './com/submit'
 export default {
-  name: 'bind',
+  name: 'add',
   data() {
     return {
       templateIsShow:false

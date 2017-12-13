@@ -14,7 +14,7 @@
       </thead>
       <tbody>
         <tr v-for="(data,index) in tableList" :key="index">
-          <td><router-link :to="{name:'updata',params:{emailId:data.emailId}}"  tag="a" v-text="data.modelName"></router-link></td>
+          <td v-on:click="savePbid(data.pbId)"><router-link :to="{name:'updata',params:{pbId:data.pbId}}"  tag="a" v-text="data.modelName"></router-link></td>
           <td v-text="data.sku"></td>
           <td v-text="data.pId"></td>
           <td  v-on:click="updateProduct()">修改</td>
@@ -90,6 +90,9 @@ export default {
     ChildData(data){
       this.tableList=data
 
+    },
+    savePbid(pbid){
+      localStorage.setItem('pbid',pbid);
     },
     updateProduct:function () {
       this.$http.post('http://10.10.56.40:8088/product/updateProduct').then(function(response) {

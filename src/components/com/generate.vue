@@ -101,7 +101,13 @@ export default {
       isclick:false
     }
   },
+  props: ['msg'],
   beforeCreate() {
+  },
+  mounted() {
+    if(this.msg){
+      console.log('ggggggg'+this.msg.pbid)
+    }
   },
   methods: {
     oninput:function (key,value) {

@@ -1,14 +1,13 @@
-<!--这是绑定printerId的页面-->
+<!--这是编辑的页面-->
 <template>
   <div class="bind-progress">
     <form method="POST" action="http://10.10.56.40:8088/product/addProduct" enctype="multipart/form-data" >
       <div class="submitPrinterBox">
-        <!-- <div class="btn btn-info" v-on:click="templateIsShow = true">template</div> -->
-        <button class="btn submitPrinter">Submit the updates</button>
+        <button class="btn submitPrinter">Updata</button>
       </div>
       <div class="row">
         <div class="col-md-5 col-padding">
-          <Gen v-on:message="recieveMessage"></Gen>
+          <Gen :msg='printerMessage'></Gen>
           <PushMessage></PushMessage>
         </div>
         <div class="col-md-6 col-padding">
@@ -33,7 +32,8 @@ export default {
   name: 'updata',
   data() {
     return {
-      templateIsShow:false
+      templateIsShow:false,
+      printerMessage:{}
     }
   },  
   methods: {
@@ -41,14 +41,14 @@ export default {
     Toast('监听到子组件变化'+text);
    }
   },
-   mounted:function(){//表格刷新
-        this.$http.post('http://10.10.56.40:8088/product/productList').then(function(response) {
-          this.tableList = response.data.list;
-          console.log(response.data.list)
+   mounted:function(){
+        // localStorage.setItem('pbid',this.$route.params.pbId);
+        this.$http.post('http://10.10.56.40:8088/product/toUpdateProduct?id='+localStorage.getItem('pbid')).then(function(response) {
+          this.printerMessage = response.body;
+          console.log(this.printerMessage)
         },function() {
           console.log('error')
         });
-      this.refresh()
   },
   components: {
     Gen,

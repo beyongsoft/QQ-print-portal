@@ -14,68 +14,88 @@
       <label class="col-sm-4 col-md-4 col-xs-4 control-label text-left" >
         </span>Color</label>
       <div class="col-sm-8 col-xs-8 col-md-8">
-        <input class="form-control" id="Color" type="text" placeholder="Color" name="color" />
+        <input class="form-control" id="Color" type="text" placeholder="Color" name="color" v-model="color"/>
       </div>
     </div>
     <div class="form-group">
       <label class="col-sm-4 col-md-4 col-xs-4 control-label text-left" >
         </span>Selectability Num</label>
       <div class="col-sm-8 col-xs-8 col-md-8">
-        <input class="form-control" id="SelectabilityNum" type="text" placeholder="Selectability Num" name="selectAbilityNumber" />
+        <input class="form-control" id="SelectabilityNum" type="text" placeholder="Selectability Num" name="selectAbilityNumber" v-model="selectAbilityNumber"/>
       </div>
     </div>
     <div class="form-group">
       <label class="col-sm-4 col-md-4 col-xs-4 control-label text-left" >
         </span>Part#</label>
       <div class="col-sm-8 col-xs-8 col-md-8">
-        <input class="form-control" id="Part" type="text" placeholder="Part#" name="partSharp" />
+        <input class="form-control" id="Part" type="text" placeholder="Part#" name="partSharp" v-model="partSharp"/>
       </div>
     </div>
     <div class="form-group">
       <label class="col-sm-4 col-md-4 col-xs-4 control-label text-left" >
         </span>JD Link</label>
       <div class="col-sm-8 col-xs-8 col-md-8">
-        <input class="form-control" id="JDLink" type="text" placeholder="JD Link" name="jdLink" />
+        <input class="form-control" id="JDLink" type="text" placeholder="JD Link" name="jdLink" v-model="jdLink"/>
       </div>
     </div>
     <div class="form-group">
       <label class="col-sm-4 col-md-4 col-xs-4 control-label text-left" >
         </span>Consumable Type</label>
       <div class="col-sm-8 col-xs-8 col-md-8">
-        <input class="form-control" id="ConsumableType" type="text" placeholder="Consumable Type" name="consumableType" />
+        <input class="form-control" id="ConsumableType" type="text" placeholder="Consumable Type" name="consumableType" v-model="consumableType"/>
       </div>
     </div>
     <div class="form-group">
       <label class="col-sm-4 col-md-4 col-xs-4 control-label text-left" >
         </span>Threshold Value</label>
       <div class="col-sm-8 col-xs-8 col-md-8">
-        <input class="form-control" id="ThresholdValue" type="text" placeholder="Threshold Value" name="thresholdValue" />
+        <input class="form-control" id="ThresholdValue" type="text" placeholder="Threshold Value" name="thresholdValue" v-model="thresholdValue"/>
       </div>
     </div>
     <div class="form-group">
       <label class="col-sm-4 col-md-4 col-xs-4 control-label text-left" >
         </span>Alter Title</label>
       <div class="col-sm-8 col-xs-8 col-md-8">
-        <input class="form-control" id="AlterTitle" type="text" placeholder="Alter Title" name="alterTitle" />
+        <input class="form-control" id="AlterTitle" type="text" placeholder="Alter Title" name="alterTitle" v-model="alterTitle"/>
       </div>
     </div>
     <div class="form-group">
       <label class="col-sm-4 col-md-4 col-xs-4 control-label text-left" >
         </span>HelpUrl Title</label>
       <div class="col-sm-8 col-xs-8 col-md-8">
-        <input class="form-control" id="HelpUrlTitle" type="text" placeholder="HelpUrl Title" name="helpUrlTitle" />
+        <input class="form-control" id="HelpUrlTitle" type="text" placeholder="HelpUrl Title" name="helpUrlTitle" v-model="helpUrlTitle"/>
       </div>
     </div>
     <div class="form-group">
       <label class="col-sm-4 col-md-4 col-xs-4 control-label text-left" >
         </span>Icon Url</label>
       <div class="col-sm-8 col-xs-8 col-md-8">
-        <input class="form-control" id="IconUrl" type="text" placeholder="Icon Url" name="iconUrl" />
+        <input class="form-control" id="IconUrl" type="text" placeholder="Icon Url" name="iconUrl" v-model="iconUrl"/>
       </div>
     </div>
-<!--     <div class="form-group">
-       <button class="btn btn-save" v-on:click="num++">save</button>
-    </div> -->
+    <div class="form-group">
+       <div class="btn btn-save" v-on:click="save()">save</div>
+    </div>
+    <div class="pushMessageListBreviary">
+      <table class="table table-hover table-striped table-bordered" v-show="num>0">
+        <thead>
+          <tr>
+            <th>Color</th>
+            <th>threshold_level</th>
+            <th>Alter Title</th>
+            <th>Details</th>
+          </tr>
+        </thead>
+        <tbody id="pushMessageListContent">
+          <tr v-for="(item,index) in pushMessageList">
+            <td>{{item.color}}</td>
+            <td>{{item.threshold_level}}</td>
+            <td>{{item.alterTitle}}</td>
+            <td><a href="javascript:void(0)" v-on:click="checkOrEdit(item,index)">check/edit</a></td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
   </fieldset>
 </template>
 <script>
@@ -83,18 +103,96 @@ export default {
   data() {
     return {
       threshold_level:'threshold_level',
+      color:'',
+      selectAbilityNumber:'',
+      partSharp:'',
+      jdLink:'',
+      consumableType:'',
+      thresholdValue:'',
+      alterTitle:'',
+      helpUrlTitle:'',
+      iconUrl:'',
+
       selected: 'F5S46B',
       options: [],
       btnState: false,
       PrintEmailId: '',
       deviceId: '',
       isclick: false,
-      num:0
+      num:0,
+      pushMessageList:[],
+      isEdite:false,
+      currentEditeNum:0
     }
   },
   beforeCreate() {
   },
   methods: {
+    save:function () {
+      if(this.isEdite){
+        var editeObj = this.pushMessageList[this.currentEditeNum];
+        editeObj.threshold_level = this.threshold_level;
+        editeObj.color = this.color;
+        editeObj.selectAbilityNumber = this.selectAbilityNumber;
+        editeObj.partSharp = this.partSharp;
+        editeObj.jdLink = this.jdLink;
+        editeObj.consumableType = this.consumableType;
+        editeObj.thresholdValue = this.thresholdValue;
+        editeObj.alterTitle = this.alterTitle;
+        editeObj.helpUrlTitle = this.helpUrlTitle;
+        editeObj.iconUrl = this.iconUrl;
+
+
+        this.clearInputs();
+
+        this.isEdite = false;
+
+        return;
+      }
+      this.num++;
+      var obj = {}
+      obj.threshold_level = this.threshold_level;
+      obj.color = this.color;
+      obj.selectAbilityNumber = this.selectAbilityNumber;
+      obj.partSharp = this.partSharp;
+      obj.jdLink = this.jdLink;
+      obj.consumableType = this.consumableType;
+      obj.thresholdValue = this.thresholdValue;
+      obj.alterTitle = this.alterTitle;
+      obj.helpUrlTitle = this.helpUrlTitle;
+      obj.iconUrl = this.iconUrl;
+      this.pushMessageList.push(obj);
+
+      this.clearInputs();
+    },
+    clearInputs:function () {
+      this.threshold_level = 'threshold_level';
+      this.color = '';
+      this.selectAbilityNumber = '';
+      this.partSharp = '';
+      this.jdLink = '';
+      this.consumableType = '';
+      this.thresholdValue = '';
+      this.alterTitle = '';
+      this.helpUrlTitle = '';
+      this.iconUrl = '';
+    },
+    checkOrEdit:function(item,index){
+      //点击了查看，这时候save的时候就是修改而不是往数组中添加了
+      this.isEdite = true;
+      this.currentEditeNum = index;
+
+      this.threshold_level = item.threshold_level;
+      this.color = item.color;
+      this.selectAbilityNumber = item.selectAbilityNumber;
+      this.partSharp = item.partSharp;
+      this.jdLink = item.jdLink;
+      this.consumableType = item.consumableType;
+      this.thresholdValue = item.thresholdValue;
+      this.alterTitle = item.alterTitle;
+      this.helpUrlTitle = item.helpUrlTitle;
+      this.iconUrl = item.iconUrl;
+    },
     validator: function() { //验证printeremailid是否存在
       var reg = /^([a-zA-Z0-9_-])+@([a-zA-Z0-9_-])+(.[a-zA-Z0-9_-])+/
       var flag = reg.test($.trim(this.PrintEmailId)) //验证邮箱的正则表达式
@@ -115,4 +213,5 @@ export default {
 <style type="text/css" scoped="">
   .dd{margin-left: 35%;}
   .btn-save{margin-left: 70%;background: #2e6daF;color:white;}
+  td,th{text-align: center;}
 </style>
