@@ -26,12 +26,12 @@
                 <ul class="printSetting">
                   <li>
                     <div class="input-group">
-                      <input type="checkbox" id="fileSuportA4"> <label  for="fileSuportA4" >A4</label>
+                      <input type="checkbox" id="fileSuportA4" name="pageType"> <label  for="fileSuportA4" >A4</label>
                     </div>
                   </li>
                   <li>
                     <div class="input-group">
-                      <input type="checkbox" id="fileSuportA5"> <label  for="fileSuportA5" >A5</label>
+                      <input type="checkbox" id="fileSuportA5" name="pageType"> <label  for="fileSuportA5" >A5</label>
                     </div>
                   </li>
                 </ul>
@@ -41,12 +41,12 @@
                 <ul class="printSetting">
                   <li>
                     <div class="input-group">
-                      <input type="radio" id="fileDefaultA4" name="filepaper"> <label  for="fileDefaultA4" >A4</label>
+                      <input type="radio" id="fileDefaultA4" name="defaultPageType"> <label  for="fileDefaultA4" >A4</label>
                     </div>
                   </li>
                   <li>
                     <div class="input-group">
-                      <input type="radio" id="fileDefaultA5" name="filepaper"> <label  for="fileDefaultA5" >A5</label>
+                      <input type="radio" id="fileDefaultA5" name="defaultPageType"> <label  for="fileDefaultA5" >A5</label>
                     </div>
                   </li>
                 </ul>
@@ -57,17 +57,17 @@
                 <ul class="printSetting">
                   <li>
                     <div class="input-group">
-                      <input type="checkbox" id="fileSuportbest"> <label  for="fileSuportbest" >最佳</label>
+                      <input type="checkbox" id="fileSuportbest" name="printEffect"> <label  for="fileSuportbest" >最佳</label>
                     </div>
                   </li>
                   <li>
                     <div class="input-group">
-                      <input type="checkbox" id="fileSuportnomal"> <label  for="fileSuportnomal" >一般</label>
+                      <input type="checkbox" id="fileSuportnomal" name="printEffect"> <label  for="fileSuportnomal" >一般</label>
                     </div>
                   </li>
                   <li>
                     <div class="input-group">
-                      <input type="checkbox" id="fileSuportdraft"> <label  for="fileSuportdraft" >草稿</label>
+                      <input type="checkbox" id="fileSuportdraft" name="printEffect"> <label  for="fileSuportdraft" >草稿</label>
                     </div>
                   </li>
                 </ul>
@@ -77,17 +77,17 @@
                 <ul class="printSetting">
                   <li>
                     <div class="input-group">
-                      <input type="radio" id="fileDefaultbest" name="fileResult"> <label  for="fileDefaultbest" >最佳</label>
+                      <input type="radio" id="fileDefaultbest" name="defaultPrintEffect"> <label  for="fileDefaultbest" >最佳</label>
                     </div>
                   </li>
                   <li>
                     <div class="input-group">
-                      <input type="radio" id="fileDefaultnomal" name="fileResult"> <label  for="fileDefaultnomal" >一般</label>
+                      <input type="radio" id="fileDefaultnomal" name="defaultPrintEffect"> <label  for="fileDefaultnomal" >一般</label>
                     </div>
                   </li>
                   <li>
                     <div class="input-group">
-                      <input type="radio" id="filedefaultdraft" name="fileResult"> <label  for="filedefaultdraft" >草稿</label>
+                      <input type="radio" id="filedefaultdraft" name="defaultPrintEffect"> <label  for="filedefaultdraft" >草稿</label>
                     </div>
                   </li>
                 </ul>
@@ -98,7 +98,7 @@
                 <ul class="printSetting">
                   <li>
                     <div class="input-group">
-                      <input type="checkbox" id="fileSuportdouble"> <label  for="fileSuportdouble" >双面打印</label>
+                      <input type="checkbox" id="fileSuportdouble" name="singleDoubleSide"> <label  for="fileSuportdouble" >双面打印</label>
                     </div>
                   </li>
                 </ul>
@@ -108,12 +108,12 @@
                 <ul class="printSetting">
                   <li>
                     <div class="input-group">
-                      <input type="radio" id="filedefaultsingle" name="fileDouble"> <label  for="filedefaultsingle" >单面打印</label>
+                      <input type="radio" id="filedefaultsingle" name="defaultSingleDoubleSide"> <label  for="filedefaultsingle" >单面打印</label>
                     </div>
                   </li>
                   <li>
                     <div class="input-group">
-                      <input type="radio" id="filedefaultdouble" name="fileDouble"> <label  for="filedefaultdouble" >双面打印</label>
+                      <input type="radio" id="filedefaultdouble" name="defaultSingleDoubleSide"> <label  for="filedefaultdouble" >双面打印</label>
                     </div>
                   </li>
                 </ul>
@@ -125,7 +125,7 @@
                 <ul class="printSetting">
                   <li>
                     <div class="input-group">
-                      <input type="checkbox" id="fileSuportcolor"> <label  for="fileSuportcolor" >彩色打印</label>
+                      <input type="checkbox" id="fileSuportcolor" name="colorPrint"> <label  for="fileSuportcolor" >彩色打印</label>
                     </div>
                   </li>
                 </ul>
@@ -135,12 +135,12 @@
                 <ul class="printSetting">
                   <li>
                     <div class="input-group">
-                      <input type="radio" id="fileSuportblack" name="fileColor"> <label  for="fileSuportblack" >黑白打印</label>
+                      <input type="radio" id="fileSuportblack" name="defaultColorPrint"> <label  for="fileSuportblack" >黑白打印</label>
                     </div>
                   </li>
                   <li>
                     <div class="input-group">
-                      <input type="radio" id="fileDefaultcolor" name="fileColor"> <label  for="fileDefaultcolor" >彩色打印</label>
+                      <input type="radio" id="fileDefaultcolor" name="defaultColorPrint"> <label  for="fileDefaultcolor" >彩色打印</label>
                     </div>
                   </li>
                 </ul>

@@ -1,4 +1,4 @@
-<!--显示绑定的printerId-->
+<!--显示printer列表-->
 <template>
   <div class="email-list">
     <HeaderDiv></HeaderDiv>
@@ -27,7 +27,6 @@
               <button class="btn btn-default" @click="refresh">Refresh</button>
             </div>
             <div class="pull-right">
-              <!-- <Pagination ref="page"  @update-data="ChildData" :async="true"  :pathUrl="pathUrl" :lens="lenArr" :page-len="pageLen" :param="param"></Pagination> -->
               <ul class="pagination" style="margin: 0;height: 34px;">
                 <li><a href="#">&laquo;</a></li>
                 <li><a href="#">1</a></li>
@@ -46,13 +45,11 @@
   </div>
 </template>
 <script>
-// import Pagination from "./com/tableContent"
 import Loading from "./com/loading";
 import HeaderDiv from './com/header.vue'
 export default {
   name: 'PrinterList',
   components: {
-    // Pagination,
       Loading,
       HeaderDiv
   },
@@ -78,7 +75,7 @@ export default {
     }
   },
    mounted:function(){//表格刷新
-        this.$http.post('http://10.10.56.40:8088/product/productList').then(function(response) {
+        this.$http.post('http://10.10.56.30:8088/product/productList').then(function(response) {
           this.tableList = response.data.list;
           console.log(response.data.list)
         },function() {

@@ -10,7 +10,7 @@
     <div class="form-group">
       <label class="col-sm-4 col-md-4 col-xs-4 control-label text-left" ></span>商品毛重</label>
       <div class="col-sm-8 col-xs-8 col-md-8">
-        <input class="form-control" id="ds_PrinterWeight" type="text" placeholder="商品毛重" name="grossWeight" />
+        <input class="form-control" id="ds_PrinterWeight" type="number" placeholder="商品毛重" name="grossWeight" />
       </div>
     </div>
     <div class="form-group">

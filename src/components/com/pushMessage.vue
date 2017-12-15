@@ -14,63 +14,63 @@
       <label class="col-sm-4 col-md-4 col-xs-4 control-label text-left" >
         </span>Color</label>
       <div class="col-sm-8 col-xs-8 col-md-8">
-        <input class="form-control" id="Color" type="text" placeholder="Color" name="color" v-model="color"/>
+        <input class="form-control" id="Color" type="text" placeholder="Color"  v-model="color"/>
       </div>
     </div>
     <div class="form-group">
       <label class="col-sm-4 col-md-4 col-xs-4 control-label text-left" >
         </span>Selectability Num</label>
       <div class="col-sm-8 col-xs-8 col-md-8">
-        <input class="form-control" id="SelectabilityNum" type="text" placeholder="Selectability Num" name="selectAbilityNumber" v-model="selectAbilityNumber"/>
+        <input class="form-control" id="SelectabilityNum" type="text" placeholder="Selectability Num"  v-model="selectAbilityNumber"/>
       </div>
     </div>
     <div class="form-group">
       <label class="col-sm-4 col-md-4 col-xs-4 control-label text-left" >
         </span>Part#</label>
       <div class="col-sm-8 col-xs-8 col-md-8">
-        <input class="form-control" id="Part" type="text" placeholder="Part#" name="partSharp" v-model="partSharp"/>
+        <input class="form-control" id="Part" type="text" placeholder="Part#"  v-model="partSharp"/>
       </div>
     </div>
     <div class="form-group">
       <label class="col-sm-4 col-md-4 col-xs-4 control-label text-left" >
         </span>JD Link</label>
       <div class="col-sm-8 col-xs-8 col-md-8">
-        <input class="form-control" id="JDLink" type="text" placeholder="JD Link" name="jdLink" v-model="jdLink"/>
+        <input class="form-control" id="JDLink" type="text" placeholder="JD Link"  v-model="jdLink"/>
       </div>
     </div>
     <div class="form-group">
       <label class="col-sm-4 col-md-4 col-xs-4 control-label text-left" >
         </span>Consumable Type</label>
       <div class="col-sm-8 col-xs-8 col-md-8">
-        <input class="form-control" id="ConsumableType" type="text" placeholder="Consumable Type" name="consumableType" v-model="consumableType"/>
+        <input class="form-control" id="ConsumableType" type="text" placeholder="Consumable Type"  v-model="consumableType"/>
       </div>
     </div>
     <div class="form-group">
       <label class="col-sm-4 col-md-4 col-xs-4 control-label text-left" >
         </span>Threshold Value</label>
       <div class="col-sm-8 col-xs-8 col-md-8">
-        <input class="form-control" id="ThresholdValue" type="text" placeholder="Threshold Value" name="thresholdValue" v-model="thresholdValue"/>
+        <input class="form-control" id="ThresholdValue" type="text" placeholder="Threshold Value"  v-model="thresholdValue"/>
       </div>
     </div>
     <div class="form-group">
       <label class="col-sm-4 col-md-4 col-xs-4 control-label text-left" >
         </span>Alter Title</label>
       <div class="col-sm-8 col-xs-8 col-md-8">
-        <input class="form-control" id="AlterTitle" type="text" placeholder="Alter Title" name="alterTitle" v-model="alterTitle"/>
+        <input class="form-control" id="AlterTitle" type="text" placeholder="Alter Title"  v-model="alterTitle"/>
       </div>
     </div>
     <div class="form-group">
       <label class="col-sm-4 col-md-4 col-xs-4 control-label text-left" >
         </span>HelpUrl Title</label>
       <div class="col-sm-8 col-xs-8 col-md-8">
-        <input class="form-control" id="HelpUrlTitle" type="text" placeholder="HelpUrl Title" name="helpUrlTitle" v-model="helpUrlTitle"/>
+        <input class="form-control" id="HelpUrlTitle" type="text" placeholder="HelpUrl Title"  v-model="helpUrlTitle"/>
       </div>
     </div>
     <div class="form-group">
       <label class="col-sm-4 col-md-4 col-xs-4 control-label text-left" >
         </span>Icon Url</label>
       <div class="col-sm-8 col-xs-8 col-md-8">
-        <input class="form-control" id="IconUrl" type="text" placeholder="Icon Url" name="iconUrl" v-model="iconUrl"/>
+        <input class="form-control" id="IconUrl" type="text" placeholder="Icon Url"  v-model="iconUrl"/>
       </div>
     </div>
     <div class="form-group">
@@ -99,6 +99,7 @@
   </fieldset>
 </template>
 <script>
+
 export default {
   data() {
     return {
@@ -122,13 +123,25 @@ export default {
       num:0,
       pushMessageList:[],
       isEdite:false,
-      currentEditeNum:0
+      currentEditeNum:0,
+      canBeSave:false,
+      warningStr:''
     }
   },
   beforeCreate() {
+    var self = this;
   },
   methods: {
     save:function () {
+      //判断input是否为空
+      this.isInputsEmpty();
+      if(!this.canBeSave){
+        this.showWarining(this.warningStr);
+        return;
+      }
+
+      this.canBeSave = false;
+      //当前数据是点击编辑过来的，保存时去修改而不是直接添加
       if(this.isEdite){
         var editeObj = this.pushMessageList[this.currentEditeNum];
         editeObj.threshold_level = this.threshold_level;
@@ -142,7 +155,7 @@ export default {
         editeObj.helpUrlTitle = this.helpUrlTitle;
         editeObj.iconUrl = this.iconUrl;
 
-
+        //
         this.clearInputs();
 
         this.isEdite = false;
@@ -164,8 +177,13 @@ export default {
       this.pushMessageList.push(obj);
 
       this.clearInputs();
+
+      console.log('&&&&&&&&&&&&&&&&'+this.pushMessageList);
+      //把数据存起来，提交的时候用
+      localStorage.setItem('pushMessageArray22',JSON.stringify(this.pushMessageList));
     },
     clearInputs:function () {
+      // 每次操作后清空input中内容
       this.threshold_level = 'threshold_level';
       this.color = '';
       this.selectAbilityNumber = '';
@@ -182,6 +200,7 @@ export default {
       this.isEdite = true;
       this.currentEditeNum = index;
 
+      // 点击编辑和查看是把这条数据填充到对应的input中
       this.threshold_level = item.threshold_level;
       this.color = item.color;
       this.selectAbilityNumber = item.selectAbilityNumber;
@@ -192,6 +211,50 @@ export default {
       this.alterTitle = item.alterTitle;
       this.helpUrlTitle = item.helpUrlTitle;
       this.iconUrl = item.iconUrl;
+    },
+    isInputsEmpty:function(){
+      if(this.threshold_level == 'threshold_level'){
+        this.warningStr = '请选择threshold_level';
+        return;
+      }
+      if (this.color == '') {
+        this.warningStr = '请输入color';
+        return;
+      }
+      if (this.selectAbilityNumber == '') {
+        this.warningStr = '请输入selectAbilityNumber';
+        return;
+      }
+      if (this.partSharp == '') {
+        this.warningStr = '请输入partSharp';
+        return;
+      }
+      if (this.jdLink == '') {
+        this.warningStr = '请输入jdLink';
+        return;
+      }
+      if (this.consumableType == '') {
+        this.warningStr = '请输入consumableType';
+        return;
+      }
+      if (this.thresholdValue == '') {
+        this.warningStr = '请输入thresholdValue';
+        return;
+      }
+      if (this.alterTitle == '') {
+        this.warningStr = '请输入alterTitle';
+        return;
+      }
+      if (this.helpUrlTitle == '') {
+        this.warningStr = '请输入helpUrlTitle';
+        return;
+      }
+      if (this.iconUrl == '') {
+        this.warningStr = '请输入iconUrl';
+        return;
+      }
+      //如果都不为空，则允许保存
+      this.canBeSave = true;
     },
     validator: function() { //验证printeremailid是否存在
       var reg = /^([a-zA-Z0-9_-])+@([a-zA-Z0-9_-])+(.[a-zA-Z0-9_-])+/
