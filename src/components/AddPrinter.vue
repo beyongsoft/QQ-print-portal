@@ -65,7 +65,14 @@ export default {
     formData.append('msg',pushMessageList);
 
     //printSetting的数据
-    // console.log($("input[name='pageType']"));
+    var pageTypes = $("input[name='pageType']");
+    console.log('====='+pageTypes.length);
+    for(var j=0;j<pageTypes.length;j++){
+      if (pageTypes[j].checked) {
+        console.log('-----');
+        console.log($(pageTypes[j]).next().text());
+      }
+    }
 
     $.ajax({
         type: 'post',

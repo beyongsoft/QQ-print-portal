@@ -1,7 +1,7 @@
 <!--这是编辑的页面-->
 <template>
   <div class="bind-progress">
-    <form method="POST" action="http://10.10.56.40:8088/product/updateProduct" enctype="multipart/form-data" >
+    <form method="POST" action="http://10.10.56.30:8088/product/addProduct" enctype="multipart/form-data" >
       <div class="submitPrinterBox">
         <button class="btn submitPrinter">Updata</button>
       </div>

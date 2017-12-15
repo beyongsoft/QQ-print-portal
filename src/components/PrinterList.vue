@@ -92,7 +92,7 @@ export default {
       localStorage.setItem('pbid',pbid);
     },
     updateProduct:function () {
-      this.$http.post('http://10.10.56.40:8088/product/updateProduct').then(function(response) {
+      this.$http.post('http://10.10.56.30:8088/product/updateProduct').then(function(response) {
           console.log(response);
         },function() {
           console.log('error')
