@@ -152,17 +152,17 @@
                 <ul class="printSetting">
                   <li>
                     <div class="input-group">
-                      <input type="checkbox" id="imgSuportA4"> <label  for="imgSuportA4" >A4</label>
+                      <input type="checkbox" id="imgSuportA4" name="pageType"> <label  for="imgSuportA4" >A4</label>
                     </div>
                   </li>
                   <li>
                     <div class="input-group">
-                      <input type="checkbox" id="imgSuportA5"> <label  for="imgSuportA5" >A5</label>
+                      <input type="checkbox" id="imgSuportA5" name="pageType"> <label  for="imgSuportA5" >A5</label>
                     </div>
                   </li>
                   <li>
                   <div class="input-group">
-                      <input type="checkbox" id="imgSuportImg"> <label  for="imgSuportImg" >图片纸</label>
+                      <input type="checkbox" id="imgSuportImg" name="pageType"> <label  for="imgSuportImg" >图片纸</label>
                     </div>
                   </li>
                 </ul>
@@ -172,17 +172,17 @@
                 <ul class="printSetting">
                   <li>
                     <div class="input-group">
-                      <input type="radio" id="imgDefaultA4" name="imgpaper"> <label  for="imgDefaultA4" >A4</label>
+                      <input type="radio" id="imgDefaultA4" name="defaultPageType"> <label  for="imgDefaultA4" >A4</label>
                     </div>
                   </li>
                   <li>
                     <div class="input-group">
-                      <input type="radio" id="imgDefaultA5" name="imgpaper"> <label  for="imgDefaultA5" >A5</label>
+                      <input type="radio" id="imgDefaultA5" name="defaultPageType"> <label  for="imgDefaultA5" >A5</label>
                     </div>
                   </li>
                   <li>
                     <div class="input-group">
-                      <input type="radio" id="imgDefaultpaper" name="imgpaper"> <label  for="imgDefaultpaper" >图片纸</label>
+                      <input type="radio" id="imgDefaultpaper" name="defaultPageType"> <label  for="imgDefaultpaper" >图片纸</label>
                     </div>
                   </li>
                 </ul>
@@ -193,17 +193,17 @@
                 <ul class="printSetting">
                   <li>
                     <div class="input-group">
-                      <input type="checkbox" id="imgSuportbest"> <label  for="imgSuportbest" >最佳</label>
+                      <input type="checkbox" id="imgSuportbest" name="printEffect"> <label  for="imgSuportbest" >最佳</label>
                     </div>
                   </li>
                   <li>
                     <div class="input-group">
-                      <input type="checkbox" id="imgSuportnomal"> <label  for="imgSuportnomal" >一般</label>
+                      <input type="checkbox" id="imgSuportnomal" name="printEffect"> <label  for="imgSuportnomal" >一般</label>
                     </div>
                   </li>
                   <li>
                     <div class="input-group">
-                      <input type="checkbox" id="imgSuportdraft"> <label  for="imgSuportdraft" >草稿</label>
+                      <input type="checkbox" id="imgSuportdraft" name="printEffect"> <label  for="imgSuportdraft" >草稿</label>
                     </div>
                   </li>
                 </ul>
@@ -213,17 +213,17 @@
                 <ul class="printSetting">
                   <li>
                     <div class="input-group">
-                      <input type="radio" id="imgDefaultbest" name="imgResult"> <label  for="imgDefaultbest" >最佳</label>
+                      <input type="radio" id="imgDefaultbest" name="defaultPrintEffect"> <label  for="imgDefaultbest" >最佳</label>
                     </div>
                   </li>
                   <li>
                     <div class="input-group">
-                      <input type="radio" id="imgDefaultnomal" name="imgResult"> <label  for="imgDefaultnomal" >一般</label>
+                      <input type="radio" id="imgDefaultnomal" name="defaultPrintEffect"> <label  for="imgDefaultnomal" >一般</label>
                     </div>
                   </li>
                   <li>
                     <div class="input-group">
-                      <input type="radio" id="imgdefaultdraft" name="imgResult"> <label  for="imgdefaultdraft" >草稿</label>
+                      <input type="radio" id="imgdefaultdraft" name="defaultPrintEffect"> <label  for="imgdefaultdraft" >草稿</label>
                     </div>
                   </li>
                 </ul>
@@ -234,7 +234,7 @@
                 <ul class="printSetting">
                   <li>
                     <div class="input-group">
-                      <input type="checkbox" id="imgSuportdouble"> <label  for="imgSuportdouble" >双面打印</label>
+                      <input type="checkbox" id="imgSuportdouble" name="singleDoubleSide"> <label  for="imgSuportdouble" >双面打印</label>
                     </div>
                   </li>
                 </ul>
@@ -244,12 +244,12 @@
                 <ul class="printSetting">
                   <li>
                     <div class="input-group">
-                      <input type="radio" id="imgdefaultsingle" name="imgDouble"> <label  for="imgdefaultsingle" >单面打印</label>
+                      <input type="radio" id="imgdefaultsingle" name="defaultSingleDoubleSide"> <label  for="imgdefaultsingle" >单面打印</label>
                     </div>
                   </li>
                   <li>
                     <div class="input-group">
-                      <input type="radio" id="imgdefaultdouble" name="imgDouble"> <label  for="imgdefaultdouble" >双面打印</label>
+                      <input type="radio" id="imgdefaultdouble" name="defaultSingleDoubleSide"> <label  for="imgdefaultdouble" >双面打印</label>
                     </div>
                   </li>
                 </ul>
@@ -261,7 +261,7 @@
                 <ul class="printSetting">
                   <li>
                     <div class="input-group">
-                      <input type="checkbox" id="imgSuportcolor"> <label  for="imgSuportcolor" >彩色打印</label>
+                      <input type="checkbox" id="imgSuportcolor" name="colorPrint"> <label  for="imgSuportcolor" >彩色打印</label>
                     </div>
                   </li>
                 </ul>
@@ -271,12 +271,12 @@
                 <ul class="printSetting">
                   <li>
                     <div class="input-group">
-                      <input type="radio" id="imgSuportblack" name="imgColor"> <label  for="imgSuportblack" >黑白打印</label>
+                      <input type="radio" id="imgSuportblack" name="defaultColorPrint"> <label  for="imgSuportblack" >黑白打印</label>
                     </div>
                   </li>
                   <li>
                     <div class="input-group">
-                      <input type="radio" id="imgDefaultcolor" name="imgColor"> <label  for="imgDefaultcolor" >彩色打印</label>
+                      <input type="radio" id="imgDefaultcolor" name="defaultColorPrint"> <label  for="imgDefaultcolor" >彩色打印</label>
                     </div>
                   </li>
                 </ul>

@@ -18,10 +18,10 @@
           <PrintSetting></PrintSetting>
           <PrinterDescription></PrinterDescription>
         </div>
-        <Loading v-show="showLoading"></Loading>
       </div>
     </form>
     <div id="addPrinterModel" v-show="templateIsShow" v-on:click="templateIsShow = false"><img src="../assets/images/addPrinter-template.png"></div>
+    <Loading v-show="showLoading"></Loading>
   </div>
 </template>
 <script>
@@ -36,7 +36,8 @@ export default {
   name: 'add',
   data() {
     return {
-      templateIsShow:false
+      templateIsShow:false,
+      pathUrl:'product/addProduct'
     }
   },  
   methods: {
@@ -45,6 +46,8 @@ export default {
    },
    submit:function (e) {
     e.preventDefault();
+
+    this.$store.state.loading = true;
 
     //创建formData对象，取到页面中的file文件
     var formData = new FormData();
@@ -65,25 +68,136 @@ export default {
     formData.append('msg',pushMessageList);
 
     //printSetting的数据
-    var pageTypes = $("input[name='pageType']");
-    console.log('====='+pageTypes.length);
-    for(var j=0;j<pageTypes.length;j++){
-      if (pageTypes[j].checked) {
-        console.log('-----');
-        console.log($(pageTypes[j]).next().text());
-      }
-    }
+    
+    //文件打印
+    var doc_default_value = JSON.stringify(this.setPrintSettingData('#filePrint'));
+    doc_default_value = doc_default_value.replace(/A4/g, "IsoA4_210x297mm");
+    doc_default_value = doc_default_value.replace(/A5/g, "NaIndex_4x6_4x6in");
+    doc_default_value = doc_default_value.replace(/图片纸/g, "Na_5x7_5x7in");
+    doc_default_value = doc_default_value.replace(/最佳/g, "Best");
+    doc_default_value = doc_default_value.replace(/一般/g, "Normal");
+    doc_default_value = doc_default_value.replace(/草稿/g, "FastDraft");
+    doc_default_value = doc_default_value.replace(/单面打印/g, "OneSided");
+    doc_default_value = doc_default_value.replace(/双面打印/g, "Duplex");
+    doc_default_value = doc_default_value.replace(/黑白打印/g, "Grey_K");
+    doc_default_value = doc_default_value.replace(/彩色打印/g, "Color");
+    console.log('doc_default_value:'+doc_default_value);
+    formData.append('doc_default',doc_default_value);
+    //图片打印
+    formData.append('photo_default',JSON.stringify(this.setPrintSettingData('#imgPrint')));
 
+
+    const url = this.$api.url(this.pathUrl);
+
+
+    var self = this;
     $.ajax({
         type: 'post',
-        url: 'http://10.10.56.30:8088/product/addProduct',
+        url: url,
         data: formData,
         contentType: false,// 当有文件要上传时，此项是必须的，否则后台无法识别文件流的起始位置
         processData: false,// 是否序列化data属性，默认true(注意：false时type必须是post)
         success: function(data) {
             console.log('OK');
+            // self.$store.state.loading = false;
+            $('input').val('');
+            $("input:checkbox,input:radio").prop("checked", false);
+            self.showWarining('提交成功！');
+            setTimeout(function(){
+                self.$store.state.warningState = false;
+                self.$store.state.loading = false;
+            },1000)
         }
     })
+   },
+   setPrintSettingData:function(fileOrImg){
+    //纸张类型
+    //支持纸张类型
+    var defaultValue = {}
+    var pageTypes = $(fileOrImg).find("input[name='pageType']");
+    var pageTypeArray = [];
+    for(var j=0;j<pageTypes.length;j++){
+      if (pageTypes[j].checked) {
+        pageTypeArray.push($(pageTypes[j]).next().text());
+      }
+    }
+    var pageTypesValue = pageTypeArray.join(',');
+    defaultValue.pageType = pageTypesValue;
+    //默认纸张类型
+    var defaultPageTypes = $(fileOrImg).find("input[name='defaultPageType']");
+    var defaultPageTypeValue = '';
+    for(var j=0;j<defaultPageTypes.length;j++){
+      if (defaultPageTypes[j].checked) {
+        defaultPageTypeValue = $(defaultPageTypes[j]).next().text();
+      }
+    }
+    defaultValue.defaultPageType = defaultPageTypeValue;
+
+    //打印效果
+    //支持打印效果
+    var printEffects = $(fileOrImg).find("input[name='printEffect']");
+    var printEffectArray = [];
+    for(var j=0;j<printEffects.length;j++){
+      if (printEffects[j].checked) {
+        printEffectArray.push($(printEffects[j]).next().text());
+      }
+    }
+    var printEffectsValue = printEffectArray.join(',');
+    defaultValue.printEffect = printEffectsValue;
+    //默认纸张类型
+    var defaultPrintEffects = $(fileOrImg).find("input[name='defaultPrintEffect']");
+    var defaultPrintEffectValue = '';
+    for(var j=0;j<defaultPrintEffects.length;j++){
+      if (defaultPrintEffects[j].checked) {
+        defaultPrintEffectValue = $(defaultPrintEffects[j]).next().text();
+      }
+    }
+    defaultValue.defaultPrintEffect = defaultPrintEffectValue;
+
+
+    //单双面打印
+    //支持双面打印
+    var singleDoubleSides = $(fileOrImg).find("input[name='singleDoubleSide']");
+    var singleDoubleSideArray = [];
+    for(var j=0;j<singleDoubleSides.length;j++){
+      if (singleDoubleSides[j].checked) {
+        singleDoubleSideArray.push($(singleDoubleSides[j]).next().text());
+      }
+    }
+    var singleDoubleSideValue = singleDoubleSideArray.join(',');
+    defaultValue.singleDoubleSide = singleDoubleSideValue;
+    //默认单双面打印
+    var defaultSingleDoubleSides = $(fileOrImg).find("input[name='defaultSingleDoubleSide']");
+    var defaultSingleDoubleSideValue = '';
+    for(var j=0;j<defaultSingleDoubleSides.length;j++){
+      if (defaultSingleDoubleSides[j].checked) {
+        defaultSingleDoubleSideValue = $(defaultSingleDoubleSides[j]).next().text();
+      }
+    }
+    defaultValue.defaultSingleDoubleSide = defaultSingleDoubleSideValue;
+
+    //彩色打印
+    //支持彩色打印
+    var colorPrints = $(fileOrImg).find("input[name='colorPrint']");
+    var colorPrintsArray = [];
+    for(var j=0;j<colorPrints.length;j++){
+      if (colorPrints[j].checked) {
+        colorPrintsArray.push($(colorPrints[j]).next().text());
+      }
+    }
+    var colorPrintValue = colorPrintsArray.join(',');
+    defaultValue.colorPrint = colorPrintValue;
+    //默认彩色打印
+    var defaultColorPrints = $(fileOrImg).find("input[name='defaultColorPrint']");
+    var defaultColorPrintValue = '';
+    for(var j=0;j<defaultColorPrints.length;j++){
+      if (defaultColorPrints[j].checked) {
+        defaultColorPrintValue = $(defaultColorPrints[j]).next().text();
+      }
+    }
+    defaultValue.defaultColorPrint = defaultColorPrintValue;
+
+    return defaultValue
    }
   },
   components: {

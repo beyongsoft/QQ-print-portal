@@ -17,7 +17,7 @@
           <td v-on:click="savePbid(data.pbId)"><router-link :to="{name:'updata',params:{pbId:data.pbId}}"  tag="a" v-text="data.modelName"></router-link></td>
           <td v-text="data.sku"></td>
           <td v-text="data.pId"></td>
-          <td  v-on:click="updateProduct()">修改</td>
+          <td>pending for approval</td>
         </tr>
       </tbody>
       <tfoot>
@@ -57,11 +57,9 @@ export default {
     return {
       lenArr: [10, 20, 50], // 每页显示长度设置
       pageLen: 5, // 可显示的分页数
-      pathUrl: 'bindPrinter/bindInfo', // 请求路径
+      pathUrl: 'product/productList', // 打印机列表请求路径
       param: {}, // 向服务器传递参数
-      tableList: [
-        // {"printerModel":"HP DeskJet Ink Advantage 3630 All-in-One Printer","sku":"F5S46B， K4U05B","pid":"1700001671","status":"pending for approval"},{"printerModel":"HP OfficeJet Pro 8710","sku":"D9L18A","pid":"1700002173","status":"approved"},{"printerModel":"HP DeskJet Ink Advantage 3630 All-in-One Printer","sku":"F5S46B， K4U05B","pid":"1700001671","status":"pending for approval"},{"printerModel":"HP OfficeJet Pro 8710","sku":"D9L18A","pid":"1700002173","status":"approved"},{"printerModel":"HP DeskJet Ink Advantage 3630 All-in-One Printer","sku":"F5S46B， K4U05B","pid":"1700001671","status":"pending for approval"},{"printerModel":"HP OfficeJet Pro 8710","sku":"D9L18A","pid":"1700002173","status":"approved"},{"printerModel":"HP DeskJet Ink Advantage 3630 All-in-One Printer","sku":"F5S46B， K4U05B","pid":"1700001671","status":"pending for approval"},{"printerModel":"HP OfficeJet Pro 8710","sku":"D9L18A","pid":"1700002173","status":"approved"},{"printerModel":"HP DeskJet Ink Advantage 3630 All-in-One Printer","sku":"F5S46B， K4U05B","pid":"1700001671","status":"pending for approval"}
-      ] // 分页组件传回的分页后数据
+      tableList: [] // 分页组件传回的分页后数据
     }
   },
   computed:{
@@ -73,11 +71,17 @@ export default {
     tableList(val){
       this.tableList = val
     }
+  }, beforeCreate() {
   },
    mounted:function(){//表格刷新
-        this.$http.post('http://10.10.56.30:8088/product/productList').then(function(response) {
+        this.$store.state.loading = true;
+
+        const vm = this;
+        const url = vm.$api.url(this.pathUrl);
+        console.log('url:'+url);
+        this.$http.post(url).then(function(response) {
           this.tableList = response.data.list;
-          console.log(response.data.list)
+          this.$store.state.loading = false;
         },function() {
           console.log('error')
         });
@@ -90,13 +94,6 @@ export default {
     },
     savePbid(pbid){
       localStorage.setItem('pbid',pbid);
-    },
-    updateProduct:function () {
-      this.$http.post('http://10.10.56.30:8088/product/updateProduct').then(function(response) {
-          console.log(response);
-        },function() {
-          console.log('error')
-        });
     },
     refresh() {
       // this.$refs.page.refresh() // 这里提供了一个表格刷新功能

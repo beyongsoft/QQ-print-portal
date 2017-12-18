@@ -8,7 +8,11 @@ const store = new Vuex.Store({
         resultCode: null, //当是新绑定的时候的绑定的时候返回的结果
         warningContent: "", //出现警告框内容为空
         warningState: false,
-        addPrinterObj:{}
+        addPrinterObj:{},
+        logMessage:'',
+        tipContent: '', //成功之后的提示框
+        tipState: false, //提示框是否出现
+        loading:false
     },
     mutations: {
         newStep1(state, msg) {
