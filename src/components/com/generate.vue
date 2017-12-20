@@ -1,81 +1,66 @@
 <template>
   <fieldset>
     <h3>Basic</h3>
-<!--     <div class="form-group" :class="{'has-error':isclick}">
-      <label class="col-sm-4 col-md-4 col-xs-4 control-label text-left" >PrinterEmailId</label>
-      <div class="col-sm-8 col-xs-8 col-md-8">
-        <input class="form-control" id="username" type="text" placeholder="PrinterEmailId" v-model="PrintEmailId" @blur="validator" required/>
-      </div>
-    </div>
-    <div class="form-group">
-      <label class="col-sm-4 col-md-4 col-xs-4 control-label text-left" ></span>CloudId</label>
-      <div class="col-sm-8 col-xs-8 col-md-8">
-        <input class="form-control" id="deviceId" type="text" placeholder="CloudId" v-model="deviceId" />
-      </div>
-    </div> -->
     <div class="form-group">
       <label class="col-sm-4 col-md-4 col-xs-4 control-label text-left" ></span>Product</label>
       <div class="col-sm-8 col-xs-8 col-md-8">
-        <input class="form-control" id="Product" type="text" placeholder="Product"  name="product" v-on:change="oninput('product',product)" v-model="product"/>
+        <input class="form-control" id="Product" type="text" placeholder="Product"  name="product" v-model="product"/>
       </div>
     </div>
     <div class="form-group">
       <label class="col-sm-4 col-md-4 col-xs-4 control-label text-left" ></span>ProductName</label>
       <div class="col-sm-8 col-xs-8 col-md-8">
-        <input class="form-control" id="ProductName" type="text" placeholder="ProductName" name="productName" v-on:change="oninput('productName',productName)" v-model="productName"/>
+        <input class="form-control" id="ProductName" type="text" placeholder="ProductName" name="productName" v-model="productName"/>
       </div>
     </div>
     <div class="form-group">
       <label class="col-sm-4 col-md-4 col-xs-4 control-label text-left" ></span>ModelName</label>
       <div class="col-sm-8 col-xs-8 col-md-8">
-        <input class="form-control" id="ModelName" type="text" placeholder="ModelName"  name="modelName" v-on:change="oninput('modelName',modelName)" v-model="modelName"/>
+        <input class="form-control" id="ModelName" type="text" placeholder="ModelName"  name="modelName" v-model="modelName"/>
       </div>
     </div>
     <div class="form-group">
       <label class="col-sm-4 col-md-4 col-xs-4 control-label text-left" ></span>SKU</label>
       <div class="col-sm-8 col-xs-8 col-md-8">
-        <input class="form-control" id="SKU" type="text" placeholder="SKU" name="sku" v-on:change="oninput('sku',sku)" v-model="sku"/>
+        <input class="form-control" id="SKU" type="text" placeholder="SKU" name="sku" v-model="sku"/>
       </div>
     </div>
     <div class="form-group">
       <label class="col-sm-4 col-md-4 col-xs-4 control-label text-left" ></span>Go-live date</label>
       <div class="col-sm-8 col-xs-8 col-md-8">
-        <input class="form-control" id="goliveDate" type="date" placeholder="Go-live date"  name="goLiveDate" v-on:change="oninput('goLiveDate',goLiveDate)" v-model="goLiveDate"/>
+        <input class="form-control" id="goliveDate" type="date" placeholder="Go-live date"  name="goLiveDate" v-model="goLiveDate"/>
       </div>
     </div>
     <div class="form-group">
       <label class="col-sm-4 col-md-4 col-xs-4 control-label text-left" ></span>JD link (Home page)</label>
       <div class="col-sm-8 col-xs-8 col-md-8">
-        <input class="form-control" id="JDLinks" type="text" placeholder="JD link (Home page)"  name="jdLinkHomePage" v-on:change="oninput('jdLinkHomePage',jdLinkHomePage)" v-model="jdLinkHomePage"/>
+        <input class="form-control" id="JDLinks" type="text" placeholder="JD link (Home page)"  name="jdLinkHomePage" v-model="jdLinkHomePage"/>
       </div>
     </div>
     <div class="form-group">
       <label class="col-sm-4 col-md-4 col-xs-4 control-label text-left" ></span>FAQ link (Home page)</label>
       <div class="col-sm-8 col-xs-8 col-md-8">
-        <input class="form-control" id="FAQ" type="text" placeholder="FAQ link (Home page)" name="faqLinHomePage" v-on:change="oninput('faqLinHomePage',faqLinHomePage)" v-model="faqLinHomePage"/>
+        <input class="form-control" id="FAQ" type="text" placeholder="FAQ link (Home page)" name="faqLinHomePage" v-model="faqLinHomePage"/>
       </div>
     </div>
     <div class="form-group">
       <label class="col-sm-4 col-md-4 col-xs-4 control-label text-left" ></span>PC prompt A link</label>
       <div class="col-sm-8 col-xs-8 col-md-8">
-        <input class="form-control" id="PCPromptALink" type="text" placeholder="PC prompt A link"  name="pcPromptALink" v-on:change="oninput('pcPromptALink',pcPromptALink)" v-model="pcPromptALink"/>
+        <input class="form-control" id="PCPromptALink" type="text" placeholder="PC prompt A link"  name="pcPromptALink" v-model="pcPromptALink"/>
       </div>
     </div>
     <div class="form-group">
       <label class="col-sm-4 col-md-4 col-xs-4 control-label text-left" ></span>PC prompt B link</label>
       <div class="col-sm-8 col-xs-8 col-md-8">
-        <input class="form-control" id="PCPromptBLink" type="text" placeholder="PC prompt B link"  name="pcPromptBLink" v-on:change="oninput('pcPromptBLink',pcPromptBLink)" v-model="pcPromptBLink"/>
+        <input class="form-control" id="PCPromptBLink" type="text" placeholder="PC prompt B link"  name="pcPromptBLink" v-model="pcPromptBLink"/>
       </div>
     </div>
     <div class="form-group">
       <label class="col-sm-4 col-md-4 col-xs-4 control-label text-left"></span>Printer Icon</label>
       <div class="col-sm-8 col-xs-8 col-md-8">
-        <input class="form-control" id="PrinterIcon" type="file" name="printerIconFile" v-on:change="fileChange()" />
+        <input class="form-control" id="PrinterIcon" type="file" name="printerIconFile" />
       </div>
     </div>
-<!--     <div class="form-group">
-       <button class="btn btn-save">save</button>
-    </div> -->
   </fieldset>
 </template>
 <script>
@@ -88,7 +73,6 @@ export default {
       sku:'',
       goLiveDate:'',
       jdLinkHomePage:'',
-      faqLinHomePage:'',
       faqLinHomePage:'',
       pcPromptALink:'',
       pcPromptBLink:'',
@@ -106,8 +90,18 @@ export default {
   beforeCreate() {
   },
   mounted() {
-    if(this.msg){
-      console.log('ggggggg'+this.msg.pbid)
+    if(localStorage.getItem('updataPrinterMessage')){
+      var obj = JSON.parse(localStorage.getItem('updataPrinterMessage'));
+      this.product = obj.product;
+      this.productName = obj.productName;
+      this.modelName = obj.modelName;
+      this.sku = obj.sku;
+      this.goLiveDate = obj.goLiveDate;
+      this.jdLinkHomePage = obj.jdLinkHomePage;
+      this.faqLinHomePage = obj.faqLinHomePage;
+      this.pcPromptALink = obj.pcPromptALink;
+      this.pcPromptBLink = obj.pcPromptBLink;
+      this.printerIconFile = obj.printerIcon;
     }
   },
   methods: {

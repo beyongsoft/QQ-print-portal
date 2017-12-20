@@ -4,7 +4,7 @@
     <div class="form-group">
       <label class="col-sm-4 col-md-4 col-xs-4 control-label text-left" ></span>PID</label>
       <div class="col-sm-8 col-xs-8 col-md-8">
-        <input class="form-control" id="PID" type="text" placeholder="PID" name="pId" />
+        <input class="form-control" id="PID" type="text" placeholder="PID" name="pId" v-model="pId"/>
       </div>
     </div>
     <div class="form-group">
@@ -33,10 +33,18 @@ export default {
       btnState: false,
       PrintEmailId: '',
       deviceId:'',
-      isclick:false
+      isclick:false,
+
+      pId:''
     }
   },
   beforeCreate() {
+  },
+  mounted() {
+    if(localStorage.getItem('updataPrinterMessage')){
+      var obj = JSON.parse(localStorage.getItem('updataPrinterMessage'));
+      this.pId = obj.pId;
+    }
   },
   methods: {
     validator: function(){//验证printeremailid是否存在

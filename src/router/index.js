@@ -2,7 +2,6 @@ import Vue from 'vue'
 import Router from 'vue-router'
 import AddPrinter from '@/components/AddPrinter'
 import PrinterList from '@/components/PrinterList'
-import PushMessageList from '../components/com/pushMessageList'
 import Updata from '@/components/UpdataPrinter'
 
 Vue.use(Router)
@@ -19,10 +18,6 @@ export default new Router({
             path: '/idList',
             name: 'idList',
             component: PrinterList
-        }, {
-            path: '/pushMessageList',
-            name: 'pushMessageList',
-            component: PushMessageList
         }, {
             path: '/updata',
             name: 'updata',

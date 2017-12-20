@@ -81,6 +81,7 @@ export default {
         console.log('url:'+url);
         this.$http.post(url).then(function(response) {
           this.tableList = response.data.list;
+          console.log(this.tableList);
           this.$store.state.loading = false;
         },function() {
           console.log('error')

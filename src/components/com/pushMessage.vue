@@ -1,6 +1,6 @@
 <template>
   <fieldset>
-    <h3>Push Message Rules({{num}})</h3>
+    <h3>Push Message Rules({{pushMessageList.length}})</h3>
     <!-- <div><router-link to="/pushMessageList" tag="li" class="addProduct">查看已添加推送信息</router-link></div> -->
     <div class="dropdown">
       <a href="#" class="dropdown-toggle" data-toggle="dropdown" name="thresholdLevel">{{threshold_level}}<b class="caret"></b></a>
@@ -77,7 +77,7 @@
        <div class="btn btn-save" v-on:click="save()">save</div>
     </div>
     <div class="pushMessageListBreviary">
-      <table class="table table-hover table-striped table-bordered" v-show="num>0">
+      <table class="table table-hover table-striped table-bordered" v-show="pushMessageList.length>0">
         <thead>
           <tr>
             <th>Color</th>
@@ -130,6 +130,12 @@ export default {
   },
   beforeCreate() {
     var self = this;
+  }, 
+  mounted() {
+    if(localStorage.getItem('updataPrinterMessage')){
+      var obj = JSON.parse(localStorage.getItem('updataPrinterMessage'));
+      this.pushMessageList = obj.msg;
+    }
   },
   methods: {
     save:function () {
@@ -177,9 +183,7 @@ export default {
       this.pushMessageList.push(obj);
 
       this.clearInputs();
-
-      console.log('&&&&&&&&&&&&&&&&'+this.pushMessageList);
-      //把数据存起来，提交的时候用
+      //把数据存起来，提交的时候用，同时防止刷新数据消失
       localStorage.setItem('pushMessageArray22',JSON.stringify(this.pushMessageList));
     },
     clearInputs:function () {

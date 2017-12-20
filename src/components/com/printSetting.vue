@@ -135,7 +135,7 @@
                 <ul class="printSetting">
                   <li>
                     <div class="input-group">
-                      <input type="radio" id="fileSuportblack" name="defaultColorPrint"> <label  for="fileSuportblack" >黑白打印</label>
+                      <input type="radio" id="fileDefaultblack" name="defaultColorPrint"> <label  for="fileDefaultblack" >黑白打印</label>
                     </div>
                   </li>
                   <li>
@@ -271,7 +271,7 @@
                 <ul class="printSetting">
                   <li>
                     <div class="input-group">
-                      <input type="radio" id="imgSuportblack" name="defaultColorPrint"> <label  for="imgSuportblack" >黑白打印</label>
+                      <input type="radio" id="imgDefaultblack" name="defaultColorPrint"> <label  for="imgDefaultblack" >黑白打印</label>
                     </div>
                   </li>
                   <li>
@@ -306,9 +306,80 @@ export default {
   },
   beforeCreate() {
   },
+  mounted() {
+    if(localStorage.getItem('updataPrinterMessage')){
+      var obj = JSON.parse(localStorage.getItem('updataPrinterMessage'));
+      var doc_defaultObj = obj.doc_default;
+      var photo_defaultObj = obj.photo_default;
+
+      this.updataAssign(doc_defaultObj,'#file');
+      this.updataAssign(photo_defaultObj,'#img');
+
+    }
+  },
   methods: {
     filePrint:function (flag) {
       this.printImgOrFile = flag
+    },
+    updataAssign:function(defaultObj,fileOrImg){
+       //纸张类型
+      if(defaultObj.pageType.indexOf('IsoA4_210x297mm') >= 0){
+          $(fileOrImg+'SuportA4').attr('checked','checked');
+      }
+      if(defaultObj.pageType.indexOf('NaIndex_4x6_4x6in') >= 0){
+          $(fileOrImg+'SuportA5').attr('checked','checked');
+      }
+      if(defaultObj.pageType.indexOf('Na_5x7_5x7in') >= 0){
+          $(fileOrImg+'SuportImg').attr('checked','checked');
+      }
+      if(defaultObj.defaultPageType.indexOf('IsoA4_210x297mm') >= 0){
+          $(fileOrImg+'DefaultA4').attr('checked','checked');
+      }
+      if(defaultObj.defaultPageType.indexOf('NaIndex_4x6_4x6in') >= 0){
+          $(fileOrImg+'DefaultA5').attr('checked','checked');
+      }
+      if(defaultObj.defaultPageType.indexOf('Na_5x7_5x7in') >= 0){
+          $(fileOrImg+'Defaultpaper').attr('checked','checked');
+      }
+      //打印效果
+      if(defaultObj.printEffect.indexOf('Best') >= 0){
+          $(fileOrImg+'Suportbest').attr('checked','checked');
+      }
+      if(defaultObj.printEffect.indexOf('Normal') >= 0){
+          $(fileOrImg+'Suportnomal').attr('checked','checked');
+      }
+      if(defaultObj.printEffect.indexOf('FastDraft') >= 0){
+          $(fileOrImg+'Suportdraft').attr('checked','checked');
+      }
+      if(defaultObj.defaultPrintEffect.indexOf('Best') >= 0){
+          $(fileOrImg+'Defaultbest').attr('checked','checked');
+      }
+      if(defaultObj.defaultPrintEffect.indexOf('Normal') >= 0){
+          $(fileOrImg+'Defaultnomal').attr('checked','checked');
+      }
+      if(defaultObj.defaultPrintEffect.indexOf('FastDraft') >= 0){
+          $(fileOrImg+'Defaultdraft').attr('checked','checked');
+      }
+      //单双面打印
+      if(defaultObj.singleDoubleSide.indexOf('Duplex') >= 0){
+          $(fileOrImg+'Suportdouble').attr('checked','checked');
+      }
+      if(defaultObj.defaultSingleDoubleSide.indexOf('OneSided') >= 0){
+          $(fileOrImg+'defaultsingle').attr('checked','checked');
+      }
+      if(defaultObj.defaultSingleDoubleSide.indexOf('Duplex') >= 0){
+          $(fileOrImg+'defaultdouble').attr('checked','checked');
+      }
+      //彩色打印
+      if(defaultObj.colorPrint.indexOf('Color') >= 0){
+          $(fileOrImg+'Suportcolor').attr('checked','checked');
+      }
+      if(defaultObj.defaultSingleDoubleSide.indexOf('Grey_K') >= 0){
+          $(fileOrImg+'Defaultblack').attr('checked','checked');
+      }
+      if(defaultObj.defaultSingleDoubleSide.indexOf('Color') >= 0){
+          $(fileOrImg+'Defaultcolor').attr('checked','checked');
+      }
     }
   }
 }

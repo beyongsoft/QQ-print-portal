@@ -48,7 +48,7 @@ export default {
         const url = this.$api.url(this.pathUrl);
         this.$http.post(url+localStorage.getItem('pbid')).then(function(response) {
           this.printerMessage = response.body;
-          console.log(this.printerMessage)
+          localStorage.setItem('updataPrinterMessage',JSON.stringify(response.body));
         },function() {
           console.log('error')
         });

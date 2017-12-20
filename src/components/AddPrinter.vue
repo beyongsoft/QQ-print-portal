@@ -55,7 +55,7 @@ export default {
     formData.append('publicKeyFile', document.getElementById('public').files[0]);
     formData.append('privateKeyFile', document.getElementById('private').files[0]);
 
-    //把正常的input输入框中的数据加入formData
+    //把普通的input输入框（除了pushMessage和printsetting）中的数据加入formData
     var inputs = $("form").serializeArray();
     for(var i = 0;i<inputs.length;i++){
       formData.append(inputs[i].name,inputs[i].value);
@@ -68,28 +68,18 @@ export default {
     formData.append('msg',pushMessageList);
 
     //printSetting的数据
-    
     //文件打印
     var doc_default_value = JSON.stringify(this.setPrintSettingData('#filePrint'));
-    doc_default_value = doc_default_value.replace(/A4/g, "IsoA4_210x297mm");
-    doc_default_value = doc_default_value.replace(/A5/g, "NaIndex_4x6_4x6in");
-    doc_default_value = doc_default_value.replace(/图片纸/g, "Na_5x7_5x7in");
-    doc_default_value = doc_default_value.replace(/最佳/g, "Best");
-    doc_default_value = doc_default_value.replace(/一般/g, "Normal");
-    doc_default_value = doc_default_value.replace(/草稿/g, "FastDraft");
-    doc_default_value = doc_default_value.replace(/单面打印/g, "OneSided");
-    doc_default_value = doc_default_value.replace(/双面打印/g, "Duplex");
-    doc_default_value = doc_default_value.replace(/黑白打印/g, "Grey_K");
-    doc_default_value = doc_default_value.replace(/彩色打印/g, "Color");
-    console.log('doc_default_value:'+doc_default_value);
+    doc_default_value = this.replaceChinese(doc_default_value);
     formData.append('doc_default',doc_default_value);
     //图片打印
-    formData.append('photo_default',JSON.stringify(this.setPrintSettingData('#imgPrint')));
+    var photo_default_value = JSON.stringify(this.setPrintSettingData('#imgPrint'));
+    photo_default_value = this.replaceChinese(photo_default_value);
+    formData.append('photo_default',photo_default_value);
+
 
 
     const url = this.$api.url(this.pathUrl);
-
-
     var self = this;
     $.ajax({
         type: 'post',
@@ -98,17 +88,28 @@ export default {
         contentType: false,// 当有文件要上传时，此项是必须的，否则后台无法识别文件流的起始位置
         processData: false,// 是否序列化data属性，默认true(注意：false时type必须是post)
         success: function(data) {
-            console.log('OK');
-            // self.$store.state.loading = false;
             $('input').val('');
             $("input:checkbox,input:radio").prop("checked", false);
-            self.showWarining('提交成功！');
+            self.showWarining('Submit success！');
             setTimeout(function(){
                 self.$store.state.warningState = false;
                 self.$store.state.loading = false;
             },1000)
         }
     })
+   },
+   replaceChinese:function(str){
+      str = str.replace(/A4/g, "IsoA4_210x297mm");
+      str = str.replace(/A5/g, "NaIndex_4x6_4x6in");
+      str = str.replace(/图片纸/g, "Na_5x7_5x7in");
+      str = str.replace(/最佳/g, "Best");
+      str = str.replace(/一般/g, "Normal");
+      str = str.replace(/草稿/g, "FastDraft");
+      str = str.replace(/单面打印/g, "OneSided");
+      str = str.replace(/双面打印/g, "Duplex");
+      str = str.replace(/黑白打印/g, "Grey_K");
+      str = str.replace(/彩色打印/g, "Color");
+      return str;
    },
    setPrintSettingData:function(fileOrImg){
     //纸张类型
