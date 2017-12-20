@@ -2,19 +2,19 @@
   <fieldset>
     <h3>Keys</h3>
     <div class="form-group">
-      <label class="col-sm-4 col-md-4 col-xs-4 control-label text-left" ></span>PID</label>
+      <label class="col-sm-3 col-md-3 col-xs-3 control-label text-right" ></span>PID</label>
       <div class="col-sm-8 col-xs-8 col-md-8">
         <input class="form-control" id="PID" type="text" placeholder="PID" name="pId" v-model="pId"/>
       </div>
     </div>
     <div class="form-group">
-      <label class="col-sm-4 col-md-4 col-xs-4 control-label text-left"></span>Public Key</label>
+      <label class="col-sm-3 col-md-3 col-xs-3 control-label text-right"></span>Public Key</label>
       <div class="col-sm-8 col-xs-8 col-md-8">
         <input class="form-control" id="public" type="file" name="publicKeyFile" />
       </div>
     </div>
     <div class="form-group">
-      <label class="col-sm-4 col-md-4 col-xs-4 control-label text-left"></span>Private Key</label>
+      <label class="col-sm-3 col-md-3 col-xs-3 control-label text-right"></span>Private Key</label>
       <div class="col-sm-8 col-xs-8 col-md-8">
         <input class="form-control" id="private" type="file" name="privateKeyFile" />
       </div>
@@ -68,6 +68,4 @@ export default {
   input[type="file"]{font-size: 10px;}
 </style>
 <style type="text/css" scoped="">
-    .form-group label{width: 25%;}
-    .form-group div{width: 75%;}
 </style>

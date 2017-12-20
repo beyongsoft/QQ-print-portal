@@ -2,7 +2,7 @@
   <fieldset>
     <h3>Print Settings</h3>
     <div class="form-group">
-      <div class="col-sm-12">
+      <div class="col-md-10 col-md-offset-1">
         <div style="border:1px solid #ccc;border-radius: 4px;">
           <div style="overflow: hidden;" class="printSettingNav">
             <ul class="printSetting printStyleModel">

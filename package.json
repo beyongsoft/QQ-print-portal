@@ -12,6 +12,7 @@
     "mockdev": "npm run mock & npm run dev"
   },
   "dependencies": {
+    "bootstrap-select": "^1.12.4",
     "browser-sync": "^2.18.13",
     "gulp": "^3.9.1",
     "gulp-nodemon": "^2.2.1",

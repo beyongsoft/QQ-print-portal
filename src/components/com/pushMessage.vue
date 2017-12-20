@@ -1,73 +1,90 @@
 <template>
   <fieldset>
     <h3>Push Message Rules({{pushMessageList.length}})</h3>
-    <!-- <div><router-link to="/pushMessageList" tag="li" class="addProduct">查看已添加推送信息</router-link></div> -->
-    <div class="dropdown">
-      <a href="#" class="dropdown-toggle" data-toggle="dropdown" name="thresholdLevel">{{threshold_level}}<b class="caret"></b></a>
-      <ul class="dropdown-menu dd">
-        <li><a v-on:click="threshold_level = 'Low' ">Low</a></li>
-        <li><a v-on:click="threshold_level = 'VeryLow' ">VeryLow</a></li>
-        <li><a v-on:click="threshold_level = 'Missing' ">Missing</a></li>
-      </ul>
+
+
+    <div class="selectBox">
+      <label class="col-sm-3 col-md-3 col-xs-3 control-label text-right" >
+        </span>Threshold Level</label>
+      <div class="dropdown">
+          <a href="#" class="dropdown-toggle selectA" data-toggle="dropdown" name="thresholdLevel" v-model="threshold_level">{{threshold_level}}<b class="caret"></b></a>
+          <ul class="dropdown-menu selectMenu">
+            <li><a v-on:click="threshold_level = 'Low' ">Low</a></li>
+            <li><a v-on:click="threshold_level = 'VeryLow' ">VeryLow</a></li>
+            <li><a v-on:click="threshold_level = 'Missing' ">Missing</a></li>
+          </ul>
+      </div>
     </div>
-    <div class="form-group">
-      <label class="col-sm-4 col-md-4 col-xs-4 control-label text-left" >
+<!--     <div class="form-group">
+      <label class="col-sm-3 col-md-3 col-xs-3 control-label text-right" >
         </span>Color</label>
       <div class="col-sm-8 col-xs-8 col-md-8">
         <input class="form-control" id="Color" type="text" placeholder="Color"  v-model="color"/>
       </div>
+    </div> -->
+    <div class="selectBox">
+      <label class="col-sm-3 col-md-3 col-xs-3 control-label text-right" >
+        </span>Color</label>
+      <div class="dropdown">
+          <a href="#" class="dropdown-toggle selectA" data-toggle="dropdown" name="Color" v-model="color">{{color}}<b class="caret"></b></a>
+          <ul class="dropdown-menu selectMenu">
+            <li><a v-on:click="color = 'B' ">B</a></li>
+            <li><a v-on:click="color = 'R' ">R</a></li>
+            <li><a v-on:click="color = 'G' ">G</a></li>
+          </ul>
+      </div>
     </div>
     <div class="form-group">
-      <label class="col-sm-4 col-md-4 col-xs-4 control-label text-left" >
+      <label class="col-sm-3 col-md-3 col-xs-3 control-label text-right" >
         </span>Selectability Num</label>
       <div class="col-sm-8 col-xs-8 col-md-8">
         <input class="form-control" id="SelectabilityNum" type="text" placeholder="Selectability Num"  v-model="selectAbilityNumber"/>
       </div>
     </div>
     <div class="form-group">
-      <label class="col-sm-4 col-md-4 col-xs-4 control-label text-left" >
+      <label class="col-sm-3 col-md-3 col-xs-3 control-label text-right" >
         </span>Part#</label>
       <div class="col-sm-8 col-xs-8 col-md-8">
         <input class="form-control" id="Part" type="text" placeholder="Part#"  v-model="partSharp"/>
       </div>
     </div>
     <div class="form-group">
-      <label class="col-sm-4 col-md-4 col-xs-4 control-label text-left" >
-        </span>JD Link</label>
+      <label class="col-sm-3 col-md-3 col-xs-3 control-label text-right" >
+        </span>JD Link</label><span class="addJDLink">+</span>
       <div class="col-sm-8 col-xs-8 col-md-8">
         <input class="form-control" id="JDLink" type="text" placeholder="JD Link"  v-model="jdLink"/>
       </div>
     </div>
     <div class="form-group">
-      <label class="col-sm-4 col-md-4 col-xs-4 control-label text-left" >
+      <label class="col-sm-3 col-md-3 col-xs-3 control-label text-right" >
         </span>Consumable Type</label>
       <div class="col-sm-8 col-xs-8 col-md-8">
         <input class="form-control" id="ConsumableType" type="text" placeholder="Consumable Type"  v-model="consumableType"/>
       </div>
     </div>
     <div class="form-group">
-      <label class="col-sm-4 col-md-4 col-xs-4 control-label text-left" >
+      <label class="col-sm-3 col-md-3 col-xs-3 control-label text-right" >
         </span>Threshold Value</label>
       <div class="col-sm-8 col-xs-8 col-md-8">
         <input class="form-control" id="ThresholdValue" type="text" placeholder="Threshold Value"  v-model="thresholdValue"/>
       </div>
     </div>
     <div class="form-group">
-      <label class="col-sm-4 col-md-4 col-xs-4 control-label text-left" >
+      <label class="col-sm-3 col-md-3 col-xs-3 control-label text-right" >
         </span>Alter Title</label>
       <div class="col-sm-8 col-xs-8 col-md-8">
         <input class="form-control" id="AlterTitle" type="text" placeholder="Alter Title"  v-model="alterTitle"/>
       </div>
     </div>
     <div class="form-group">
-      <label class="col-sm-4 col-md-4 col-xs-4 control-label text-left" >
+      <label class="col-sm-3 col-md-3 col-xs-3 control-label text-right" >
         </span>HelpUrl Title</label>
       <div class="col-sm-8 col-xs-8 col-md-8">
         <input class="form-control" id="HelpUrlTitle" type="text" placeholder="HelpUrl Title"  v-model="helpUrlTitle"/>
       </div>
     </div>
     <div class="form-group">
-      <label class="col-sm-4 col-md-4 col-xs-4 control-label text-left" >
+      <label class="col-sm-3 col-md-3 col-xs-3 control-label text-right" >
         </span>Icon Url</label>
       <div class="col-sm-8 col-xs-8 col-md-8">
         <input class="form-control" id="IconUrl" type="text" placeholder="Icon Url"  v-model="iconUrl"/>
@@ -104,7 +121,7 @@ export default {
   data() {
     return {
       threshold_level:'threshold_level',
-      color:'',
+      color:'B',
       selectAbilityNumber:'',
       partSharp:'',
       jdLink:'',
@@ -132,6 +149,15 @@ export default {
     var self = this;
   }, 
   mounted() {
+      // $('.selectpicker').selectpicker('val', 'Mustard');
+      // 
+      $(window).on('load', function () {
+        $('#usertype').selectpicker({
+            'selectedText': 'cat'
+        });
+    });
+
+
     if(localStorage.getItem('updataPrinterMessage')){
       var obj = JSON.parse(localStorage.getItem('updataPrinterMessage'));
       this.pushMessageList = obj.msg;
@@ -189,7 +215,7 @@ export default {
     clearInputs:function () {
       // 每次操作后清空input中内容
       this.threshold_level = 'threshold_level';
-      this.color = '';
+      this.color = 'B';
       this.selectAbilityNumber = '';
       this.partSharp = '';
       this.jdLink = '';
@@ -278,7 +304,11 @@ export default {
 
 </script>
 <style type="text/css" scoped="">
-  .dd{margin-left: 35%;}
+  .selectA{display: inline-block;width: 30%;height: 34px;border: 1px solid #ccc;border-radius:4px;margin-left: -42%;color: black;line-height: 34px;}
+  .selectMenu{margin-left: 35%;}
   .btn-save{margin-left: 70%;background: #2e6daF;color:white;}
   td,th{text-align: center;}
+  .selectBox{margin-bottom: 10px;}
+  .pushMessageListBreviary{width: 80%;margin-left: 10%;}
+  .addJDLink{display: inline-block;width: 20px;height: 20px;background: green;border-radius: 50%;line-height: 20px;text-align: center;color: white;margin-top: 7px;margin-left: -50px;}
 </style>

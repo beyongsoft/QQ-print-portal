@@ -9,20 +9,17 @@
         <button class="btn submitPrinter" @click="submit">submit</button>
       </div>
       <div class="row">
-        <div class="col-md-5 col-padding">
+        <div class="col-md-12 col-padding">
           <Gen v-on:message="recieveMessage"></Gen>
-          <PushMessage></PushMessage>
-        </div>
-        <div class="col-md-6 col-padding">
           <ImgsAndFiles></ImgsAndFiles>
+          <PushMessage></PushMessage>
           <PrintSetting></PrintSetting>
-          <PrinterDescription></PrinterDescription>
+          <!-- <PrinterDescription></PrinterDescription> -->
         </div>
       </div>
     </form>
     <div id="addPrinterModel" v-show="templateIsShow" v-on:click="templateIsShow = false"><img src="../assets/images/addPrinter-template.png"></div>
     <Loading v-show="showLoading"></Loading>
-    
   </div>
 </template>
 <script>
