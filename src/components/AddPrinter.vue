@@ -22,6 +22,7 @@
     </form>
     <div id="addPrinterModel" v-show="templateIsShow" v-on:click="templateIsShow = false"><img src="../assets/images/addPrinter-template.png"></div>
     <Loading v-show="showLoading"></Loading>
+    
   </div>
 </template>
 <script>
