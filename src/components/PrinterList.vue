@@ -1,8 +1,9 @@
 <!--显示printer列表-->
 <template>
   <div class="email-list">
-    <HeaderDiv></HeaderDiv>
-    <!-- <Search :param="param" @change-param="getParam"></Search> -->
+    <div class="addPrinterHead">
+      <router-link to="/add" tag="li" class="btn addPrinter">add printer</router-link>
+    </div>
     <table class="table table-hover table-bordered">
       <thead>
         <tr>
@@ -14,7 +15,8 @@
       </thead>
       <tbody>
         <tr v-for="(data,index) in tableList" :key="index">
-          <td v-on:click="savePbid(data.pbId)"><router-link :to="{name:'updata',params:{pbId:data.pbId}}"  tag="a" v-text="data.modelName"></router-link></td>
+          <!-- <router-link :to="{name:'updata',params:{pbId:data.pbId}}"  tag="a" v-text="data.modelName"></router-link> -->
+          <td v-on:click="savePbid(data.pbId)" v-text="data.modelName"></td>
           <td v-text="data.sku"></td>
           <td v-text="data.pId"></td>
           <td>pending for approval</td>
@@ -30,10 +32,6 @@
               <ul class="pagination" style="margin: 0;height: 34px;">
                 <li><a href="#">&laquo;</a></li>
                 <li><a href="#">1</a></li>
-                <li><a href="#">2</a></li>
-                <li><a href="#">3</a></li>
-                <li><a href="#">4</a></li>
-                <li><a href="#">5</a></li>
                 <li><a href="#">&raquo;</a></li>
               </ul>
             </div>
@@ -46,18 +44,17 @@
 </template>
 <script>
 import Loading from "./com/loading";
-import HeaderDiv from './com/header.vue'
 export default {
   name: 'PrinterList',
   components: {
-      Loading,
-      HeaderDiv
+      Loading
   },
   data() {
     return {
       lenArr: [10, 20, 50], // 每页显示长度设置
       pageLen: 5, // 可显示的分页数
       pathUrl: 'product/productList', // 打印机列表请求路径
+      pathUrlUpdata:'product/toUpdateProduct?id=',//updata路径
       param: {}, // 向服务器传递参数
       tableList: [] // 分页组件传回的分页后数据
     }
@@ -73,7 +70,8 @@ export default {
     }
   }, beforeCreate() {
   },
-   mounted:function(){//表格刷新
+   mounted:function(){
+        var self = this;
         this.$store.state.loading = true;
 
         const vm = this;
@@ -83,18 +81,27 @@ export default {
           this.tableList = response.data.list;
           console.log(this.tableList);
           this.$store.state.loading = false;
-        },function() {
+        },function(err) {
           console.log('error')
+          console.log(err);
+          this.$store.state.loading = false;
         });
       this.refresh()
   },
   methods: {
     ChildData(data){
-      this.tableList=data
-
+      this.tableList=data;
     },
     savePbid(pbid){
-      localStorage.setItem('pbid',pbid);
+      const url = this.$api.url(this.pathUrlUpdata);
+        this.$http.post(url+pbid).then(function(response) {
+          localStorage.setItem('updataPrinterMessage',JSON.stringify(response.body));
+          //数据拿到之后跳转到updata页面
+          this.$router.replace('updata');
+        },function() {
+          console.log('error')
+        });
+
     },
     refresh() {
       // this.$refs.page.refresh() // 这里提供了一个表格刷新功能
@@ -127,6 +134,8 @@ export default {
 }
 table{background: white;}
 th{text-align: center;}
+.addPrinterHead{overflow: hidden;margin: 20px 0;}
+.addPrinter{background: #2e6da4;color: white;float: right;}
 </style>
 
 

@@ -1,6 +1,12 @@
 <template>
   <fieldset>
     <h3>Basic</h3>
+    <div class="form-group" style="display: none;">
+      <label class="col-sm-3 col-md-3 col-xs-3 control-label text-right" ></span>Carrier Id</label>
+      <div class="col-sm-8 col-xs-8 col-md-8">
+        <input class="form-control" id="CarrierId" type="text" placeholder="carrierId"  name="carrierId" v-model="carrierId"/>
+      </div>
+    </div>
     <div class="form-group">
       <label class="col-sm-3 col-md-3 col-xs-3 control-label text-right" ></span>Product</label>
       <div class="col-sm-8 col-xs-8 col-md-8">
@@ -56,15 +62,15 @@
       </div>
     </div>
     <div class="form-group">
-      <label class="col-sm-3 col-md-3 col-xs-3 control-label text-right"></span>Printer Icon</label>
-      <div class="col-sm-8 col-xs-8 col-md-8">
-        <input class="form-control" id="PrinterIcon" type="file" name="printerIconFile" />
-      </div>
-    </div>
-    <div class="form-group">
       <label class="col-sm-3 col-md-3 col-xs-3 control-label text-right"></span>Printer Description</label>
       <div class="col-sm-8 col-xs-8 col-md-8">
         <textarea class="form-control" rows="4" style="resize: none" id="PrinterDescription" placeholder="Printer Description"  name="printerDescription" v-model="printerDescription"></textarea>
+      </div>
+    </div>
+    <div class="form-group">
+      <label class="col-sm-3 col-md-3 col-xs-3 control-label text-right"></span>Printer Icon</label>
+      <div class="col-sm-8 col-xs-8 col-md-8">
+        <input class="form-control" id="PrinterIcon" type="file" name="printerIconFile" />
       </div>
     </div>
   </fieldset>
@@ -73,6 +79,7 @@
 export default {
   data() {
     return {
+      carrierId:1,
       product:'',
       productName:'',
       modelName:'',
@@ -99,6 +106,10 @@ export default {
   mounted() {
     if(localStorage.getItem('updataPrinterMessage')){
       var obj = JSON.parse(localStorage.getItem('updataPrinterMessage'));
+
+      console.log('genelar');
+     console.log(obj);
+
       this.product = obj.product;
       this.productName = obj.productName;
       this.modelName = obj.modelName;
@@ -110,19 +121,10 @@ export default {
       this.pcPromptBLink = obj.pcPromptBLink;
       this.printerIconFile = obj.printerIcon;
     }
+
+
   },
   methods: {
-    oninput:function (key,value) {
-      var obj = {};
-      if(localStorage.getItem('addPrinterObj')){
-        obj = JSON.parse(localStorage.getItem('addPrinterObj'));
-      }else{
-      }
-      obj[key] = value;
-      localStorage.setItem('addPrinterObj',JSON.stringify(obj));
-
-      console.log('localStorage*****'+localStorage.getItem('addPrinterObj'));
-    },
     fileChange:function () {
       
     },

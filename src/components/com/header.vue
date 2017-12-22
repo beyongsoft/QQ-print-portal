@@ -28,7 +28,6 @@ export default {
     }
 }
 
-.addProduct{width: 100px;height: 35px;background: #2e6da4;border-radius: 4px;line-height: 35px;text-align: center;color: white;}
 </style>
 
 

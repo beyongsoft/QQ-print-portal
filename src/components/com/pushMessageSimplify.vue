@@ -7,11 +7,11 @@
       <label class="col-sm-3 col-md-3 col-xs-3 control-label text-right" >
         </span>Threshold Level</label>
       <div class="dropdown">
-          <a href="#" class="dropdown-toggle selectA" data-toggle="dropdown" v-model="thresholdLevel">{{thresholdLevel}}<b class="caret"></b></a>
+          <a href="#" class="dropdown-toggle selectA" data-toggle="dropdown" v-model="threshold_level">{{threshold_level}}<b class="caret"></b></a>
           <ul class="dropdown-menu selectMenu">
-            <li><a v-on:click="thresholdLevel = 'Low' ">Low</a></li>
-            <li><a v-on:click="thresholdLevel = 'VeryLow' ">VeryLow</a></li>
-            <li><a v-on:click="thresholdLevel = 'Missing' ">Missing</a></li>
+            <li><a v-on:click="threshold_level = 'Low' ">Low</a></li>
+            <li><a v-on:click="threshold_level = 'VeryLow' ">VeryLow</a></li>
+            <li><a v-on:click="threshold_level = 'Missing' ">Missing</a></li>
           </ul>
       </div>
     </div>
@@ -50,24 +50,10 @@
           </ul>
       </div>
     </div>
-<!--     <div class="form-group">
-      <label class="col-sm-3 col-md-3 col-xs-3 control-label text-right" >
-        </span>Selectability Num</label>
-      <div class="col-sm-8 col-xs-8 col-md-8">
-        <input class="form-control" id="SelectabilityNum" type="text" placeholder="Selectability Num"  v-model="selectAbilityNumber"/>
-      </div>
-    </div> -->
-    <div class="form-group">
-      <label class="col-sm-3 col-md-3 col-xs-3 control-label text-right" >
-        </span>Part#</label>
-      <div class="col-sm-8 col-xs-8 col-md-8">
-        <input class="form-control" id="Part" type="text" placeholder="Part#"  v-model="partSharp"/>
-      </div>
-    </div>
     <div class="form-group">
       <label class="col-sm-3 col-md-3 col-xs-3 control-label text-right" >
         </span>JD Link</label>
-      <div class="col-sm-8 col-xs-8 col-md-8">
+      <div class="jdLinkBoxOuter">
         <div style="border:1px solid #ccc;border-radius: 4px;">
           <div class="jdLinkBox">
             <input class="form-control" id="JDLink" type="text" placeholder="JD Link"  v-model="jdLink"/><span class="addJDLink" v-on:click="addJDLink()">+</span>
@@ -83,7 +69,7 @@
                 <tbody id="jdLinkListContent">
                   <tr v-for="(item,index) in pushMessageJDLinkList">
                     <td>{{item}}</td>
-                    <td><input type="radio" class="pushMessageJDLink" name="pushMessageJDLink"></td>
+                    <td><input type="radio" class="pushMessageJDLink" name="pushMessageJDLink" checked="this.pushMessageJDLinkDefault == item"></td>
                     <td><div class="btn btn-danger" v-on:click="deleteJDLink(index)">delete</div></td>
                   </tr>
                 </tbody>
@@ -95,41 +81,6 @@
       </div>
     </div>
     <div class="form-group">
-      <label class="col-sm-3 col-md-3 col-xs-3 control-label text-right" >
-        </span>Consumable Type</label>
-      <div class="col-sm-8 col-xs-8 col-md-8">
-        <input class="form-control" id="ConsumableType" type="text" placeholder="Consumable Type"  v-model="consumableType"/>
-      </div>
-    </div>
-    <div class="form-group">
-      <label class="col-sm-3 col-md-3 col-xs-3 control-label text-right" >
-        </span>Threshold Value</label>
-      <div class="col-sm-8 col-xs-8 col-md-8">
-        <input class="form-control" id="ThresholdValue" type="text" placeholder="Threshold Value"  v-model="thresholdValue"/>
-      </div>
-    </div>
-    <div class="form-group">
-      <label class="col-sm-3 col-md-3 col-xs-3 control-label text-right" >
-        </span>Alter Title</label>
-      <div class="col-sm-8 col-xs-8 col-md-8">
-        <input class="form-control" id="AlterTitle" type="text" placeholder="Alter Title"  v-model="alterTitle"/>
-      </div>
-    </div>
-    <div class="form-group">
-      <label class="col-sm-3 col-md-3 col-xs-3 control-label text-right" >
-        </span>HelpUrl Title</label>
-      <div class="col-sm-8 col-xs-8 col-md-8">
-        <input class="form-control" id="HelpUrlTitle" type="text" placeholder="HelpUrl Title"  v-model="helpUrlTitle"/>
-      </div>
-    </div>
-    <div class="form-group">
-      <label class="col-sm-3 col-md-3 col-xs-3 control-label text-right" >
-        </span>Icon Url</label>
-      <div class="col-sm-8 col-xs-8 col-md-8">
-        <input class="form-control" id="IconUrl" type="text" placeholder="Icon Url"  v-model="iconUrl"/>
-      </div>
-    </div>
-    <div class="form-group">
        <div class="btn btn-save" v-on:click="save()">save</div>
     </div>
     <div class="pushMessageListBreviary">
@@ -137,7 +88,7 @@
         <thead>
           <tr>
             <th>Color</th>
-            <th>thresholdLevel</th>
+            <th>threshold_level</th>
             <th>Alter Title</th>
             <th>Details</th>
           </tr>
@@ -145,7 +96,7 @@
         <tbody id="pushMessageListContent">
           <tr v-for="(item,index) in pushMessageList">
             <td>{{item.color}}</td>
-            <td>{{item.thresholdLevel}}</td>
+            <td>{{item.threshold_level}}</td>
             <td>{{item.alterTitle}}</td>
             <td><a href="javascript:void(0)" v-on:click="checkOrEdit(item,index)">check/edit</a></td>
           </tr>
@@ -159,22 +110,10 @@
 export default {
   data() {
     return {
-      thresholdLevel:'thresholdLevel',
-      color:'Colors',
+      threshold_level:'threshold_level',
+      color:'Black',
       selectAbilityNumber:'selectAbilityNumber',
-      partSharp:'',
       jdLink:'',
-      consumableType:'',
-      thresholdValue:'',
-      alterTitle:'',
-      helpUrlTitle:'',
-      iconUrl:'',
-
-      selected: 'F5S46B',
-      options: [],
-      btnState: false,
-      PrintEmailId: '',
-      deviceId: '',
       isclick: false,
       num:0,
       pushMessageList:[],
@@ -197,15 +136,6 @@ export default {
   },
   methods: {
     save:function () {
-
-      //判断input是否为空
-      this.isInputsEmpty();
-      if(!this.canBeSave){
-        this.showWarining(this.warningStr);
-        return;
-      }
-      this.canBeSave = false;
-
       //JDLink默认值
       var JDLinks = $('.pushMessageJDLink');
       for(var i = 0;i<JDLinks.length;i++){
@@ -214,28 +144,27 @@ export default {
         }
       }
       if (this.pushMessageJDLinkDefault == "") {
-        this.warningStr = 'Please Select the default jdLink';
+        this.warningStr = '请选择默认jdLink';
         return;
       }
 
-      console.log('save defaultLink')
-      console.log(this.pushMessageJDLinkDefault);
+      //判断input是否为空
+      this.isInputsEmpty();
+      if(!this.canBeSave){
+        this.showWarining(this.warningStr);
+        return;
+      }
 
+      this.canBeSave = false;
 
       //当前数据是点击编辑过来的，保存时去修改而不是直接添加
       if(this.isEdite){
         var editeObj = this.pushMessageList[this.currentEditeNum];
-        editeObj.thresholdLevel = this.thresholdLevel;
+        editeObj.threshold_level = this.threshold_level;
         editeObj.color = this.color;
         editeObj.selectAbilityNumber = this.selectAbilityNumber;
-        editeObj.partSharp = this.partSharp;
         editeObj.jdLink = this.pushMessageJDLinkList;
         editeObj.defaultLink = this.pushMessageJDLinkDefault;
-        editeObj.consumableType = this.consumableType;
-        editeObj.thresholdValue = this.thresholdValue;
-        editeObj.alterTitle = this.alterTitle;
-        editeObj.helpUrlTitle = this.helpUrlTitle;
-        editeObj.iconUrl = this.iconUrl;
 
         //
         this.clearInputs();
@@ -246,22 +175,16 @@ export default {
       }
       this.num++;
       var obj = {}
-      obj.thresholdLevel = this.thresholdLevel;
+      obj.threshold_level = this.threshold_level;
       obj.color = this.color;
       obj.selectAbilityNumber = this.selectAbilityNumber;
-      obj.partSharp = this.partSharp;
       obj.jdLink = this.pushMessageJDLinkList;
       obj.defaultLink = this.pushMessageJDLinkDefault;
-      obj.consumableType = this.consumableType;
-      obj.thresholdValue = this.thresholdValue;
-      obj.alterTitle = this.alterTitle;
-      obj.helpUrlTitle = this.helpUrlTitle;
-      obj.iconUrl = this.iconUrl;
       this.pushMessageList.push(obj);
 
       this.clearInputs();
       //把数据存起来，提交的时候用，同时防止刷新数据消失
-      localStorage.setItem('pushMessageArray',JSON.stringify(this.pushMessageList));
+      localStorage.setItem('pushMessageArray22',JSON.stringify(this.pushMessageList));
 
 
       console.log(this.pushMessageList);
@@ -269,18 +192,11 @@ export default {
     },
     clearInputs:function () {
       // 每次操作后清空input中内容
-      this.thresholdLevel = 'thresholdLevel';
+      this.threshold_level = 'threshold_level';
       this.color = 'B';
-      this.selectAbilityNumber = '';
-      this.partSharp = '';
       this.pushMessageJDLinkList = [];
       this.jdLink = '';
       this.pushMessageJDLinkDefault = '';
-      this.consumableType = '';
-      this.thresholdValue = '';
-      this.alterTitle = '';
-      this.helpUrlTitle = '';
-      this.iconUrl = '';
     },
     checkOrEdit:function(item,index){
       //点击了查看，这时候save的时候就是修改而不是往数组中添加了
@@ -288,61 +204,23 @@ export default {
       this.currentEditeNum = index;
 
       // 点击编辑和查看是把这条数据填充到对应的input中
-      this.thresholdLevel = item.thresholdLevel;
+      this.threshold_level = item.threshold_level;
       this.color = item.color;
       this.selectAbilityNumber = item.selectAbilityNumber;
-      this.partSharp = item.partSharp;
       this.pushMessageJDLinkList = item.jdLink;
       this.pushMessageJDLinkDefault = item.defaultLink;
-      this.consumableType = item.consumableType;
-      this.thresholdValue = item.thresholdValue;
-      this.alterTitle = item.alterTitle;
-      this.helpUrlTitle = item.helpUrlTitle;
-      this.iconUrl = item.iconUrl;
     },
     isInputsEmpty:function(){
-      if(this.thresholdLevel == 'thresholdLevel'){
-        this.warningStr = 'Please select the thresholdLevel';
+      if(this.threshold_level == 'threshold_level'){
+        this.warningStr = '请选择threshold_level';
         return;
       }
-      if (this.color == 'Colors') {
-        this.warningStr = 'Please enter the color';
+      if (this.color == '') {
+        this.warningStr = '请输入color';
         return;
       }
-      if (this.selectAbilityNumber == 'selectAbilityNumber') {
-        this.warningStr = 'Please enter the selectAbilityNumber';
-        return;
-      }
-      if (this.partSharp == '') {
-        this.warningStr = 'Please enter the partSharp';
-        return;
-      }
-      if (this.pushMessageJDLinkList.length<=0) {
-        this.warningStr = 'Please enter the jdLink';
-        return;
-      }
-      // if (this.pushMessageJDLinkDefault == "") {
-      //   this.warningStr = '请选择默认jdLink';
-      //   return;
-      // }
-      if (this.consumableType == '') {
-        this.warningStr = 'Please enter the consumableType';
-        return;
-      }
-      if (this.thresholdValue == '') {
-        this.warningStr = 'Please enter the thresholdValue';
-        return;
-      }
-      if (this.alterTitle == '') {
-        this.warningStr = 'Please enter the alterTitle';
-        return;
-      }
-      if (this.helpUrlTitle == '') {
-        this.warningStr = 'Please enter the helpUrlTitle';
-        return;
-      }
-      if (this.iconUrl == '') {
-        this.warningStr = 'Please enter the iconUrl';
+      if (this.selectAbilityNumber == '') {
+        this.warningStr = '请输入selectAbilityNumber';
         return;
       }
       //如果都不为空，则允许保存
@@ -350,17 +228,14 @@ export default {
     },
     addJDLink:function(){
       if(this.jdLink == ''){
-        this.showWarining('Please enter JDLink!');
+        this.showWarining('plase enter JDLink!');
         return;
       }else if(this.pushMessageJDLinkList.indexOf(this.jdLink)<=-1){
         this.pushMessageJDLinkList.push(this.jdLink);
         this.jdLink = '';
-      }else if(this.pushMessageJDLinkList.indexOf(this.jdLink)>-1){
-        this.showWarining('This JDLink has been added!');
+      }else{
+        this.showWarining('this JDLink has been added!');
       }
-
-      console.log('defaultLink')
-      console.log(this.pushMessageJDLinkDefault);
     },
     deleteJDLink:function(index){
       this.pushMessageJDLinkList.splice(index,1);
@@ -383,8 +258,8 @@ export default {
 
 </script>
 <style type="text/css" scoped="">
-  .selectA{display: inline-block;width: 30%;height: 34px;border: 1px solid #ccc;border-radius:4px;margin-left: -42%;color: black;line-height: 34px;}
-  .selectMenu{margin-left: 35%;}
+  .selectA{display: inline-block;width: 64%;height: 34px;border: 1px solid #ccc;border-radius:4px;margin-left: -8.5%;color: black;line-height: 34px;}
+  .selectMenu{margin-left: 53%;}
   .btn-save{margin-left: 70%;background: #2e6daF;color:white;}
   td,th{text-align: center;}
   .selectBox{margin-bottom: 10px;}
@@ -392,4 +267,5 @@ export default {
   .addJDLink{display: inline-block;width: 20px;height: 20px;background: #2dd;border-radius: 50%;line-height: 20px;text-align: center;color: white;position: absolute;right: -20px;top: 12px;}
   .jdLinkBox{padding: 5px;width:90%;position: relative;}
   .jdLinkList{margin-top: 10px;}
+  .jdLinkBoxOuter{width: 64%;margin-left: 26.2%;}
 </style>

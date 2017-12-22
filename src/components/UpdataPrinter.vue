@@ -6,16 +6,13 @@
         <button class="btn submitPrinter">Updata</button>
       </div>
       <div class="row">
-        <div class="col-md-5 col-padding">
-          <Gen :msg='printerMessage'></Gen>
-          <PushMessage></PushMessage>
-        </div>
-        <div class="col-md-6 col-padding">
+        <div class="col-md-12 col-padding">
+          <Gen v-on:message="recieveMessage"></Gen>
           <ImgsAndFiles></ImgsAndFiles>
+          <PushMessage></PushMessage>
           <PrintSetting></PrintSetting>
-          <PrinterDescription></PrinterDescription>
+          <!-- <PrinterDescription></PrinterDescription> -->
         </div>
-        <Loading v-show="showLoading"></Loading>
       </div>
     </form>
     <div id="addPrinterModel" v-show="templateIsShow" v-on:click="templateIsShow = false"><img src="../assets/images/addPrinter-template.png"></div>
@@ -32,10 +29,7 @@ export default {
   name: 'updata',
   data() {
     return {
-      templateIsShow:false,
-      printerMessage:{},
-      pathUrl:'product/toUpdateProduct?id='
-
+      templateIsShow:false
     }
   },  
   methods: {
@@ -44,14 +38,6 @@ export default {
    }
   },
    mounted:function(){
-        // localStorage.setItem('pbid',this.$route.params.pbId);
-        const url = this.$api.url(this.pathUrl);
-        this.$http.post(url+localStorage.getItem('pbid')).then(function(response) {
-          this.printerMessage = response.body;
-          localStorage.setItem('updataPrinterMessage',JSON.stringify(response.body));
-        },function() {
-          console.log('error')
-        });
   },
   components: {
     Gen,
@@ -65,6 +51,12 @@ export default {
     showLoading() {
       return this.$store.state.loading
     }
+  },
+  destroyed:function(){
+     localStorage.removeItem('updataPrinterMessage');
+     console.log('out');
+     console.log(localStorage.getItem('updataPrinterMessage'));
+
   }
 }
 

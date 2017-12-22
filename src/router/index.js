@@ -1,6 +1,7 @@
 import Vue from 'vue'
 import Router from 'vue-router'
 import AddPrinter from '@/components/AddPrinter'
+import AddPrinterSimplify from '@/components/AddPrinterSimplify'
 import PrinterList from '@/components/PrinterList'
 import Updata from '@/components/UpdataPrinter'
 
@@ -14,6 +15,10 @@ export default new Router({
             path: '/add',
             name: 'add',
             component: AddPrinter,
+        },{
+            path: '/addSimplify',
+            name: 'addSimplify',
+            component: AddPrinterSimplify,
         }, {
             path: '/idList',
             name: 'idList',

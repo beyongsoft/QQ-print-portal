@@ -5,7 +5,6 @@ Vue.use(Vuex);
 const store = new Vuex.Store({
     state: {
         isWarning: false, //是否出现警告框
-        resultCode: null, //当是新绑定的时候的绑定的时候返回的结果
         warningContent: "", //出现警告框内容为空
         warningState: false,
         addPrinterObj:{},

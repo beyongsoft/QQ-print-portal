@@ -11,10 +11,8 @@
       <div class="row">
         <div class="col-md-12 col-padding">
           <Gen v-on:message="recieveMessage"></Gen>
-          <ImgsAndFiles></ImgsAndFiles>
           <PushMessage></PushMessage>
           <PrintSetting></PrintSetting>
-          <!-- <PrinterDescription></PrinterDescription> -->
         </div>
       </div>
     </form>
@@ -26,7 +24,7 @@
 import Gen from './com/generate'
 import ImgsAndFiles from './com/imgsAndFiles'
 import PrintSetting from './com/printSetting'
-import PushMessage from './com/pushMessage'
+import PushMessage from './com/pushMessageSimplify'
 import PrinterDescription from './com/printerDescription'
 import Loading from "./com/loading"
 // import Submit from './com/submit'
@@ -62,40 +60,23 @@ export default {
 
     //把pushmessage中的数据加入formdata
     //注意这里不用JSON.parse(),这样后台没法解析
-    var pushMessageList = localStorage.getItem('pushMessageArray');
+    var pushMessageList = localStorage.getItem('pushMessageArray22');
     formData.append('msg',pushMessageList);
-
-
-    console.log('-------pushMessageList---------');
-    console.log(pushMessageList)
-    console.log('------------------')
-
 
     //printSetting的数据
     //文件打印
-    var doc_default_value = JSON.stringify(this.setPrintSettingData('filePrint'));
+    var doc_default_value = JSON.stringify(this.setPrintSettingData('#filePrint'));
     doc_default_value = this.replaceChinese(doc_default_value);
     formData.append('doc_default',doc_default_value);
     //图片打印
-    var photo_default_value = JSON.stringify(this.setPrintSettingData('imgPrint'));
+    var photo_default_value = JSON.stringify(this.setPrintSettingData('#imgPrint'));
     photo_default_value = this.replaceChinese(photo_default_value);
     formData.append('photo_default',photo_default_value);
 
 
 
-    console.log('-------doc_default_value---------');
-    console.log(doc_default_value)
-    console.log('------------------')
-
-    console.log('------photo_default_value----------');
-    console.log(photo_default_value)
-    console.log('------------------')
-
     const url = this.$api.url(this.pathUrl);
     var self = this;
-
-    console.log("formData");
-
     $.ajax({
         type: 'post',
         url: url,
@@ -105,7 +86,6 @@ export default {
         success: function(data) {
             $('input').val('');
             $("input:checkbox,input:radio").prop("checked", false);
-            
             self.showWarining('Submit success！');
             setTimeout(function(){
                 self.$store.state.warningState = false;
@@ -127,12 +107,11 @@ export default {
       str = str.replace(/彩色打印/g, "Color");
       return str;
    },
-   setPrintSettingData:function(fileOrImgHead){
-    var fileOrImg = '#'+fileOrImgHead;
+   setPrintSettingData:function(fileOrImg){
     //纸张类型
     //支持纸张类型
     var defaultValue = {}
-    var pageTypes = $(fileOrImg).find("input[name='" + fileOrImgHead + "pageType']");
+    var pageTypes = $(fileOrImg).find("input[name='pageType']");
     var pageTypeArray = [];
     for(var j=0;j<pageTypes.length;j++){
       if (pageTypes[j].checked) {
@@ -142,19 +121,18 @@ export default {
     var pageTypesValue = pageTypeArray.join(',');
     defaultValue.pageType = pageTypesValue;
     //默认纸张类型
-    var defaultPageTypes = $(fileOrImg).find("input[name='" + fileOrImgHead + "defaultPageType']");
+    var defaultPageTypes = $(fileOrImg).find("input[name='defaultPageType']");
     var defaultPageTypeValue = '';
     for(var j=0;j<defaultPageTypes.length;j++){
       if (defaultPageTypes[j].checked) {
         defaultPageTypeValue = $(defaultPageTypes[j]).next().text();
-        console.log('ddd')
       }
     }
     defaultValue.defaultPageType = defaultPageTypeValue;
 
     //打印效果
     //支持打印效果
-    var printEffects = $(fileOrImg).find("input[name='" + fileOrImgHead + "printEffect']");
+    var printEffects = $(fileOrImg).find("input[name='printEffect']");
     var printEffectArray = [];
     for(var j=0;j<printEffects.length;j++){
       if (printEffects[j].checked) {
@@ -164,7 +142,7 @@ export default {
     var printEffectsValue = printEffectArray.join(',');
     defaultValue.printEffect = printEffectsValue;
     //默认纸张类型
-    var defaultPrintEffects = $(fileOrImg).find("input[name='" + fileOrImgHead + "defaultPrintEffect']");
+    var defaultPrintEffects = $(fileOrImg).find("input[name='defaultPrintEffect']");
     var defaultPrintEffectValue = '';
     for(var j=0;j<defaultPrintEffects.length;j++){
       if (defaultPrintEffects[j].checked) {
@@ -176,7 +154,7 @@ export default {
 
     //单双面打印
     //支持双面打印
-    var singleDoubleSides = $(fileOrImg).find("input[name='" + fileOrImgHead + "singleDoubleSide']");
+    var singleDoubleSides = $(fileOrImg).find("input[name='singleDoubleSide']");
     var singleDoubleSideArray = [];
     for(var j=0;j<singleDoubleSides.length;j++){
       if (singleDoubleSides[j].checked) {
@@ -186,7 +164,7 @@ export default {
     var singleDoubleSideValue = singleDoubleSideArray.join(',');
     defaultValue.singleDoubleSide = singleDoubleSideValue;
     //默认单双面打印
-    var defaultSingleDoubleSides = $(fileOrImg).find("input[name='" + fileOrImgHead + "defaultSingleDoubleSide']");
+    var defaultSingleDoubleSides = $(fileOrImg).find("input[name='defaultSingleDoubleSide']");
     var defaultSingleDoubleSideValue = '';
     for(var j=0;j<defaultSingleDoubleSides.length;j++){
       if (defaultSingleDoubleSides[j].checked) {
@@ -197,7 +175,7 @@ export default {
 
     //彩色打印
     //支持彩色打印
-    var colorPrints = $(fileOrImg).find("input[name='" + fileOrImgHead + "colorPrint']");
+    var colorPrints = $(fileOrImg).find("input[name='colorPrint']");
     var colorPrintsArray = [];
     for(var j=0;j<colorPrints.length;j++){
       if (colorPrints[j].checked) {
@@ -207,7 +185,7 @@ export default {
     var colorPrintValue = colorPrintsArray.join(',');
     defaultValue.colorPrint = colorPrintValue;
     //默认彩色打印
-    var defaultColorPrints = $(fileOrImg).find("input[name='" + fileOrImgHead + "defaultColorPrint']");
+    var defaultColorPrints = $(fileOrImg).find("input[name='defaultColorPrint']");
     var defaultColorPrintValue = '';
     for(var j=0;j<defaultColorPrints.length;j++){
       if (defaultColorPrints[j].checked) {

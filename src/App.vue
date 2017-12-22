@@ -21,6 +21,11 @@ export default {
     Warning,
     Tip
 
+  },mounted(){
+    var self = this;
+    $('input').on('focus',function(){
+      self.$store.state.warningState = false
+    })
   }
 }
 </script>
